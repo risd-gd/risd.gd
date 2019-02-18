@@ -1,0 +1,65 @@
+.anim--shrink {
+  animation-name: shrink; }
+
+.anim--expand {
+  animation-name: expand;
+  background: white; }
+
+@keyframes fadein {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+@keyframes expand {
+  from {
+    height: 30px; }
+  to {
+    height: calc(100vh - 60px); } }
+@keyframes shrink {
+  from {
+    height: calc(100vh - 60px); }
+  to {
+    height: 30px; } }
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: "GT Zirkon";
+  font-size: 18px; }
+
+nav#nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  pointer-events: none; }
+  nav#nav .nav--pane {
+    height: 30px;
+    box-shadow: 0px -10px 20px rgba(0, 0, 0, 0.2);
+    animation-duration: 0.25s;
+    transition-timing-function: cubic-bezier(0.24, 0, 0.18, 1);
+    animation-fill-mode: both; }
+    nav#nav .nav--pane .pane--handle {
+      height: 30px;
+      background: white;
+      pointer-events: all; }
+    nav#nav .nav--pane.__isactive {
+      height: calc(100vh - 60px); }
+    nav#nav .nav--pane:last-child.anim--expand {
+      background: #FCE363; }
+    nav#nav .nav--pane:last-child .pane--handle {
+      background: #FCE363; }
+  nav#nav a {
+    color: black;
+    text-decoration: none;
+    text-transform: uppercase; }
+
+main {
+  animation-duration: 0.25s;
+  transition-timing-function: cubic-bezier(0.24, 0, 0.18, 1);
+  animation-fill-mode: both;
+  animation-delay: 0.25s;
+  animation: fadein;
+  margin-top: 40%;
+  text-align: center; }
+
+/*# sourceMappingURL=main.css.map */

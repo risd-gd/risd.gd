@@ -1,0 +1,63 @@
+// GLOBALS
+// Trying to keep global selectors as minimal as possible
+
+body,html {
+    margin: 0;
+    padding: 0;
+    font-family: "GT Zirkon";
+    font-size: 18px;
+}
+
+// ANIMATED NAV
+
+nav#nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    pointer-events: none;
+
+    .nav--pane {
+    height: 30px;
+    box-shadow: 0px -10px 20px rgba(0,0,0,0.2);
+
+    @include animated;
+        .pane--handle {
+            height: 30px;
+            background: white;
+            pointer-events: all;
+        }
+
+        &.__isactive {
+            height: calc(100vh - 60px)
+        }
+
+        &:last-child {
+            &.anim--expand {
+                background: $ruiz-yellow;
+            }
+            .pane--handle {
+                background: $ruiz-yellow;
+            }
+        }
+    }
+
+    a {
+        color: black;
+        text-decoration: none;
+        text-transform: uppercase;
+    }
+
+    
+}
+
+#container {
+    
+}
+
+main {
+    @include animated--delay;
+    animation: fadein;
+    margin-top: 40%;
+    text-align: center;
+}

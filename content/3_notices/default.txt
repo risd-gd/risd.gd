@@ -1,0 +1,5 @@
+Title: Notices
+
+----
+
+Text: This is where notices would go.

@@ -7,19 +7,22 @@
 
   <title><?= $site->title() ?> | <?= $page->title() ?></title>
 
-  <?= css(['assets/css/index.css', '@auto']) ?>
+  <?= css(['assets/css/main.css', '@auto']) ?>
+  <?= js('assets/lib/jquery-3.3.1.min.js') ?>
+  <?= js('assets/lib/jquery.smoothState.min.js') ?>
+  <?= js('assets/js/index.js') ?>
 
 </head>
 <body>
-
-  <div class="page">
-    <header class="header">
-      <a class="logo" href="<?= $site->url() ?>"><?= $site->title() ?></a>
-
-      <nav id="menu" class="menu">
-        <?php foreach ($site->children()->listed() as $item): ?>
-        <?= $item->title()->link() ?>
-        <?php endforeach ?>
-      </nav>
-    </header>
-
+  <div id="container">
+    <nav id="nav" data-current="<?= $page->num() ?>">
+      <?php foreach ($site->children()->listed() as $item): ?>
+        <div id="pane--<?= $item->num() ?>" class="nav--pane <?php e($item->isActive(), '__isactive') ?>"> 
+          <a data-target="<?= $item->num() ?>" href="<?= $item->url() ?>">
+            <div class="pane--handle">
+              <?= $item->title() ?>
+            </div>
+          </a>
+        </div>
+      <?php endforeach ?>
+  </nav>

@@ -1,0 +1,5 @@
+Title: risd.gd
+
+----
+
+Text: Welcome to RISD Graphic Design.
