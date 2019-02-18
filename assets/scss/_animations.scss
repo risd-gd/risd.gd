@@ -2,38 +2,51 @@
 // DRY (Don't Repeat Yourself) code is lame and unreadable. We're talking about a couple more kilobytes here
 // That's why this is all mixins, so the SCSS is readable.
 
-.anim--shrink {
-    animation-name: shrink;
-}
-
-.anim--expand {
-    animation-name: expand;
-    background: white;
-}
-
-
-@mixin animated {
-    animation-duration: 0.25s;
-    transition-timing-function: cubic-bezier(.24,0,.18,1);
-    animation-fill-mode: both;
-}
-
-@mixin animated--delay {
-    @include animated;
-    animation-delay: 0.25s;
-}
 
 @keyframes fadein {
     from {opacity: 0;};
     to {opacity: 1;};
 }
+@keyframes fadeout {
+    from {opacity: 1;};
+    to {opacity: 0;};
+}
 
 @keyframes expand {
-    from {height: 30px};
-    to {height: calc(100vh - 60px)}
+    from {height: 50px};
+    to {height: calc(100vh - 100px)}
 }
 
 @keyframes shrink {
-    from {height: calc(100vh - 60px)}
-    to {height: 30px};
+    from {height: calc(100vh - 100px)}
+    to {height: 50px};
+}
+
+.anim--shrink {
+    animation-name: shrink;
+    animation-duration: 0.35s;
+    transition-timing-function: cubic-bezier(.24,0,.18,1);
+    animation-fill-mode: both;
+}
+
+.anim--expand {
+    animation-name: expand;
+    background: white;
+    animation-duration: 0.35s;
+    transition-timing-function: cubic-bezier(.24,0,.18,1);
+    animation-fill-mode: both;
+}
+
+.anim--fadein {
+    animation-name: fadein;
+    animation-delay: 0.20s;
+    animation-duration: 0.15s;
+    animation-fill-mode: both;
+    
+}
+
+.anim--fadeout {
+    animation-name: fadeout;
+    animation-duration: 0.2s;
+    animation-fill-mode: both;
 }

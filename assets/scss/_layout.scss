@@ -4,8 +4,11 @@
 body,html {
     margin: 0;
     padding: 0;
-    font-family: "GT Zirkon";
-    font-size: 18px;
+    @include type--default
+}
+
+div {
+    box-sizing: border-box;
 }
 
 // ANIMATED NAV
@@ -16,28 +19,31 @@ nav#nav {
     right: 0;
     left: 0;
     pointer-events: none;
+    z-index: 100;
 
     .nav--pane {
-    height: 30px;
-    box-shadow: 0px -10px 20px rgba(0,0,0,0.2);
+    height: 50px;
+    border-top: 1px solid $black;
+    // box-shadow: 0px -10px 20px rgba(0,0,0,0.05);
 
-    @include animated;
         .pane--handle {
-            height: 30px;
-            background: white;
+            height: 50px;
+            text-align: center;
+            padding-top: 12px;
+            background: $white;
             pointer-events: all;
         }
 
         &.__isactive {
-            height: calc(100vh - 60px)
+            height: calc(100vh - 100px)
         }
 
         &:last-child {
             &.anim--expand {
-                background: $ruiz-yellow;
+                background: $misterworldwides-yellow;
             }
             .pane--handle {
-                background: $ruiz-yellow;
+                background: $misterworldwides-yellow;
             }
         }
     }
@@ -56,8 +62,11 @@ nav#nav {
 }
 
 main {
-    @include animated--delay;
-    animation: fadein;
-    margin-top: 40%;
+    min-height: 100vh;
     text-align: center;
+
+    &#notices {
+        background: $misterworldwides-yellow;
+        padding-top: 150px;
+    }
 }

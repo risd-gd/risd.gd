@@ -16,23 +16,24 @@
                 var current = $('[data-current]').first().data('current'),
                     currentPane = $('#pane--' + current),
                     target = $anchor.data('target'),
-                    targetPane = $('#pane--' + target);
+                    targetPane = $('#pane--' + target),
+                    contentPane = $('main');
                 currentPane.removeClass('__isactive');
                 currentPane.addClass('anim--shrink');
                 targetPane.addClass('anim--expand');
+                contentPane.addClass('anim--fadeout');
             },
             onStart: {
-                duration: 250,
+                duration: 400,
                 render: function (url, $container) {
-                    // $main.addClass('__isexiting');
                     $site.animate({scrollTop: 0});
+                    // smoothState.restartCSSAnimations();
                 }
             },
             onReady: {
                 duration: 0,
                 render: function ($container, $newContent) {
-                    $container.html($newContent);
-                    smoothState.restartCSSAnimations();
+                    $main.html($newContent);
                 }
             },
         }).data('smoothState');

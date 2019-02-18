@@ -1,6 +1,6 @@
 <?php snippet('header') ?>
 
-<main class="anim--fadein">
+<main id="notices" class="anim--fadein">
   <?= $page->text()->kt() ?>
 </main>
 

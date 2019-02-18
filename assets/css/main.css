@@ -1,65 +1,106 @@
-.anim--shrink {
-  animation-name: shrink; }
-
-.anim--expand {
-  animation-name: expand;
-  background: white; }
-
 @keyframes fadein {
   from {
     opacity: 0; }
   to {
     opacity: 1; } }
+@keyframes fadeout {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
 @keyframes expand {
   from {
-    height: 30px; }
+    height: 50px; }
   to {
-    height: calc(100vh - 60px); } }
+    height: calc(100vh - 100px); } }
 @keyframes shrink {
   from {
-    height: calc(100vh - 60px); }
+    height: calc(100vh - 100px); }
   to {
-    height: 30px; } }
+    height: 50px; } }
+.anim--shrink {
+  animation-name: shrink;
+  animation-duration: 0.35s;
+  transition-timing-function: cubic-bezier(0.24, 0, 0.18, 1);
+  animation-fill-mode: both; }
+
+.anim--expand {
+  animation-name: expand;
+  background: white;
+  animation-duration: 0.35s;
+  transition-timing-function: cubic-bezier(0.24, 0, 0.18, 1);
+  animation-fill-mode: both; }
+
+.anim--fadein {
+  animation-name: fadein;
+  animation-delay: 0.20s;
+  animation-duration: 0.15s;
+  animation-fill-mode: both; }
+
+.anim--fadeout {
+  animation-name: fadeout;
+  animation-duration: 0.2s;
+  animation-fill-mode: both; }
+
 body, html {
   margin: 0;
   padding: 0;
-  font-family: "GT Zirkon";
-  font-size: 18px; }
+  font-family: 'GT Zirkon';
+  font-weight: normal;
+  font-size: 18px;
+  color: #111111;
+  line-height: 1em;
+  letter-spacing: -0.01em; }
+  body p, html p {
+    margin: 0; }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    body, html {
+      font-size: 18px; } }
+  @media (min-width: 1024px) and (max-width: 1279px) {
+    body, html {
+      font-size: 20px; } }
+  @media (min-width: 1280px) and (max-width: 1599px) {
+    body, html {
+      font-size: 22px; } }
+  @media (min-width: 1600px) {
+    body, html {
+      font-size: 24px; } }
+
+div {
+  box-sizing: border-box; }
 
 nav#nav {
   position: fixed;
   top: 0;
   right: 0;
   left: 0;
-  pointer-events: none; }
+  pointer-events: none;
+  z-index: 100; }
   nav#nav .nav--pane {
-    height: 30px;
-    box-shadow: 0px -10px 20px rgba(0, 0, 0, 0.2);
-    animation-duration: 0.25s;
-    transition-timing-function: cubic-bezier(0.24, 0, 0.18, 1);
-    animation-fill-mode: both; }
+    height: 50px;
+    border-top: 1px solid #111111; }
     nav#nav .nav--pane .pane--handle {
-      height: 30px;
-      background: white;
+      height: 50px;
+      text-align: center;
+      padding-top: 12px;
+      background: #ffffff;
       pointer-events: all; }
     nav#nav .nav--pane.__isactive {
-      height: calc(100vh - 60px); }
+      height: calc(100vh - 100px); }
     nav#nav .nav--pane:last-child.anim--expand {
-      background: #FCE363; }
+      background: #FFF974; }
     nav#nav .nav--pane:last-child .pane--handle {
-      background: #FCE363; }
+      background: #FFF974; }
   nav#nav a {
     color: black;
     text-decoration: none;
     text-transform: uppercase; }
 
 main {
-  animation-duration: 0.25s;
-  transition-timing-function: cubic-bezier(0.24, 0, 0.18, 1);
-  animation-fill-mode: both;
-  animation-delay: 0.25s;
-  animation: fadein;
-  margin-top: 40%;
+  min-height: 100vh;
   text-align: center; }
+  main#notices {
+    background: #FFF974;
+    padding-top: 150px; }
 
 /*# sourceMappingURL=main.css.map */
