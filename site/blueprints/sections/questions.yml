@@ -1,0 +1,11 @@
+type: pages
+headline: Questions
+parent: site.find("home")
+size: tiny
+info: "{{ page.images.count }} image(s)"
+template: question
+empty: No featured work yet
+image:
+  query: page.cover
+  cover: true
+  ratio: 5/4

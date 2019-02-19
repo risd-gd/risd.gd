@@ -1,2 +1,2 @@
-46b194b027d813359f6df32a35311f5496e52175c56454958c0b2b4d4455d296
-a:7:{s:9:"startTime";i:1550480633;s:10:"expiryTime";i:1551690236;s:8:"duration";i:1209600;s:7:"timeout";b:0;s:12:"lastActivity";N;s:9:"renewable";b:1;s:4:"data";a:2:{s:4:"csrf";s:64:"fc80edbe782aff4aff112c70d4fd7cdc65e933596a2ea2a6c2f6ac8d569eb59c";s:7:"user.id";s:8:"U35vESpO";}}
+d70e0d4214eb9da9fbd0d8293923c855b7de8121410e8f0948496b578b1446fc
+a:3:{s:9:"startTime";i:1550480633;s:10:"expiryTime";i:1550562482;s:10:"newSession";s:31:"1551690236.c4de675c8f61e07851d3";}

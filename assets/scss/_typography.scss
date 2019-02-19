@@ -1,16 +1,55 @@
 // All type sizing and styling is isolated to this file.
 
 @mixin type--default {
-    font-family: 'GT Zirkon';
-    font-weight: normal;
-    font-size: 18px;
+    font-family: 'Times Ten';
+    font-size: 24px;
     color: $black;
     line-height: 1em;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.025em;
+    font-weight: 500;
     p {
         margin: 0;
     }
+}
 
-    @include breakpoints(font-size, 18px, 20px, 22px, 24px);
+@mixin type--uppercase {
+    font-family: 'Domaine Display';
+    letter-spacing: 0;
+    font-size: 28px;
+}
 
+@mixin type--big {
+    font-size: 54px;
+    line-height: 50px;
+    letter-spacing: -0.05em;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+@mixin type--huge {
+    font-size: 90px;
+    line-height: 85px;
+    letter-spacing: -0.07em;
+    text-transform: uppercase;
+}
+
+@mixin type--multiline {
+    line-height: 1.1em;
+    p:last-child {
+        margin: 0;
+    }
+    p {
+        margin-bottom: 1em;
+    }
+    a {
+    }
+}
+
+h1 {
+    @include type--big;
+    margin: 0;
+}
+
+a {
+    color: $black;
 }

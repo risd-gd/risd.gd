@@ -1,0 +1,30 @@
+Title: About
+
+----
+
+Text: Rich, multifaceted and encompassing a broad range of media, Graphic Design at RISD respects the foundations of formal, aesthetic and analytical knowledge and skills while exploring the ever-changing context and function of visual communication.
+
+----
+
+Subdomains: 
+
+- 
+  url: risdgd2018triennial.risd.gd
+- 
+  url: antiantialiasing.risd.gd
+- 
+  url: mfa2017.risd.gd
+- 
+  url: sp17.risd.gd
+- 
+  url: mfa2016.risd.gd
+- 
+  url: unlimitededition.risd.gd
+- 
+  url: calendar.risd.gd
+- 
+  url: commons.risd.gd
+- 
+  url: unzippening.risd.gd
+- 
+  url: mfa2015.risd.gd

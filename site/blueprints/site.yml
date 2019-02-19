@@ -1,12 +1,12 @@
 title: Site
 
 columns:
-  - width: 1/2
+  - width: 1/3
     sections:
-      albums: sections/albums
-  - width: 1/2
+      albums: sections/questions
+  - width: 1/3
     sections:
-      notes: sections/notes
+      notes: sections/notices
       pages:
         type: pages
         template:
@@ -14,3 +14,13 @@ columns:
           - home
           - default
           - notices
+  - width: 1/3
+    sections:
+      meta:
+        type: fields
+        fields:
+          featurednotice:
+            label: Featured notice
+            type: select
+            options: query
+            query: site.grandchildren.template("notice")

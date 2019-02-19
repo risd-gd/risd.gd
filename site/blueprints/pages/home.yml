@@ -2,9 +2,13 @@ title: Home
 
 icon: 🏠
 
+sections:
+  drafts:
+    extends: sections/questions
+    headline: Drafts
+    status: draft
 
-fields:
-  text:
-    type: textarea
-    size: huge
-
+  listed:
+    extends: sections/questions
+    headline: Published Questions
+    status: listed

@@ -4,9 +4,11 @@
 
     $(document).ready(function () {
 
+        
+
         // Init here.
         var $body = $('body'),
-            $main = $('#container'),
+            $main = $('#anim--container'),
             $site = $('html, body'),
             transition = 'top',
             smoothState;
@@ -17,14 +19,19 @@
                     currentPane = $('#pane--' + current),
                     target = $anchor.data('target'),
                     targetPane = $('#pane--' + target),
-                    contentPane = $('main');
-                currentPane.removeClass('__isactive');
-                currentPane.addClass('anim--shrink');
-                targetPane.addClass('anim--expand');
-                contentPane.addClass('anim--fadeout');
+                    contentPane = $('#content');
+
+                if (current != target) {
+                    currentPane.removeClass('__isactive');
+                    currentPane.addClass('anim--shrink');
+                    targetPane.addClass('anim--expand');
+                    contentPane.addClass('anim--fadeout');
+                } else {
+                    contentPane.addClass('anim--fadeout');
+                }
             },
             onStart: {
-                duration: 400,
+                duration: 500,
                 render: function (url, $container) {
                     $site.animate({scrollTop: 0});
                     // smoothState.restartCSSAnimations();
@@ -34,10 +41,14 @@
                 duration: 0,
                 render: function ($container, $newContent) {
                     $main.html($newContent);
+                    
                 }
             },
         }).data('smoothState');
 
+        
     });
 
 }(jQuery));
+
+

@@ -1,5 +1,4 @@
 title: Notices
-preset: page
 
 icon: 📝
 
@@ -12,10 +11,22 @@ status:
     label: Menu Page
     text: The page is listed in the main menu
 
-pages:
-  template: default
+columns:
+  - width: 1/2
+    sections:
+      drafts:
+        extends: sections/notices
+        headline: Drafts
+        status: draft
 
-fields:
-  text:
-    type: textarea
-    size: huge
+      unlisted:
+        extends: sections/notices
+        headline: In Review
+        status: unlisted
+
+  - width: 1/2
+    sections:
+      listed:
+        extends: sections/notices
+        headline: Published
+        status: listed
