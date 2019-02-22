@@ -41,10 +41,27 @@
                 duration: 0,
                 render: function ($container, $newContent) {
                     $main.html($newContent);
-                    
+                    startMarquee();
+                    console.log("ready state");
                 }
             },
         }).data('smoothState');
+
+        startMarquee();
+
+        // Marquee (only visible on home page)
+        function startMarquee() {
+            $('.notices--marquee').marquee({
+                duration: 15000,
+                gap: 0,
+                delayBeforeStart: 0,
+                direction: 'left',
+                duplicated: true,
+                startVisible: true
+            });
+        }
+
+
 
         
     });

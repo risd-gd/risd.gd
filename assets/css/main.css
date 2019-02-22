@@ -2,7 +2,7 @@ h1 {
   font-size: 54px;
   line-height: 50px;
   letter-spacing: -0.05em;
-  font-weight: 500;
+  font-weight: normal;
   text-transform: uppercase;
   margin: 0; }
 
@@ -58,12 +58,10 @@ body, html {
   margin: 0;
   padding: 0;
   background: #ffffff;
-  font-family: 'Times Ten';
+  font-family: 'Monument Grotesk';
   font-size: 24px;
   color: #111111;
-  line-height: 1em;
-  letter-spacing: -0.025em;
-  font-weight: 500; }
+  line-height: 1em; }
   body p, html p {
     margin: 0; }
 
@@ -82,8 +80,6 @@ nav#nav {
     transition: 0.25s;
     border-top: 1px solid #111111; }
     nav#nav .nav--pane .pane--handle {
-      font-family: 'Domaine Display';
-      letter-spacing: 0;
       font-size: 28px;
       height: 50px;
       padding-top: 12px;
@@ -95,10 +91,28 @@ nav#nav {
       text-align-last: justify; }
     nav#nav .nav--pane.__isactive {
       height: calc(100vh - 100px); }
-    nav#nav .nav--pane:last-child.anim--expand, nav#nav .nav--pane:last-child.anim--shrink {
-      background: #FFF974; }
-    nav#nav .nav--pane:last-child .pane--handle {
-      background: #FFF974; }
+    nav#nav .nav--pane:last-child {
+      white-space: nowrap; }
+      nav#nav .nav--pane:last-child.anim--expand, nav#nav .nav--pane:last-child.anim--shrink {
+        background: #FFF974; }
+      nav#nav .nav--pane:last-child .pane--handle {
+        background: #FFF974;
+        position: relative; }
+        nav#nav .nav--pane:last-child .pane--handle.__hasmarquee {
+          padding-left: 0;
+          padding-right: 0; }
+      nav#nav .nav--pane:last-child .notices--overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding-top: 12px;
+        padding-left: 60px;
+        padding-right: 30px;
+        z-index: 200;
+        background: linear-gradient(to right, #fff974 90%, rgba(255, 249, 116, 0) 100%); }
+      nav#nav .nav--pane:last-child .notices--marquee {
+        padding-left: 200px;
+        overflow: hidden; }
   nav#nav a {
     color: #111111;
     text-decoration: none;
@@ -180,12 +194,10 @@ article.notice {
     text-align: center;
     margin-bottom: 30px; }
   article.notice .notice--button {
-    font-family: 'Times Ten';
+    font-family: 'Monument Grotesk';
     font-size: 24px;
     color: #111111;
     line-height: 1em;
-    letter-spacing: -0.025em;
-    font-weight: 500;
     padding: 3px;
     border: 1px solid black;
     outline: none;

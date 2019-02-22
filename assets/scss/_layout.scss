@@ -65,6 +65,30 @@ nav#nav {
             }
             .pane--handle {
                 background: $misterworldwides-yellow;
+                position: relative;
+
+                &.__hasmarquee {
+                    padding-left: 0;
+                    padding-right: 0;
+                }
+            }
+            white-space: nowrap;
+
+            .notices--overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                padding-top: 12px;
+                padding-left: 60px;
+                padding-right: 30px;
+                z-index: 200;
+                background: linear-gradient(to right, rgba(255,249,116,1) 90%, rgba(255,249,116,0) 100%),
+
+            }
+
+            .notices--marquee {
+                padding-left: 200px;
+                overflow: hidden;
             }
         }
     }
