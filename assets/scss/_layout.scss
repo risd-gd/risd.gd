@@ -110,11 +110,6 @@ main {
 
     &#home {
         padding-top: 50px;
-        #content {
-            @include type--huge;
-            text-align: center;
-            padding: 0 60px;
-        }
         margin-bottom: 100px;
     }
 
@@ -223,5 +218,62 @@ article.notice {
         &:last-child {
             border-right: 1px solid $black;
         }
+    }
+}
+#questions {
+    &.__isactive {
+        width: 50%;
+        .question {
+            // border-right: 1px solid $black;
+        }
+    }
+    .question {
+        @include type--huge;
+        text-align: center;
+        border-top: 1px solid $black;
+        padding: 0 60px;
+        img {
+            height: 0.75em;
+        }
+        &:hover {
+            cursor: pointer;
+            background: $black;
+            color: $white;
+        }
+        &.__isactive {
+            // border-right: none;
+        }
+    }
+    
+}
+
+#answer {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    bottom: 0;
+    right: 0;
+    margin-top: 50px;
+    margin-bottom: 100px;
+    padding: 60px;
+
+    img {
+        width: 100%;
+    }
+
+    .answer--designers, .answer--for {
+        border-bottom: 1px solid $black;
+        .designers--content, .for--content {
+            @include type--big;
+        }
+    }
+
+    .answer--description {
+        
+    }
+
+    &.__isactive {
+        display: block;
     }
 }

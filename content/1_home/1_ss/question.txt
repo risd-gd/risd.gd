@@ -2,13 +2,19 @@ Title: CommenceFest
 
 ----
 
-Description: 
+Description: This is a sample project to appear on the home page.
+
+----
+
+Designers: Julian Kelly, Rohan Chaurasia, Fabiola Millan
+
+----
+
+For: Design Studio III
 
 ----
 
 Cover: 
-
-- commencefest_final_new-01.jpg
 
 ----
 

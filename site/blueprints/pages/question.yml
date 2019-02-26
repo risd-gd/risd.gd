@@ -26,6 +26,12 @@ columns:
         type: textarea
         buttons:
           - italic
+      designers:
+        type: text
+        placeholder: Rohan Chaurasia, Julian Kelly
+      for: 
+        type: text
+        placeholder: Design Studio III
 
 
 
