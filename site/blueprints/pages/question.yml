@@ -7,7 +7,7 @@ status:
   listed: true
 
 columns:
-  - width: 1/3
+  - width: 1/2
     sections:
       image:
         type: files
@@ -19,9 +19,12 @@ columns:
           cover: true
         max: 1
         size: small
-
-  - width: 1/3
     fields:
+      cover:
+        type: files
+        multiple: false
+      question:
+        type: text
       description:
         type: textarea
         buttons:
@@ -32,13 +35,6 @@ columns:
       for: 
         type: text
         placeholder: Design Studio III
-
-
-
-  - width: 1/3
-    fields:
-      cover:
-        type: files
-        multiple: false
-      question:
+      shorthand:
         type: text
+        placeholder: DS3

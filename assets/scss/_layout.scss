@@ -115,6 +115,7 @@ main {
 
     &#about {
         padding-top: 100px;
+        margin: 0px 60px;
     }
 
     &#notices {
@@ -200,6 +201,7 @@ article.notice {
     }
 
     .notice--date {
+        @include type--big;
         &.__isisolated {
             text-align: center;
             margin-bottom: 30px;
@@ -207,73 +209,142 @@ article.notice {
     }
 
     .notice--button {
-        @include button;
-        display: inline-block;
-        text-align: center;
-        border-right: none;
-        width: 50%;
-        &:hover {
-            color: $misterworldwides-yellow;
-        }
-        &:last-child {
-            border-right: 1px solid $black;
-        }
+        text-decoration: underline;
+        // @include button;
+        // display: inline-block;
+        // text-align: center;
+        // border-right: none;
+        // width: 50%;
+        // &:hover {
+        //     color: $misterworldwides-yellow;
+        // }
+        // &:last-child {
+        //     border-right: 1px solid $black;
+        // }
     }
 }
-#questions {
-    &.__isactive {
-        width: 50%;
-        .question {
-            // border-right: 1px solid $black;
+#featured {
+    .feature, .question {
+        border-top: 1px solid $transparentblack;
+        padding: 20px 60px;
+
+        a {
+            text-decoration: none;
         }
     }
-    .question {
+
+    .feature {
+        color: $brutalistikea-blue;
+        .feature--date {
+            @include type--big;
+        }
+
+        &:hover {
+            background: $brutalistikea-blue;
+            color: $white;
+        }
+    }
+
+    .question--title, .feature--title {
         @include type--huge;
         text-align: center;
-        border-top: 1px solid $black;
-        padding: 0 60px;
-        img {
-            height: 0.75em;
+    }
+
+    .question {
+
+        .question--image {
+            text-align: right;
+        
+            img {
+                max-width: 100%;
+                margin-top: 15px;
+            }
         }
+
+        .question--shorthand {
+            @include type--big;
+        }
+
         &:hover {
             cursor: pointer;
             background: $black;
             color: $white;
         }
+
         &.__isactive {
-            // border-right: none;
+            .question--image, .question--shorthand {
+                opacity: 0;
+            }
+            .question--answer {
+                padding: 30px 0;
+            }
+        }
+    }
+
+    .question--answer {
+
+        .answer--image {
+
+            animation-name: anim-fadein;
+            animation-duration: 0.25s;
+
+            img {
+                width: 100%;
+                transform: rotate(0);
+                transition: transform 0.25s;
+            }
+            margin-right: 15px;
+        }
+
+        .answer--metadata {
+            margin-left: 15px;
+            height:auto;
+        }
+    
+        .answer--designers, .answer--for {
+            margin-bottom: 30px;
+            height: auto;
+            .designers--caption, .for--caption {
+                margin-bottom: 5px;
+            }
+            .designers--content, .for--content {
+                @include type--big;
+            }
+        }
+
+        .answer--designers {
+            padding-right: 20px;
+        }
+
+        .answer--for {
+            padding-left: 20px;
+        }
+    
+        .answer--description {
+            @include type--big;
+            margin-bottom: 20px;
+            
+        }
+    
+        &.__isactive {
+            display: block;
         }
     }
     
 }
 
-#answer {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 50%;
-    bottom: 0;
-    right: 0;
-    margin-top: 50px;
-    margin-bottom: 100px;
-    padding: 60px;
+.about--title {
+    @include type--huge;
+    text-align: center;
+    margin-bottom: 20px;
+}
 
-    img {
-        width: 100%;
-    }
-
-    .answer--designers, .answer--for {
-        border-bottom: 1px solid $black;
-        .designers--content, .for--content {
-            @include type--big;
-        }
-    }
-
-    .answer--description {
-        
-    }
-
-    &.__isactive {
-        display: block;
-    }
+.about--featured {
+    @include type--big;
+    padding-right: 15px;
+    margin-bottom: 20px;
+}
+.about--text {
+    padding-left: 15px;
+    margin-bottom: 20px;
 }

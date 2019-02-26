@@ -2,7 +2,15 @@ Title: CommenceFest
 
 ----
 
-Description: This is a sample project to appear on the home page.
+Cover: 
+
+----
+
+Question: How can you translate what you see into a graphic language?
+
+----
+
+Description: This is a sample project to appear on the home page. Here is where you might put a short description of the project.
 
 ----
 
@@ -14,8 +22,12 @@ For: Design Studio III
 
 ----
 
-Cover: 
+Shorthand: DS3
 
 ----
 
-Question: How can you translate what you see into a graphic language?
+Link: 
+
+----
+
+Timing: 

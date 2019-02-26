@@ -1,12 +1,11 @@
 // All type sizing and styling is isolated to this file.
 
 @mixin type--default {
-    font-family: 'Monument Grotesk';
+    font-family: 'GT Zirkon';
     font-size: 24px;
     color: $black;
     line-height: 1em;
-    // letter-spacing: -0.025em;
-    // font-weight: 500;
+    letter-spacing: -0.02em;
     p {
         margin: 0;
     }
@@ -19,18 +18,17 @@
 }
 
 @mixin type--big {
-    font-size: 54px;
-    line-height: 50px;
-    letter-spacing: -0.05em;
-    font-weight: normal;
-    // font-weight: 500;
+    font-size: 36px;
+    line-height: 0.97em;
+    letter-spacing: -0.04em;
+    font-weight: 300;
 }
 
 @mixin type--huge {
-    font-size: 90px;
-    line-height: 85px;
+    font-size: 80px;
+    line-height: 0.97em;
     letter-spacing: -0.07em;
-    text-transform: uppercase;
+    font-weight: 200;
 }
 
 @mixin type--multiline {
@@ -46,10 +44,11 @@
 }
 
 h1 {
-    @include type--big;
+    @include type--huge;
     margin: 0;
+    font-weight: 300;
 }
 
 a {
-    color: $black;
+    color: inherit;
 }

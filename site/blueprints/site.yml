@@ -23,4 +23,4 @@ columns:
             label: Featured notice
             type: select
             options: query
-            query: site.grandchildren.template("notice")
+            query: site.grandchildren.published

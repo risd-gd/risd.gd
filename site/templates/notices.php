@@ -15,7 +15,7 @@
           <h1><?= $notice->title() ?></h1>
         </c>
         <c class="notice--tools" span=1-1 span-s=1-6>
-          <a href="<?= $notice->url() ?>"><div class="notice--button">Link</div></a><div class="notice--button">Print</div>
+          <a href="<?= $notice->url() ?>"><div class="notice--button">Link</div></a><a><div class="notice--button">Print</div></a>
         </c>
         <c class="notice--content" span=2-5 span-s=1-6>
           <?= $notice->text()->kt() ?>

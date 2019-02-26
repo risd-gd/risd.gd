@@ -2,10 +2,6 @@ Title: Block Party
 
 ----
 
-Description: 
-
-----
-
 Cover: 
 
 - rgb-poster-3.png
@@ -13,3 +9,19 @@ Cover:
 ----
 
 Question: How can we use symbols to unify a group of people?
+
+----
+
+Description: 
+
+----
+
+Designers: 
+
+----
+
+For: 
+
+----
+
+Shorthand: Design Guild

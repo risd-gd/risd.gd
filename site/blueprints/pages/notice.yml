@@ -32,7 +32,7 @@ columns:
             type: date
             time: false
           timing:
-            label: time
+            label: Time
             type: text
             placeholder: 6:15pm
           deadline:

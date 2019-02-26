@@ -1,0 +1,17 @@
+title: Link
+
+icon: 🖼
+
+status:
+  draft: true
+  listed: true
+
+columns:
+  - width: 1/2
+    fields:
+      link:
+        type: url
+      date:
+        label: Displayed date
+        type: date
+        default: now

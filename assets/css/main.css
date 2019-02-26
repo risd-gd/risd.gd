@@ -1,12 +1,13 @@
 h1 {
-  font-size: 54px;
-  line-height: 50px;
-  letter-spacing: -0.05em;
-  font-weight: normal;
-  margin: 0; }
+  font-size: 80px;
+  line-height: 0.97em;
+  letter-spacing: -0.07em;
+  font-weight: 200;
+  margin: 0;
+  font-weight: 300; }
 
 a {
-  color: #111111; }
+  color: inherit; }
 
 @keyframes fadein {
   from {
@@ -57,10 +58,11 @@ body, html {
   margin: 0;
   padding: 0;
   background: #ffffff;
-  font-family: 'Monument Grotesk';
+  font-family: 'GT Zirkon';
   font-size: 24px;
   color: #111111;
-  line-height: 1em; }
+  line-height: 1em;
+  letter-spacing: -0.02em; }
   body p, html p {
     margin: 0; }
 
@@ -121,7 +123,8 @@ main#home {
   padding-top: 50px;
   margin-bottom: 100px; }
 main#about {
-  padding-top: 100px; }
+  padding-top: 100px;
+  margin: 0px 60px; }
 main#notices {
   background: #FFF974;
   padding-top: 150px;
@@ -182,69 +185,108 @@ article.notice {
   article.notice .notice--tools {
     padding-right: 30px;
     display: none; }
-  article.notice .notice--date.__isisolated {
-    text-align: center;
-    margin-bottom: 30px; }
+  article.notice .notice--date {
+    font-size: 36px;
+    line-height: 0.97em;
+    letter-spacing: -0.04em;
+    font-weight: 300; }
+    article.notice .notice--date.__isisolated {
+      text-align: center;
+      margin-bottom: 30px; }
   article.notice .notice--button {
-    font-family: 'Monument Grotesk';
-    font-size: 24px;
-    color: #111111;
-    line-height: 1em;
-    padding: 3px;
-    border: 1px solid black;
-    outline: none;
-    background: none;
-    display: inline-block;
-    text-align: center;
-    border-right: none;
-    width: 50%; }
-    article.notice .notice--button p {
-      margin: 0; }
-    article.notice .notice--button:hover {
-      background: black;
-      color: #ffffff; }
-    article.notice .notice--button:hover {
-      color: #FFF974; }
-    article.notice .notice--button:last-child {
-      border-right: 1px solid #111111; }
+    text-decoration: underline; }
 
-#questions.__isactive {
-  width: 50%; }
-#questions .question {
-  font-size: 90px;
-  line-height: 85px;
-  letter-spacing: -0.07em;
-  text-transform: uppercase;
-  text-align: center;
-  border-top: 1px solid #111111;
-  padding: 0 60px; }
-  #questions .question img {
-    height: 0.75em; }
-  #questions .question:hover {
-    cursor: pointer;
-    background: #111111;
+#featured .feature, #featured .question {
+  border-top: 1px solid rgba(0, 0, 0, 0.5);
+  padding: 20px 60px; }
+  #featured .feature a, #featured .question a {
+    text-decoration: none; }
+#featured .feature {
+  color: #2C3DDE; }
+  #featured .feature .feature--date {
+    font-size: 36px;
+    line-height: 0.97em;
+    letter-spacing: -0.04em;
+    font-weight: 300; }
+  #featured .feature:hover {
+    background: #2C3DDE;
     color: #ffffff; }
+#featured .question--title, #featured .feature--title {
+  font-size: 80px;
+  line-height: 0.97em;
+  letter-spacing: -0.07em;
+  font-weight: 200;
+  text-align: center; }
+#featured .question .question--image {
+  text-align: right; }
+  #featured .question .question--image img {
+    max-width: 100%;
+    margin-top: 15px; }
+#featured .question .question--shorthand {
+  font-size: 36px;
+  line-height: 0.97em;
+  letter-spacing: -0.04em;
+  font-weight: 300; }
+#featured .question:hover {
+  cursor: pointer;
+  background: #111111;
+  color: #ffffff; }
+#featured .question.__isactive .question--image, #featured .question.__isactive .question--shorthand {
+  opacity: 0; }
+#featured .question.__isactive .question--answer {
+  padding: 30px 0; }
+#featured .question--answer .answer--image {
+  animation-name: anim-fadein;
+  animation-duration: 0.25s;
+  margin-right: 15px; }
+  #featured .question--answer .answer--image img {
+    width: 100%;
+    transform: rotate(0);
+    transition: transform 0.25s; }
+#featured .question--answer .answer--metadata {
+  margin-left: 15px;
+  height: auto; }
+#featured .question--answer .answer--designers, #featured .question--answer .answer--for {
+  margin-bottom: 30px;
+  height: auto; }
+  #featured .question--answer .answer--designers .designers--caption, #featured .question--answer .answer--designers .for--caption, #featured .question--answer .answer--for .designers--caption, #featured .question--answer .answer--for .for--caption {
+    margin-bottom: 5px; }
+  #featured .question--answer .answer--designers .designers--content, #featured .question--answer .answer--designers .for--content, #featured .question--answer .answer--for .designers--content, #featured .question--answer .answer--for .for--content {
+    font-size: 36px;
+    line-height: 0.97em;
+    letter-spacing: -0.04em;
+    font-weight: 300; }
+#featured .question--answer .answer--designers {
+  padding-right: 20px; }
+#featured .question--answer .answer--for {
+  padding-left: 20px; }
+#featured .question--answer .answer--description {
+  font-size: 36px;
+  line-height: 0.97em;
+  letter-spacing: -0.04em;
+  font-weight: 300;
+  margin-bottom: 20px; }
+#featured .question--answer.__isactive {
+  display: block; }
 
-#answer {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 50%;
-  bottom: 0;
-  right: 0;
-  margin-top: 50px;
-  margin-bottom: 100px;
-  padding: 60px; }
-  #answer img {
-    width: 100%; }
-  #answer .answer--designers, #answer .answer--for {
-    border-bottom: 1px solid #111111; }
-    #answer .answer--designers .designers--content, #answer .answer--designers .for--content, #answer .answer--for .designers--content, #answer .answer--for .for--content {
-      font-size: 54px;
-      line-height: 50px;
-      letter-spacing: -0.05em;
-      font-weight: normal; }
-  #answer.__isactive {
-    display: block; }
+.about--title {
+  font-size: 80px;
+  line-height: 0.97em;
+  letter-spacing: -0.07em;
+  font-weight: 200;
+  text-align: center;
+  margin-bottom: 20px; }
+
+.about--featured {
+  font-size: 36px;
+  line-height: 0.97em;
+  letter-spacing: -0.04em;
+  font-weight: 300;
+  padding-right: 15px;
+  margin-bottom: 20px; }
+
+.about--text {
+  padding-left: 15px;
+  margin-bottom: 20px; }
 
 /*# sourceMappingURL=main.css.map */

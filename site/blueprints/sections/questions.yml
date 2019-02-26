@@ -1,9 +1,10 @@
 type: pages
-headline: Questions
+headline: Featured
 parent: site.find("home")
 size: tiny
-info: "{{ page.images.count }} image(s)"
-template: question
+template:
+    - question
+    - link
 empty: No featured work yet
 image:
   query: page.cover
