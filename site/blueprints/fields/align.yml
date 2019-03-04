@@ -1,0 +1,5 @@
+label: Alignment
+type: select
+options: 
+  half: Half
+  center: Centered

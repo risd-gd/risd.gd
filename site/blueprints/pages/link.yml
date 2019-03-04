@@ -11,7 +11,7 @@ columns:
     fields:
       link:
         type: url
-      date:
-        label: Displayed date
-        type: date
-        default: now
+      caption:
+        label: Caption
+        type: text
+        placeholder: Watch

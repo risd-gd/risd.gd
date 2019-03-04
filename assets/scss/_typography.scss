@@ -24,6 +24,11 @@
     font-weight: 300;
 }
 
+@mixin type--bigmultiline {
+    @include type--big;
+    line-height: 1.1em;
+}
+
 @mixin type--huge {
     font-size: 80px;
     line-height: 0.97em;

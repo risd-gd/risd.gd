@@ -1,0 +1,27 @@
+Title: ePost
+
+----
+
+Cover: 
+
+- julian-kelly-1.jpg
+
+----
+
+Question: How can the graphic medium enhance, enrich and deepen the verbal message?
+
+----
+
+Description: Experimental video based on a mediating SMS bot.
+
+----
+
+Designers: Julian Kelly
+
+----
+
+For: Ambient Interfaces
+
+----
+
+Shorthand: CTC

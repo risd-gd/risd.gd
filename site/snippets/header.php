@@ -25,10 +25,9 @@
             <?php if($item->title() == 'Notices' && $page->isHomePage()): ?>
               <a data-target="<?= $item->num() ?>" href="<?= $item->url() ?>">
                 <div class="pane--handle __hasmarquee">
-                  <div class="notices--overlay"><?= $item->title()?></div>
                   <div class="notices--marquee">
                     <?php foreach ($item->children()->listed() as $notice): ?>
-                    <?= $notice->title() ?> • 
+                    <?= $notice->title() ?><span class="marquee--marker">NOTICES</span>
                     <?php endforeach ?>
                   </div>
                 </a>

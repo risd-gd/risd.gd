@@ -15,7 +15,7 @@
         <c class="notice--tools" span=1-1>
           <div class="notice--button">Print</div>
         </c>
-        <c class="notice--content" span=2-5>
+        <c class="notice--content __isisolated" span=2-5>
           <?= $page->text()->kt() ?>
         </c>
       </grid>

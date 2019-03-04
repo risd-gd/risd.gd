@@ -10,7 +10,11 @@ Please submit all work to this Google Form [ https://goo.gl/forms/DMQ3J9B7zoKRIm
 
 ----
 
-Date: 2019-02-16 05:00
+Date: 2019-02-16
+
+----
+
+Timing: 
 
 ----
 
@@ -37,3 +41,7 @@ Backgroundimage:
 ----
 
 Alternativedate: Deadline: Feb 16
+
+----
+
+Time: 

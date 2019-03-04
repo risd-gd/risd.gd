@@ -13,16 +13,15 @@ options:
 columns:
   - width: 1/2
     fields:
-      text:
-        label: About the department
-        type: textarea
-        size: huge
-
+      builder: fields/builder
   - width: 1/2
-    fields:
-      subdomains:
-        type: structure
-        fields:
-          url:
-            label: URL
-            type: text
+    sections:
+      images:
+        type: files
+        layout: cards
+        template: image
+        info: "{{ file.dimensions }}"
+        image:
+          ratio: 5/4
+          cover: true
+        size: small

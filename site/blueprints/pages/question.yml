@@ -19,6 +19,8 @@ columns:
           cover: true
         max: 1
         size: small
+        
+  - width: 1/2
     fields:
       cover:
         type: files

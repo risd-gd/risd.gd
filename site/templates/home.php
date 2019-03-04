@@ -27,9 +27,8 @@
         <?php else: ?>
           <div class="feature">
             <grid columns=6>
-              <c class="feature--date" span-s=1-6>
-                <?= $feature->date()->toDate('M j, ') ?><br>
-                <?= $feature->date()->toDate('Y') ?>
+              <c class="feature--caption" span-s=1-6>
+                <?= $feature->caption()->text() ?>
               </c>
               <c class="feature--title" span=2-5>
                 <a href="<?= $feature->link() ?>" >
