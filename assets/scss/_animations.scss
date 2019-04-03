@@ -12,42 +12,91 @@
     to {opacity: 0;};
 }
 
+// Media queries and animations...don't have fun together. So we have to separate them out.
+
 @keyframes expand {
-    from {height: 50px};
-    to {height: calc(100vh - 100px)}
+    from { height: $handle; };
+    to { height: calc(100vh - #{$handle}  * 2); }
+}
+
+@keyframes expand-sm {
+    from { height: $handle-sm; };
+    to { height: calc(100vh - #{$handle-sm} * 2); }
+}
+
+@keyframes expand-md {
+    from { height: $handle-md; };
+    to { height: calc(100vh - #{$handle-md} * 2); }
+}
+
+@keyframes expand-lg {
+    from { height: $handle-lg; };
+    to { height: calc(100vh - #{$handle-lg} * 2); }
+}
+
+@keyframes expand-xl {
+    from { height: $handle-xl; };
+    to { height: calc(100vh - #{$handle-xl} * 2); } 
 }
 
 @keyframes shrink {
-    from {height: calc(100vh - 100px)}
-    to {height: 50px};
+    from { height: calc(100vh - #{$handle} * 2); }
+    to { height: $handle; };
 }
 
-.anim--shrink {
-    animation-name: shrink;
+@keyframes shrink-sm {
+    from { height: calc(100vh - #{$handle-sm} * 2); }
+    to { height: $handle-sm; };
+}
+
+@keyframes shrink-md {
+    from { height: calc(100vh - #{$handle-md} * 2); }
+    to { height: $handle-md; };
+}
+
+@keyframes shrink-lg {
+    from { height: calc(100vh - #{$handle-lg} * 2); }
+    to { height: $handle-lg; };
+}
+
+@keyframes shrink-xl {
+    from { height: calc(100vh - #{$handle-xl} * 2); }
+    to { height: $handle-xl; };
+}
+
+%anim {
     animation-delay: 0.15s;
     animation-duration: 0.35s;
     transition-timing-function: cubic-bezier(.24,0,.18,1);
     animation-fill-mode: both;
 }
 
+.anim--shrink {
+    @extend %anim;
+    animation-name: shrink;
+    @include breakpoints(animation-name, shrink-sm, shrink-md, shrink-lg, shrink-xl);
+
+
+}
+
 .anim--expand {
+    @extend %anim;
     animation-name: expand;
-    animation-delay: 0.15s;
-    background: white;
-    animation-duration: 0.35s;
-    transition-timing-function: cubic-bezier(.24,0,.18,1);
+    @include breakpoints(animation-name, expand-sm, expand-md, expand-lg, expand-xl);
+}
+
+%anim--short {
+    animation-duration: 0.15s;
     animation-fill-mode: both;
 }
 
 .anim--fadein {
+    @extend %anim--short;
     animation-name: fadein;
-    animation-duration: 0.15s;
-    animation-fill-mode: both;
     
 }
 
 .anim--fadeout {
+    @extend %anim--short;
     animation-name: fadeout;
-    animation-duration: 0.15s;
-    animation-fill-mode: both;
 }

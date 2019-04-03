@@ -5,28 +5,19 @@ body,html {
     margin: 0;
     padding: 0;
     background: $white;
-    @include type--default
+    @extend %type--default;
 }
 
 div {
     box-sizing: border-box;
 }
 
-// COMPONENT MIXINS
-@mixin button {
-    @include type--default;
-    padding: 3px;
-    border: 1px solid black;
-    outline: none;
-    background: none;
-
-    &:hover {
-        background: black;
-        color: $white;
-    }
-}
-
 // ANIMATED NAV
+// The formatting follows (loosely) the BEM style.
+// So, base--element__modifier
+// (I know this is backwards, but I think underscores are less important than hyphens)
+// e.g. pane--handle__active or gallery__full or gallery--images
+// I like to chain these by element, so they lose the base the deeper they go
 
 nav#nav {
     position: fixed;
@@ -37,35 +28,65 @@ nav#nav {
     z-index: 100;
 
     .nav--pane {
-    height: 50px;
+    height: $handle;
+    @include breakpoints(height, $handle-sm, $handle-md, $handle-lg, $handle-xl);
     transition: 0.25s;
-    border-top: 1px solid $black;
-    // box-shadow: 0px -10px 20px rgba(0,0,0,0.05);
+    // border-top: 1px solid $black;
+    box-shadow: 0px -10px 20px rgba(0,0,0,0.1);
 
         .pane--handle {
-            @include type--uppercase;
-            height: 50px;
-            padding-top: 12px;
-            background: $white;
+            @extend %type--body__upper;
+            height: $handle;
+            @include breakpoints(height, $handle-sm, $handle-md, $handle-lg, $handle-xl);
+            display: flex;
+            align-items: center;
             pointer-events: all;
-            padding-left: 60px;
-            padding-right: 60px;
-            text-align: justify;
-            text-align-last: justify;
-            border-bottom: 1px solid $transparentblack;
+            padding: 0 $unit*2;
+            @include breakpoints(
+                padding,
+                0 $unit-sm * 2,
+                0 $unit-md * 2,
+                0 $unit-lg * 2,
+                0 $unit-xl * 2
+            );
+            text-align: left;
+
+            .pane--subpagetitle {
+                @include bp-md {
+                    display: none;
+                }
+            }
         }
 
         &.__isactive {
-            height: calc(100vh - 100px)
+            height: calc(100vh - #{$handle} * 2);
+            @include breakpoints(
+                height,
+                calc(100vh - #{$handle-sm} * 2),
+                calc(100vh - #{$handle-md} * 2),
+                calc(100vh - #{$handle-lg} * 2),
+                calc(100vh - #{$handle-xl} * 2)
+            );
+            .pane--handle {
+                mix-blend-mode: difference;
+            }
+        }
+
+        &:not(.__isactive) {
+            background: $white;
         }
 
 
         &:last-child {
             &.anim--expand, &.anim--shrink {
+                // background: $misterworldwides-yellow;
+            }
+
+            &:not(.__isactive) {
                 background: $misterworldwides-yellow;
             }
+
             .pane--handle {
-                background: $misterworldwides-yellow;
                 position: relative;
 
                 &.__hasmarquee {
@@ -101,328 +122,412 @@ nav#nav {
 
 main {
 
-    &#home {
-        padding-top: 50px;
-        margin-bottom: 100px;
+    &#home, &#internal {
+        padding-top: $handle;
+        @include breakpoints(padding-top, $handle-sm, $handle-md, $handle-lg, $handle-xl);
+        margin-bottom: $handle;
+        @include breakpoints(margin-bottom, $handle-sm * 2, $handle-md * 2, $handle-lg * 2, $handle-xl * 2);
     }
 
     &#about {
-        padding-top: 100px;
-        padding-bottom: 50px;
+        padding-top: $handle * 2;
+        @include breakpoints(padding-top, $handle-sm * 2, $handle-md * 2, $handle-lg * 2, $handle-xl * 2);
+        margin-bottom: $handle;
+        @include breakpoints(margin-bottom, $handle-sm, $handle-md, $handle-lg, $handle-xl);
     }
 
     &#notices {
         background: $misterworldwides-yellow;
-        padding-top: 150px;
-        min-height: calc(100vh - 150px);
+        padding-top: $handle * 3;
+        @include breakpoints(padding-top, $handle-sm * 3, $handle-md * 3, $handle-lg * 3, $handle-xl * 3);
     }
 
     &#notice {
         background: $misterworldwides-yellow;
-        padding-top: 150px;
-        min-height: calc(100vh - 150px);
+        padding-top: $handle * 3;
+        min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
     }
 
     #content {
-        // width: 1400px;
         margin: 0 auto;
-        padding-bottom: 30px;
     }
 }
 
-section#featured--notice {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: calc(100vh - 320px);
-    color: $white;
-    background: #2C3DDE;
-    border-radius: 50vw/40vh;
-    margin: 160px;
-    a {
-        color: $white;
+// Blocks
+// Rather than using one big grid, each block is a separate grid to flow better.
+// Some helpers that we can reuse with out blocks.
+// The resultant CSS isn't that DRY, but the SCSS is more readable.
+
+%block {
+    padding: $unit * 2;
+    border-top: 1px solid $transparentblack;
+    @include breakpoints(
+        padding, 
+        $unit-sm * 2, 
+        $unit-md * 2, 
+        $unit-lg * 2, 
+        $unit-xl * 2
+    );
+}
+
+%grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-gap: $unit * 1.5;
+    @include breakpoints(
+        grid-gap, 
+        $unit-sm * 1.5, 
+        $unit-md * 1.5, 
+        $unit-lg * 1.5, 
+        $unit-xl * 1.5
+    );
+}
+
+// When we have a full screen block, and just need padding for the other elements
+%full {
+    padding: $unit * 2;
+    @include breakpoints(
+        padding, 
+        0 $unit-sm * 2, 
+        0 $unit-md * 2, 
+        0 $unit-lg * 2, 
+        0 $unit-xl * 2
+    );
+    padding-bottom: $unit * 2;
+
+    @include breakpoints(
+        padding-bottom, 
+        $unit-sm * 2, 
+        $unit-md * 2, 
+        $unit-lg * 2, 
+        $unit-xl * 2
+    );
+}
+
+// Collapse only at the smallest size
+@mixin col-collapse-sm ($full) {
+    grid-column: $full;
+    @include bp-sm {
+        grid-column: 1 / -1;
     }
 }
 
-// NOTICES
+// Collapse at medium sizes
+@mixin col-collapse-md ($full) {
+    grid-column: $full;
+    @include bp-md {
+        grid-column: 1 / -1;
+    }
+}
+
 .notice {
-    padding-top: 30px;
-    border-bottom: 1px solid $black;
-    padding-left: 60px;
-    padding-right: 60px;
-    transition: padding 0.25s;
+    @extend %block;
+    @extend %grid;
+    background: $misterworldwides-yellow;
+    grid-auto-flow: row dense;
 
-    &:first-child {
-        margin-top: 0;
-    }
-    &:last-child {
-        margin-bottom: 0;
-        border: none;
-    }
-    &.__isactive {
-        .notice--content {
-            display: block
-        }
-        .notice--tools {
-            display: block;
-        }
-    }
-
-    &:not(.__isactive).__isinteractive:hover {
-        background: $black;
-        color: $misterworldwides-yellow;
-        cursor: pointer;
-    }
-
-    .notice--title {
-        text-align: center;
-        margin-bottom: 30px;
-    }
-
-    .notice--content {
-        @include type--multiline;
-        display: none;
-        margin-bottom: 30px;
-
-        &.__isisolated {
-            @include type--bigmultiline;
-        }
-    }
-
-    .notice--tools {
-        padding-right: 30px;
-        display: none;
-    }
-
-    .notice--date {
-        @include type--big;
-        &.__isisolated {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-    }
-
-    .notice--button {
-        text-decoration: underline;
-        // @include button;
-        // display: inline-block;
-        // text-align: center;
-        // border-right: none;
-        // width: 50%;
-        // &:hover {
-        //     color: $misterworldwides-yellow;
-        // }
-        // &:last-child {
-        //     border-right: 1px solid $black;
-        // }
-    }
-}
-#featured {
-    .feature, .question {
-        border-top: 1px solid $transparentblack;
-        padding: 20px 60px;
-
-        a {
-            text-decoration: none;
-        }
-    }
-
-    .feature {
-        background: $brutalistikea-blue;
-        color: $white;
-
-        .feature--caption {
-            @include type--big;
+    &:not(.notice__active) {
+        .notice--tools, .notice--location, .notice--body {
+            display: none;
         }
 
         &:hover {
             background: $black;
-            color: $white;
-        }
-
-        .feature--title {
-            @include type--big;
-            text-align: center;
-        }
-    }
-
-    .question {
-
-        .question--image {
-            text-align: right;
-            transition: opacity 0.25s;
-        
-            img {
-                max-width: 100%;
-                margin-top: 15px;
-            }
-        }
-
-        .question--title {
-            @include type--huge;
-            text-align: center;
-        }
-
-        .question--shorthand {
-            @include type--big;
-        }
-
-        &:not(.__isactive):hover {
+            color: $misterworldwides-yellow;
             cursor: pointer;
-            background: $black;
-            color: $white;
-        }
-
-        &.__isactive {
-            .question--image {
-                opacity: 0;
-            }
-            .question--answer {
-                padding: 30px 0;
+            svg {
+                stroke: $misterworldwides-yellow;
             }
         }
     }
 
-    .question--answer {
-
-        .answer--image {
-
-            animation-name: anim-fadein;
-            animation-duration: 0.25s;
-
-            img {
-                width: 100%;
-                transform: rotate(0);
-                transition: transform 0.25s;
-            }
-            margin-right: 15px;
-        }
-
-        .answer--metadata {
-            margin-left: 15px;
-            height:auto;
-        }
-    
-        .answer--designers, .answer--for {
-            margin-bottom: 30px;
-            height: auto;
-            .designers--caption, .for--caption {
-                margin-bottom: 5px;
-            }
-            .designers--content, .for--content {
-                @include type--big;
-            }
-        }
-
-        .answer--designers {
-            padding-right: 20px;
-        }
-
-        .answer--for {
-            padding-left: 20px;
-        }
-    
-        .answer--description {
-            @include type--big;
-            margin-bottom: 20px;
-            
-        }
-    
-        &.__isactive {
-            display: block;
-        }
-    }
-    
-}
-
-.about--title {
-    @include type--huge;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.about--featured {
-    @include type--big;
-    padding-right: 15px;
-    margin-bottom: 20px;
-}
-.about--text {
-    padding-left: 15px;
-    margin-bottom: 20px;
-}
-
-// PAGE BUILDER
-
-#builder {
-    margin: 0 60px;
-    margin-top: 100px;
-    .builder--item {
-        margin-bottom: 100px;
+    svg {
+        stroke: $black;
     }
 
-    .builder--header {
-        @include type--big;
-        padding-right: 40%;
+    .notice--meta {
+        @extend %type--body;
+        @include col-collapse-md(#{'1 / 5'});
     }
 
-    .builder--title {
-        @include type--huge;
+    .notice--title {
+        @include col-collapse-md(#{'5 / 12'});
+    }
+
+    .notice--tools {
+        @include col-collapse-md(#{'1 / 5'});
+
+        .notice--button {
+            background: none;
+            outline: none;
+            padding: 0;
+            margin: 0;
+            border: none;
+            transition: transform 0.25s;
+
+            &:hover {
+                cursor: pointer;
+                transform: scale(1.1);
+            }
+        }
+    }
+
+    .notice--body {
+        @extend %type--body;
+        @include col-collapse-md(#{'5 / 12'});
+    }
+}
+
+.textblock {
+    @extend %block;
+
+    &.textblock__featured {
+        @extend %type--feature;
         text-align: center;
-        border-top: 1px solid $transparentblack;
-        margin: 0 -50vh;
-        overflow: hidden;
-        .title--text {
-            padding-top: 30px;
+        padding: 120px 60px;
+    }
+}
+
+.link {
+    @extend %block;
+    @extend %grid;
+
+    color: $brutalistikea-blue;
+    border-top: 1px solid $brutalistikea-blue;
+    border-bottom: 1px solid $brutalistikea-blue;
+    margin-bottom: -1px;
+
+    svg {
+        stroke: $brutalistikea-blue;
+    }
+
+    &:hover {
+        background: $brutalistikea-blue;
+        color: $white;
+        svg {
+            stroke: $white;
         }
     }
 
-    .builder--textblock {
-        &.__islarge {
-            @include type--bigmultiline;
+    .link--caption {
+        @extend %type--body__upper;
+        @include col-collapse-sm(#{'1 / 3'});
+    }
+
+    .link--title {
+        @extend %type--heading;
+        @include col-collapse-sm(#{'5 / 12'});
+    }
+    .link--icon {
+        grid-column: span 1;
+        align-self: center;
+        text-align: right;
+        @include bp-md {
+            display: none;
         }
     }
-    .builder--images {
-        margin-left: -15px;
-        margin-right: -15px;
-        .builder--image {
-            padding: 15px;
-            img {
-                width: 100%;
+}
+
+.gallery {
+    @extend %grid;
+    @extend %block;
+    grid-auto-flow: row dense;
+
+    .carousel--item {
+        width: 100%;
+    }
+
+    &.gallery__right {
+        .gallery--images { @include col-collapse-md(#{'5 / -1'}); }
+        .gallery--caption { @include col-collapse-md(#{'2 / 5'}); }
+    }
+
+    &.gallery__left {
+        .gallery--images { @include col-collapse-md(#{'1 / 9'}); }
+        .gallery--caption { @include col-collapse-md(#{'9 / 12'}); }
+
+    }
+
+    &.gallery__full {
+        padding: 0;
+
+        .gallery--images { @include col-collapse-md(#{'1 / -1'}); }
+        .gallery--caption { 
+            @include col-collapse-md(#{'5 / -1'}); 
+            @extend %full;
+        }
+    }
+
+    .gallery--images {
+        grid-column: #{'1 / 9'};
+
+        img {
+            width: 100%;
+        }
+    }
+
+    .gallery--caption {
+        @extend %type--body;
+        align-self: end;
+        padding-bottom: $unit * 1.5;
+        @include breakpoints(
+            padding-bottom, 
+            $unit-sm * 1.5, 
+            $unit-md * 1.5, 
+            $unit-lg * 1.5, 
+            $unit-xl * 1.5
+        );
+    }
+
+    // Following is code specific to Flickity, our carousel library
+    &.gallery__left .flickity-page-dots {
+        text-align: right;
+    }
+
+    &.gallery__right .flickity-page-dots {
+        text-align: left;
+    }
+
+    .flickity-page-dots {
+        .dot {
+            background: transparent;
+            border: 1px solid $black;
+            opacity: 1;
+            &.is-selected {
+                background: $black;
             }
         }
+    }
+
+    .flickity-prev-next-button {
+        top: 50%;
+        bottom: 0;
+        height: 100%;
+        width: 50%;
+        background: none;
+        border-radius: 0;
+
+        &.next {
+            cursor: url(../img/cursor-next.svg), e-resize;
+        }
+
+        &.previous {
+            cursor: url(../img/cursor-prev.svg), w-resize;
+        }
+
+        svg {
+            display: none;
+        }
+
+        @include bp-md {
+            display: none;
+        }
+    }
+}
+
+.list {
+    @extend %block;
+    @extend %grid;
+
+    .list--caption {
+        @extend %type--body__upper;
+        @include col-collapse-md(#{'span 6'});
+    }
+
+    .list--cta {
+        @include col-collapse-md(#{'span 6'});
+        grid-row: 2 / 4;
+        @extend %type--body;
+    }
+
+    .list--description {
+        @extend %type--body;
+        @include col-collapse-md(#{'5 / 10'});
+    }
+
+    .list--item {
+        @include col-collapse-md(#{'span 6'});
+        display: block;
+        grid-row: span 1;
+        .item--title {
+            @extend %type--heading;
+        }
+        .item--description {
+            padding-top: 13px;
+            align-self: end;
+        }
+        
+    }
+    .item--icon {
+        grid-column: span 1;
+        align-self: center;
+        text-align: right;
+        @include bp-md {
+            display: none;
+        }
+    }
+    svg {
+        stroke: $black;
+    }
+}
+
+.multimedia {
+    @extend %grid;
+    @extend %block;
+    grid-auto-flow: row dense;
+
+    &.multimedia__right {
+        .multimedia--embed { @include col-collapse-md(#{'5 / 13'}); }
+        .multimedia--caption { @include col-collapse-md(#{'1 / 5'}); }
+    }
+
+    &.multimedia__left {
+        @extend %block;
+
+        .multimedia--embed { @include col-collapse-md(#{'1 / 9'}); }
+        .multimedia--caption { @include col-collapse-md(#{'9 / 13'}); }
 
     }
 
-    .builder--caption {
-        margin-top: 15px;
-        color: $transparentblack;
-        margin-left: 15px;
+    &.multimedia__full {
+        padding: 0;
+
+        .multimedia--embed { @include col-collapse-md(#{'1 / -1'}); }
+        .multimedia--caption { 
+            @include col-collapse-md(#{'5 / -1'}); 
+            @extend %full;
+        }
     }
 
-    .builder--list {
-        &.__islarge {
+    .multimedia--caption {
+        @extend %type--body;
+        align-self: center;
+    }
 
-            .listitem--title {
-                @include type--huge;
-                margin-bottom: 10px;
-            }
+}
 
-            .listitem--caption {
-                @include type--big;
-                margin-bottom: 10px;
-            }
+.imagegrid {
+    @extend %grid;
+    @extend %block;
+
+    .imagegrid--image {
+        @include col-collapse-md(#{'span 6'});
+        img {
+            width: 100%;
         }
+    }
 
-        .listitem--title {
-            @include type--big;
-        }
+    .imagegrid--caption {
+        @extend %type--heading__upper;
+        @include col-collapse-md(#{'1 / 5'});
 
-        .listitem {
-            margin-bottom: 15px;
-            padding-right: 30px;
-        }
+    }
+
+    .imagegrid--description {
+        @extend %type--body;
+        @include col-collapse-md(#{'5 / 12'});
     }
 }

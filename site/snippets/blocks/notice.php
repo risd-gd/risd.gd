@@ -1,0 +1,1 @@
+<?php snippet('notice', ['notice' => $data->notice()->toPage()]) ?>

@@ -1,22 +1,16 @@
 {
-    "name": "getkirby/starterkit",
-    "description": "Kirby Starterkit",
+    "name": "juliankellydesign/risdgd",
+    "description": "RISD Graphic Design",
     "type": "project",
-    "keywords": ["kirby", "cms", "starterkit"],
-    "homepage": "https://getkirby.com",
+    "keywords": ["risd", "gd"],
+    "homepage": "https://risd.gd",
     "authors": [
         {
-            "name": "Bastian Allgeier",
-            "email": "bastian@getkirby.com",
-            "homepage": "https://getkirby.com"
+            "name": "Julian Kelly",
+            "email": "jkelly@risd.edu",
+            "homepage": "https://juliankellydesign.com"
         }
     ],
-    "support": {
-        "email": "support@getkirby.com",
-        "issues": "https://github.com/getkirby/starterkit/issues",
-        "forum": "https://forum.getkirby.com",
-        "source": "https://github.com/getkirby/starterkit"
-    },
     "require": {
         "php": ">=7.1.0",
         "getkirby/cms": "^3.0"

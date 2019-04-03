@@ -1,5 +1,44 @@
 $misterworldwides-yellow: #FFF974;
 $brutalistikea-blue: #2C3DDE;
 $black: #111111;
-$white: #ffffff;
+$white: #eeeeee;
 $transparentblack: rgba(0,0,0,0.3);
+
+// THE HOLY VALUES
+// These are the core values all of our type sizes and widths are based on.
+
+// Keep in mind there's a big jump between sm and md, and between md and xl
+
+// Type
+$body: 18px;
+$body-sm: 22px;
+$body-md: 26px;
+$body-lg: 28px;
+$body-xl: 34px;
+
+$heading: 27px;
+$heading-sm: 34px;
+$heading-md: 44px;
+$heading-lg: 46px;
+$heading-xl: 54px;
+
+$feature: 36px;
+$feature-sm: 46px;
+$feature-md: 66px;
+$feature-lg: 70px;
+$feature-xl: 80px;
+
+
+// Margins and padding
+$unit: 10px;
+$unit-sm: 14px;
+$unit-md: 20px;
+$unit-lg: 24px;
+$unit-xl: 30px;
+
+// Pane handle sizes
+$handle: 40px;
+$handle-sm: 45px;
+$handle-md: 50px;
+$handle-lg: 60px;
+$handle-xl: 70px;

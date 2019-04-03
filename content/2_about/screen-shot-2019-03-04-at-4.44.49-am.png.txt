@@ -3,3 +3,7 @@ Caption:
 ----
 
 Template: image
+
+----
+
+Sort: 7

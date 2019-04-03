@@ -5,165 +5,161 @@ Title: About
 Builder: 
 
 - 
+  featured: 'true'
+  twocolumns: 'false'
   title: ""
-  newrow: 'false'
-  islarge: 'true'
   text: >
-    RISD Graphic Design runs a three-year
-    BFA program with about 65 students per
-    class and a two and three-year MFA
-    program graduating about 16 per class.
-    Twelve full-time faculty and about 30
-    additional adjunct faculty teach about
-    110 courses per year. We accept transfer
-    students to the BFA program and have
-    studio space for juniors and seniors.
+    RISD GD supports the fringe, the
+    nascent, and the highly evolved in order
+    to affect visual culture. We treat the
+    educational environment as a thriving
+    ecosystem that leads to change, not to
+    reaffirm the status quo.
+  title2: ""
+  text2: ""
   _key: textblock
-  _uid: textblock_1551701451645_429
+  _uid: textblock_1553747142316_1204
 - 
   imageselect:
     - screen-shot-2019-03-04-at-4.44.49-am.png
-  caption: 'Installation in the (link: http://commons.risd.gd/ text: GD Commons).'
-  _key: images
-  _uid: images_1551693511392_197
+    - 56a0020-x3.jpg
+  style: full
+  caption: Views of the Design Center.
+  _key: gallery
+  _uid: gallery_1553829089401_355
 - 
-  title: Upcoming Exhibitions
-  newrow: 'false'
-  islarge: 'true'
+  caption: Upcoming Exhibitions
+  description: ""
+  items:
+    - 
+      title: Graduate Biennial
+      description: >
+        April 4 – 21. Opens Thursday, April at
+        7:30PM
+      externallink: ""
+    - 
+      title: Graduate Thesis Presentations
+      description: May 23 – June 1
+      externallink: ""
+    - 
+      title: 'As Not For: Historical survey of work created by African-American graphic designers'
+      description: April 11 – 25
+      externallink: ""
+  cta: >
+    Students and faculty may propose
+    exhibitions.
+  _key: list
+  _uid: list_1553834975100_462
+- 
+  imageselect:
+    - 2019_seniorshow11.jpg
+    - dsc_0116.jpg
+  caption: ""
+  description: Views of our 2019 Senior Show.
+  _key: imagegrid
+  _uid: imagegrid_1554087864101_330
+- 
+  caption: Recent Projects
+  description: ""
   items:
     - 
       title: Senior Show 2019
-      caption: March 7–12
-      url: http://endless-scroll.github.io
+      description: >
+        March 7 – 12, Opens Thursday, March 7
+        at 6PM
+      externallink: ""
     - 
-      title: Graduate Biennial
-      caption: April 12
-      url: http://google.com
+      title: risdgd2018triennial.risd.gd
+      description: 2018 Triennial
+      externallink: ""
     - 
-      title: Graduate Thesis
-      caption: 'May 23– Jun 1 '
-      url: ""
+      title: '#RISDVOTE2018'
+      description: >
+        Sophomore Instagram posts to get out the
+        vote
+      externallink: ""
+  cta: 'See an archive of websites including past exhibitions at (link: http://archive.risd.gd text: archive.risd.gd)'
   _key: list
-  _uid: list_1551697705417_273
+  _uid: list_1554087888352_510
 - 
-  imageselect:
-    - c8kw-79uwaepdph.jpg
-    - c8kw-yuaaazrdg.jpg
-  caption: More views of the commons.
-  _key: images
-  _uid: images_1551710703125_1014
+  featured: 'true'
+  twocolumns: 'false'
+  title: ""
+  text: 'RISD GD has 11 full-time faculty, about 30 part-time faculty and no shortage of visitors and guests. A current list of faculty is kept at gd.risd.edu. Full-time teach 6 courses a year, advise graduates and undergraduates and contribute to department culture. These are our current full-time faculty: John Caserta, Lucinda Hitchcock, James Goggin, Bethany Johns, Aki Nurosi, Hammett Nurosi, Paul Soulellis, Nancy Skolos, Anastasiia Raina, Ramon Tejada, Franz Werner.'
+  title2: ""
+  text2: ""
+  _key: textblock
+  _uid: textblock_1554088152985_866
 - 
-  title: Past Exhibitions
-  newrow: 'true'
-  islarge: 'false'
+  caption: In the Classroom
+  description: ""
   items:
-    - 
-      title: 2018 Triennial
-      caption: ""
-      url: http://risdgd2018triennial.risd.gd
-    - 
-      title: 2018 MFA Exhibition
-      caption: ""
-      url: http://mfa2018.risd.gd
-    - 
-      title: 2016 Senior Show
-      caption: ""
-      url: http://unlimitededition.risd.gd
-  _key: list
-  _uid: list_1551698571434_556
-- 
-  title: Selected Projects
-  newrow: 'false'
-  islarge: 'false'
-  items:
-    - 
-      title: Exquisite Corpse
-      caption: ""
-      url: http://exquisitecorpse.risd.gd
-    - 
-      title: Anti-Anti-Aliasing
-      caption: ""
-      url: http://antiantialiasing.risd.gd
-    - 
-      title: Unzippening
-      caption: ""
-      url: http://unzippening.risd.gd
-  _key: list
-  _uid: list_1551698900414_346
-- 
-  title: Courses
-  _key: title
-  _uid: title_1551706419325_641
-- 
-  title: Selected Courses
-  newrow: 'false'
-  islarge: 'false'
-  items:
-    - 
-      title: Design Studio
-      caption: Core
-      url: http://ds1820.risd.gd
-    - 
-      title: Type 3
-      caption: James Goggin
-      url: ""
     - 
       title: Urgency Lab
-      caption: Paul Soullelis
-      url: ""
+      description: Paul Soulellis
+      externallink: https://soulellis.com/index.html
     - 
-      title: The Web and Democracy
-      caption: John Caserta
-      url: ""
+      title: Women of GD
+      description: Tori Hinn, BFA 2015
+      externallink: ""
     - 
-      title: Newly Formed
-      caption: Kathleen and Christopher Sleboda
-      url: ""
+      title: Test Pattern
+      description: Cem Eskinazi, MFA 2017
+      externallink: ""
+    - 
+      title: Nice to Meet You
+      description: Can Yang, BFA 2018
+      externallink: ""
+  cta: >
+    A paragraph that sets the stage for
+    variety of classes. BFA vs MFA should be
+    considered. A paragraph that sets the
+    stage for variety of classes. BFA vs MFA
+    should be considered. A paragraph that
+    sets the stage for variety of classes.
+    BFA vs MFA should be considered.
   _key: list
-  _uid: list_1551701014521_716
+  _uid: list_1554088166343_956
 - 
-  title: ""
-  _key: title
-  _uid: title_1551709873438_956
-- 
-  title: Credits
-  newrow: 'true'
-  islarge: 'false'
+  featured: 'false'
+  twocolumns: 'true'
+  title: BFA
   text: >
-    The website was designed and developed
-    by 2019 BFA Candidates Julian Kelly and
-    Rohan Chaurasia and maintained by the
-    RISD Design Guild. Built in using Kirby
-    CMS. Faculty advisers are James Goggin
-    and John Caserta.
+    Graphic Design graduates leave RISD
+    prepared to work in almost any field
+    imaginable — from education to film,
+    television, publishing, retail and more.
+    Alumni follow a wide range of individual
+    paths, including running their own
+    design studios, working for large
+    corporations, specializing in web and
+    interactive media, and creating
+    everything from package design to title
+    sequences for film and television.TK
+  title2: MFA
+  text2: >
+    Rich, multifaceted and encompassing a
+    broad range of media, Graphic Design at
+    RISD respects the foundations of formal,
+    aesthetic and analytical knowledge and
+    skills while exploring the ever-changing
+    context and function of visual
+    communication. In the studio students
+    learn the fundamental value of
+    typography, imagery, grids, systems and
+    more in the course of creating
+    everything from traditional books,
+    posters, logos and websites to apps,
+    interactive texts and other digital
+    media.TK
   _key: textblock
-  _uid: textblock_1551701986005_515
-
-----
-
-Text: Rich, multifaceted and encompassing a broad range of media, Graphic Design at RISD respects the foundations of formal, aesthetic and analytical knowledge and skills while exploring the ever-changing context and function of visual communication.
-
-----
-
-Subdomains: 
-
+  _uid: textblock_1554088580921_1589
 - 
-  url: risdgd2018triennial.risd.gd
-- 
-  url: antiantialiasing.risd.gd
-- 
-  url: mfa2017.risd.gd
-- 
-  url: sp17.risd.gd
-- 
-  url: mfa2016.risd.gd
-- 
-  url: unlimitededition.risd.gd
-- 
-  url: calendar.risd.gd
-- 
-  url: commons.risd.gd
-- 
-  url: unzippening.risd.gd
-- 
-  url: mfa2015.risd.gd
+  featured: 'true'
+  twocolumns: 'false'
+  title: ""
+  text: 'Monitor our digital footprint: (link: https://instagram.com/risd_gd text: Instagram) (link: https://vimeo.com/user13812896 text: Vimeo (Lectures)) (link: https://twitter.com/risd_gd text: Twitter) (link: https://www.are.na/risd-gd text: Are.na)'
+  title2: ""
+  text2: ""
+  _key: textblock
+  _uid: textblock_1554088274284_1343

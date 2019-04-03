@@ -1,118 +1,66 @@
 // Breakpoints
-$xxl-bangkok: 1600px;
-$xl-miami: 1280px;
-$lg-rye: 1024px;
-$md-vineyard: 768px;
-$sm-montpelier: 600px;
+$julian: 1700px; // Big displays
+$mike: 1400px; // 15in laptops
+$rohan: 1100px; // 13in laptops
+$sol: 700px; // small windows, iPads
+// Default is phone sized
 
 // Breakpoints
 
-@mixin bp-xl-xxl {
-    @media (min-width: #{$xl-miami}) and (max-width: #{$xxl-bangkok - 1px}) {
-      @content;
-    }
-  }
-
 @mixin bp-lg-xl {
-  @media (min-width: #{$lg-rye}) and (max-width: #{$xl-miami - 1px}) {
+  @media (min-width: #{$mike}) and (max-width: #{$julian - 1px}) {
     @content;
   }
 }
 
-@mixin bp-md-xl {
-    @media (min-width: #{$md-vineyard}) and (max-width: #{$xl-miami - 1px}) {
-      @content;
-    }
-  }
-
 @mixin bp-md-lg {
-  @media (min-width: #{$md-vineyard}) and (max-width: #{$lg-rye - 1px}) {
-    @content;
-  }
-}
-
-@mixin bp-md-xxl {
-    @media (min-width: #{$md-vineyard}) and (max-width: #{$xxl-bangkok - 1px}) {
-      @content;
-    }
-  }
-
-@mixin bp-lg-xl {
-    @media (min-width: #{$lg-rye}) and (max-width: #{$xl-miami - 1px}) {
-      @content;
-    }
-  }
-
-  @mixin bp-lg-xxl {
-    @media (min-width: #{$lg-rye}) and (max-width: #{$xxl-bangkok - 1px}) {
-      @content;
-    }
-  }
-
-@mixin bp-md-lg {
-  @media (min-width: #{$md-vineyard}) and (max-width: #{$lg-rye - 1px}) {
+  @media (min-width: #{$rohan}) and (max-width: #{$mike - 1px}) {
     @content;
   }
 }
 
 @mixin bp-sm-md {
-  @media (min-width: #{$sm-montpelier}) and (max-width: #{$md-vineyard - 1px}) {
+  @media (min-width: #{$sol}) and (max-width: #{$rohan - 1px}) {
     @content;
   }
 }
 
-@mixin bp-sm {
-    @media (max-width: #{$sm-montpelier - 1px}) {
-        @content;
-    }
+@mixin bp-xl- {
+  @media (min-width: #{$julian}) {
+      @content;
+  }
 }
 
-@mixin bp-xxl- {
-    @media (min-width: #{$xxl-bangkok}) {
-        @content;
-    }
+@mixin bp-xl {
+  @media (max-width: #{$julian - 1px}) {
+      @content;
+  }
 }
 
 @mixin bp-lg {
-    @media (max-width: #{$lg-rye - 1px}) {
-        @content;
-    }
-}
-
-@mixin bp-lg- {
-    @media (min-width: #{$lg-rye}) {
+    @media (max-width: #{$mike - 1px}) {
         @content;
     }
 }
 
 @mixin bp-md {
-    @media (max-width: #{$md-vineyard - 1px}) {
+    @media (max-width: #{$rohan - 1px}) {
         @content;
     }
 }
 
 @mixin bp-sm {
-    @media (max-width: #{$sm-montpelier - 1px}) {
-        @content;
-    }
-}
-
-
-
-@mixin bp-md- {
-    @media (min-width: #{$md-vineyard}) {
-        @content;
-    }
-}
-
-@mixin bp-xl- {
-    @media (min-width: #{$xl-miami}) {
-        @content;
-    }
+  @media (max-width: #{$sol - 1px}) {
+      @content;
+  }
 }
 
 // This is a cheap, fun mixin that makes defining breakpoints a million times easier
-@mixin breakpoints($property, $md, $lg, $xl, $xxl) {
+@mixin breakpoints($property, $sm, $md, $lg, $xl) {
+
+    @include bp-sm-md {
+      #{$property}: $sm;
+    }
 
     @include bp-md-lg {
         #{$property}: $md;
@@ -121,12 +69,8 @@ $sm-montpelier: 600px;
     @include bp-lg-xl {
         #{$property}: $lg;
     }
-
-    @include bp-xl-xxl {
-        #{$property}: $xl;
-    }
-
-    @include bp-xxl- {
-        #{$property}: $xxl;
+    
+    @include bp-xl- {
+      #{$property}: $xl;
     }
 }

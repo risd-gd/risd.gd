@@ -1,6 +1,6 @@
 type: pages
 headline: Notices
 parent: site.find("notices")
-info: "{{ page.date.toDate('D M j')}}"
+info: "{{ page.timing.toString }}"
 template: notice
 empty: No notices yet

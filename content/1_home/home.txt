@@ -2,4 +2,61 @@ Title: risd.gd
 
 ----
 
-Text: How can you translate what you see into a graphic language? How can the graphic medium enhance, enrich and deepen the verbal message? How can we use symbols to unify a group of people? How does the sequencing of information affect communication? Does design imply the idea of products that are necessarily useful?
+Builder: 
+
+- 
+  style: full
+  embed: '<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/327392206?autoplay=1&title=0&byline=0&portrait=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>'
+  caption: ""
+  _key: multimedia
+  _uid: multimedia_1553903761493_196
+- 
+  imageselect:
+    - img_7294.jpg
+    - img_7307.jpg
+    - img_7313.jpg
+    - img_7315.jpg
+  style: left
+  caption: 'Installation by (link: https://rohanchau.com/ text: Rohan Chaurasia), (link: https://juliankellydesign.com text: Julian Kelly), and (link: https://vimeo.com/user46697547 text: Fabiola Millan) engaging Olneyville’s Big Top Flea Market.'
+  _key: gallery
+  _uid: gallery_1553904108258_354
+- 
+  caption: Watch on Vimeo
+  title: 'Visiting Designer Lecture: Richard The'
+  isinternal: 'true'
+  externallink: https://vimeo.com/321592368
+  internallink: home/subpage-test
+  _key: link
+  _uid: link_1553904173880_720
+- 
+  featured: 'true'
+  twocolumns: 'false'
+  title: ""
+  text: 'Welcome new faculty member Ramon Tejada. (link: https://ramongd.com/ text: Learn more about his practice).'
+  title2: ""
+  text2: ""
+  _key: textblock
+  _uid: textblock_1553904214924_895
+- 
+  imageselect:
+    - dsc_0116.jpg
+  style: right
+  caption: 'Our 2019 Senior Show just wrapped up. (link: http://endless-scroll.github.io text: View the website).'
+  _key: gallery
+  _uid: gallery_1553904263666_1014
+- 
+  caption: Read all about it
+  title: >
+    What Does "Posthuman Design" Actually
+    Mean?
+  isinternal: 'false'
+  externallink: >
+    https://eyeondesign.aiga.org/what-does-posthuman-design-actually-mean/
+  internallink: ""
+  _key: link
+  _uid: link_1553904473456_1610
+- 
+  notice: >
+    notices/faculty-search-lecture-anastasiia-raina
+  _key: notice
+  _uid: notice_1553905115308_1731

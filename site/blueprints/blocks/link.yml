@@ -1,0 +1,33 @@
+label: Link
+fields:
+  caption:
+    label: Caption
+    type: text
+    placeholder: Read all about it
+    width: 1/2
+  title: 
+    type: text
+    label: Title
+    placeholder: Title of link
+    width: 1/2
+  isinternal:
+    label: Link to...
+    type: toggle
+    width: 1/2
+    text:
+      - External URL
+      - Internal link
+  externallink:
+    label: External URL
+    type: url
+    width: 1/2
+    when: 
+      isinternal: false
+  internallink:
+    label: Internal link
+    type: select
+    options: query
+    query: site.index.filterby('template', 'internal')
+    width: 1/2
+    when: 
+      isinternal: true

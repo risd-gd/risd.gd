@@ -2,7 +2,7 @@
 
 <main id="about">
   <div id="content" class="anim--fadein">
-    <?php snippet('builder') ?>
+      <?php snippet('builder') ?>
   </div>
 </main>
 

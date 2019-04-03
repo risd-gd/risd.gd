@@ -1,0 +1,29 @@
+label: List
+fields:
+  caption:
+    label: Caption
+    type: text
+  description:
+    label: Description
+    type: textarea
+    buttons:
+      - link
+  items:
+    label: Items
+    type: structure
+    fields:
+      title:
+        label: Title
+        type: text
+      description:
+        label: Description
+        type: text
+        placeholder: Optional.
+      externallink:
+        label: Link
+        type: url
+  cta:
+    label: Call to action
+    type: textarea
+    buttons: 
+      - link

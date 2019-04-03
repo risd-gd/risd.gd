@@ -1,17 +1,17 @@
-
-<?php if($data->islarge()->isTrue()): ?>
-    <c class="builder--item builder--textblock __islarge" span=row>
-        <grid columns=12>
-            <?php snippet('buildersnippets/builderheader', ['data' => $data]) ?>
-            <c span=3-10>
-
+<?php if($data->featured()->isTrue()): ?>
+    <section class="textblock textblock__featured">
+        <?= $data->text()->kt() ?>
+    </section>
 <?php else: ?>
-    <c class="builder--item builder--textblock" span=12>
-        <grid columns=12>
-            <?php snippet('buildersnippets/builderheader', ['data' => $data]) ?>
-            <c span=4>
+    <section class="textblock">
+        <div class="textblock--title">
+            <?= $data->title()->text() ?>
+        </div>
+        <div class="textblock--content">
+            <?= $data->text()->kt() ?>
+        </div>
+        <div class="textblock--cta">
+            <?= $data->cta()->kt() ?>
+        </div>
+    </section>
 <?php endif ?>
-    <?= $data->text()->kt() ?>
-</c>
-</grid>
-</c>

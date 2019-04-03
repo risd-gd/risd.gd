@@ -1,27 +1,23 @@
 title: About
 
-icon: ☎️
-
-status:
-  draft: true
-  listed: true
+icon: 🤪
 
 options:
   url: false
+  status: false
   delete: false
 
-columns:
-  - width: 1/2
-    fields:
-      builder: fields/builder
-  - width: 1/2
+tabs:
+  content:
+    label: Content
+    icon: page
     sections:
-      images:
-        type: files
-        layout: cards
-        template: image
-        info: "{{ file.dimensions }}"
-        image:
-          ratio: 5/4
-          cover: true
-        size: small
+      builder:
+        extends: sections/builder
+
+  files:
+    label: Files
+    icon: file
+    sections:
+      files:
+        extends: sections/files

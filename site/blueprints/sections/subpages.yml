@@ -1,0 +1,4 @@
+type: pages
+parent: site.find("home")
+template: internal
+empty: No subpages yet

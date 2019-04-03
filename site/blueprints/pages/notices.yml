@@ -2,14 +2,11 @@ title: Notices
 
 icon: 📝
 
-status:
-  draft: true
-  unlisted:
-    label: Hidden Page
-    text: The page is not listed in the main menu
-  listed:
-    label: Menu Page
-    text: The page is listed in the main menu
+
+options:
+  url: false
+  status: false
+  delete: false
 
 columns:
   - width: 1/2
@@ -18,11 +15,6 @@ columns:
         extends: sections/notices
         headline: Drafts
         status: draft
-
-      unlisted:
-        extends: sections/notices
-        headline: In Review
-        status: unlisted
 
   - width: 1/2
     sections:

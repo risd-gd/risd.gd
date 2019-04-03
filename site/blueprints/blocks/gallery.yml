@@ -1,0 +1,21 @@
+label: Image(s)
+fields:
+  imageselect:
+    label: Select images
+    type: files
+    width: 1/2
+    max: 4
+  style:
+    label: Style
+    type: select
+    width: 1/2
+    default: right
+    options:
+        right: Right aligned
+        left: Left aligned
+        full: Full width
+  caption:
+    label: Caption
+    type: textarea
+    buttons:
+      - link

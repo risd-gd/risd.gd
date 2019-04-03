@@ -1,0 +1,23 @@
+label: Text Block
+fields:
+  featured: 
+    label: Featured?
+    type: toggle
+    width: 1/2
+  title:
+    label: Title
+    type: text
+    width: 1/2
+    placeholder: Only appears when not featured.
+  cta:
+    label: Text
+    type: textarea
+    buttons:
+      - link
+    placeholder: Only appears when not featured.
+  text:
+    label: Text
+    type: textarea
+    buttons:
+      - link
+      

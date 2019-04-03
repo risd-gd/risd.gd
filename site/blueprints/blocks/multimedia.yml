@@ -1,0 +1,20 @@
+label: Multimedia
+fields:
+  style: 
+    label: Style
+    type: select
+    default: full
+    options:
+      right: Right aligned
+      left: Left aligned
+      full: Full width
+  embed:
+    label: Embedded HTML
+    type: textarea
+    buttons: false
+  caption:
+    label: Caption
+    type: textarea
+    buttons:
+      - link
+    

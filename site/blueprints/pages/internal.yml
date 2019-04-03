@@ -1,0 +1,24 @@
+title: Internal Page
+
+icon: 📝
+
+status:
+  draft: true
+  unlisted:
+    label: Linkable
+    text: This page can be linked from other builder elements.
+
+tabs:
+  content:
+    label: Content
+    icon: page
+    sections:
+      builder:
+        extends: sections/builder
+
+  files:
+    label: Files
+    icon: file
+    sections:
+      files:
+        extends: sections/files

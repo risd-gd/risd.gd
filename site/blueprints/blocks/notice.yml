@@ -1,0 +1,6 @@
+label: Featured Notice
+fields:
+  notice:
+    type: select
+    options: query
+    query: site.index.filterby('template', 'notice')

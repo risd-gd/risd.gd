@@ -1,57 +1,96 @@
+@font-face {
+    font-family: 'GT Walsheim';
+    src: url('../fonts/gt-walsheim-regular.ttf') format('truetype');
+  }
+
 // All type sizing and styling is isolated to this file.
 
-@mixin type--default {
-    font-family: 'GT Zirkon';
-    font-size: 24px;
+%type--default {
+    font-family: 'GT Walsheim';
+    font-size: $body;
     color: $black;
-    line-height: 1em;
-    letter-spacing: -0.02em;
+    line-height: 1.15em;
+
+    @include breakpoints(font-size, $body-sm, $body-md, $body-lg, $body-xl);
+
     p {
         margin: 0;
     }
-}
 
-@mixin type--uppercase {
-    // font-family: 'Domaine Display';
-    // letter-spacing: 0;
-    font-size: 28px;
-}
-
-@mixin type--big {
-    font-size: 36px;
-    line-height: 0.97em;
-    letter-spacing: -0.04em;
-    font-weight: 300;
-}
-
-@mixin type--bigmultiline {
-    @include type--big;
-    line-height: 1.1em;
-}
-
-@mixin type--huge {
-    font-size: 80px;
-    line-height: 0.97em;
-    letter-spacing: -0.07em;
-    font-weight: 200;
-}
-
-@mixin type--multiline {
-    line-height: 1.1em;
-    p:last-child {
-        margin: 0;
-    }
-    p {
-        margin-bottom: 1em;
-    }
     a {
+        text-decoration: none;
+    }
+}
+
+%type--body {
+
+    a {
+        text-decoration: underline;
+
+        &:hover {
+            color: $brutalistikea-blue;
+        }
+    }
+    p {
+        margin-bottom: 0.8em;
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
+%type--body__upper {
+    @extend %type--body;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+}
+
+%type--heading {
+    font-size: $heading;
+    letter-spacing: -0.02em;
+    line-height: 1em;
+
+    @include breakpoints(font-size, $heading-sm, $heading-md, $heading-lg, $heading-xl);
+
+    a {
+        text-decoration: none;
+    }
+}
+
+%type--heading__upper {
+    @extend %type--heading;
+    text-transform: uppercase;
+}
+
+%type--feature {
+    font-size: $feature;
+    letter-spacing: -0.03em;
+    line-height: 1.1em;
+
+    @include breakpoints(font-size, $feature-sm, $feature-md, $feature-lg, $feature-xl);
+
+    a {
+        text-decoration: underline;
+        &:hover {
+            color: $brutalistikea-blue;
+        }
     }
 }
 
 h1 {
-    @include type--huge;
+    @extend %type--feature;
+    font-weight: normal;
     margin: 0;
-    font-weight: 300;
+}
+
+h2 {
+    @extend %type--heading;
+    font-weight: normal;
+    margin: 0;
+}
+
+h3,h4,h5,h6 {
+    @extend %type--default;
 }
 
 a {

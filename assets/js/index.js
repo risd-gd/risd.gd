@@ -4,9 +4,7 @@
 
     $(document).ready(function () {
 
-        
-
-        // Init here.
+        // This chunk of code uses Smoothstate.js for the tabbed page transitions
         var $body = $('body'),
             $main = $('#anim--container'),
             $site = $('html, body'),
@@ -34,31 +32,44 @@
                 duration: 500,
                 render: function (url, $container) {
                     $site.animate({scrollTop: 0});
-                    // smoothState.restartCSSAnimations();
                 }
             },
             onReady: {
                 duration: 0,
                 render: function ($container, $newContent) {
+
+                    // This is where we load the new page, thus the redundant function calls
                     $main.html($newContent);
                     startMarquee();
-                    console.log("ready state");
+                    startCarousel();
                 }
             },
         }).data('smoothState');
 
         startMarquee();
+        startCarousel();
 
         // Marquee (only visible on home page)
         function startMarquee() {
             $('.notices--marquee').marquee({
-                duration: 15000,
+                speed: 30,
                 gap: 0,
                 delayBeforeStart: 0,
                 direction: 'left',
                 duplicated: true,
                 startVisible: true
             });
+        }
+
+        // This inits the carousel on each page
+        function startCarousel() {
+            $('.carousel').flickity({
+                cellAlign: 'left',
+                contain: true,
+                adaptiveHeight: true,
+                wrapAround: true,
+                autoPlay: 3000
+              });
         }
 
 

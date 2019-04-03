@@ -1,0 +1,82 @@
+Title: Visiting Designer Workshop: Richard The
+
+----
+
+Builder: 
+
+- 
+  featured: 'true'
+  twocolumns: 'false'
+  title: ""
+  text: >
+    Student work from a workshop following
+    Richard The’s talk. The work sought to
+    answer the question “Design for retina
+    screens.” Watch a lecture of Richard
+    The’s work on the RISD Vimeo page.
+  title2: ""
+  text2: ""
+  _key: textblock
+  _uid: textblock_1554084064597_4814
+- 
+  imageselect:
+    - img_9347.jpg
+  style: left
+  caption: >
+    Here is a potential caption for this
+    image.
+  _key: gallery
+  _uid: gallery_1554083978516_4510
+- 
+  featured: 'false'
+  twocolumns: 'false'
+  title: ""
+  text: >
+    Rich, multifaceted and encompassing a
+    broad range of media, Graphic Design at
+    RISD respects the foundations of formal,
+    aesthetic and analytical knowledge and
+    skills while exploring the ever-changing
+    context and function of visual
+    communication. In the studio students
+    learn the fundamental value of
+    typography, imagery, grids, systems and
+    more in the course of creating
+    everything from traditional books,
+    posters, logos and websites to apps,
+    interactive texts and other digital
+    media.TK
+  title2: ""
+  text2: ""
+  _key: textblock
+  _uid: textblock_1554084054376_4642
+- 
+  imageselect:
+    - img_9348.jpeg
+  style: right
+  caption: ""
+  _key: gallery
+  _uid: gallery_1554084136934_5028
+- 
+  featured: 'false'
+  twocolumns: 'false'
+  title: ""
+  text: >
+    Rich, multifaceted and encompassing a
+    broad range of media, Graphic Design at
+    RISD respects the foundations of formal,
+    aesthetic and analytical knowledge and
+    skills while exploring the ever-changing
+    context and function of visual
+    communication. In the studio students
+    learn the fundamental value of
+    typography, imagery, grids, systems and
+    more in the course of creating
+    everything from traditional books,
+    posters, logos and websites to apps,
+    interactive texts and other digital
+    media.TK
+  title2: ""
+  text2: ""
+  _key: textblock
+  _uid: textblock_1554084121995_4937

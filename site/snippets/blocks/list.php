@@ -1,47 +1,31 @@
-<?php if($data->islarge()->isTrue()): ?>
-    <c class="builder--item builder--list __islarge" span=row>
-        <grid columns=12>
-            <?php snippet('buildersnippets/builderheader', ['data' => $data]) ?>
-            <?php foreach ($data->items()->toStructure() as $item): ?> 
-            <c class="listitem" span=3>
-                    <?php if($title = $item->title()->text()): ?>
-                        <div class="listitem--title"><?= $title ?></div>
-                    <?php endif ?>
-                    <?php if($caption = $item->caption()->text()): ?>
-                        <div class="listitem--caption"><?= $caption ?></div>
-                    <?php endif ?>
-                    <?php if($url = $item->url()->text()): ?>
-                        <a href="<?= $url ?>">
-                            <div class="listitem--url"><?= $url ?></div>
-                        </a>
-                    <?php endif ?>
-            </c>
-            <?php endforeach ?>
-        </grid>
-    </c>
-    <?php else: ?>
-    <c class="builder--item builder--list"span=6>
-        <grid columns=6>
-            <?php snippet('buildersnippets/builderheader', ['data' => $data]) ?>
-            <c span=4>
-            <?php foreach ($data->items()->toStructure() as $item): ?> 
-                <div class="listitem">
-                    <?php if($title = $item->title()->text()): ?>
-                        <div class="listitem--title"><?= $title ?></div>
-                    <?php endif ?>
-                    <?php if($caption = $item->caption()->text()): ?>
-                        <div class="listitem--caption"><?= $caption ?></div>
-                    <?php endif ?>
-                    <?php if($url = $item->url()->text()): ?>
-                        <a href="<?= $url ?>">
-                            <div class="listitem--url"><?= $url ?></div>
-                        </a>
-                    <?php endif ?>
-                </div>
-            <?php endforeach ?>
-            </c>
-        </grid>
-    </c>
-<?php endif ?>
-
-
+<section class="list" columns=12>
+    <div class="list--caption">
+        <?= $data->caption()->text() ?>
+    </div>
+    <div class="list--cta">
+        <?php if ($data->cta()->isNotEmpty()): ?>
+            <?= $data->cta()->kt() ?>
+        <?php endif ?>
+    </div>
+    <?php if ($data->description()->isNotEmpty()): ?>
+        <div class="list--description">
+                <?= $data->description()->kt() ?>
+        </div>
+    <?php endif ?>
+    <?php foreach ($data->items()->toStructure() as $item): ?>
+        <a class="list--item" <?php if($item->externallink()->isNotEmpty()): ?> href="<?=$item->externallink()->text() ?>"<?php endif ?>>
+            <div class="item--title">
+                <?= $item->title()->text() ?>
+            </div>
+            <div class="item--description">
+                <?= $item->description()->text() ?>
+            </div>
+        </a>
+        <?php if($item->externallink()->isNotEmpty()): ?>
+            <div class="item--icon">
+                <?php snippet('svg/svg-link') ?>
+            </div>
+        <?php endif ?>
+    <?php endforeach ?>
+</div>
+</section>

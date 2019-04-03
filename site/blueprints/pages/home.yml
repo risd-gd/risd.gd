@@ -2,13 +2,22 @@ title: Home
 
 icon: 🏠
 
-sections:
-  drafts:
-    extends: sections/questions
-    headline: Drafts
-    status: draft
+options:
+  url: false
+  status: false
+  delete: false
 
-  listed:
-    extends: sections/questions
-    headline: Published Questions
-    status: listed
+tabs:
+  content:
+    label: Content
+    icon: page
+    sections:
+      builder:
+        extends: sections/builder
+
+  files:
+    label: Files
+    icon: file
+    sections:
+      files:
+        extends: sections/files

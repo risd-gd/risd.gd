@@ -1,0 +1,16 @@
+label: Image Grid
+fields:
+  imageselect:
+    label: Select images
+    type: files
+    width: 1/2
+    max: 4
+  caption:
+    label: Caption
+    type: text
+    width: 1/2
+  description:
+    label: Description
+    type: textarea
+    buttons:
+      - link

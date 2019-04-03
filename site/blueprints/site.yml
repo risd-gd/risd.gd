@@ -1,26 +1,16 @@
 title: Site
 
 columns:
-  - width: 1/3
+  - width: 1/2
     sections:
-      albums: sections/questions
-  - width: 1/3
-    sections:
-      notes: sections/notices
-      pages:
+      pages: 
         type: pages
-        template:
-          - about
-          - home
-          - default
-          - notices
-  - width: 1/3
+        layout: cards
+      
+      subpages:
+        extends: sections/subpages
+
+  - width: 1/2
     sections:
-      meta:
-        type: fields
-        fields:
-          featurednotice:
-            label: Featured notice
-            type: select
-            options: query
-            query: site.grandchildren.published
+      notices:
+        extends: sections/notices
