@@ -6,8 +6,8 @@ Builder:
 
 - 
   featured: 'true'
-  twocolumns: 'false'
-  title: ""
+  caption: ""
+  cta: ""
   text: >
     RISD GD supports the fringe, the
     nascent, and the highly evolved in order
@@ -15,6 +15,8 @@ Builder:
     educational environment as a thriving
     ecosystem that leads to change, not to
     reaffirm the status quo.
+  twocolumns: 'false'
+  title: ""
   title2: ""
   text2: ""
   _key: textblock
@@ -83,9 +85,11 @@ Builder:
   _uid: list_1554087888352_510
 - 
   featured: 'true'
+  caption: ""
+  cta: ""
+  text: 'RISD GD has 11 full-time faculty, about 30 part-time faculty and no shortage of visitors and guests. A current list of faculty is kept at gd.risd.edu. Full-time teach 6 courses a year, advise graduates and undergraduates and contribute to department culture. These are our current full-time faculty: John Caserta, Lucinda Hitchcock, James Goggin, Bethany Johns, Aki Nurosi, Hammett Nurosi, Paul Soulellis, Nancy Skolos, Anastasiia Raina, Ramon Tejada, Franz Werner.'
   twocolumns: 'false'
   title: ""
-  text: 'RISD GD has 11 full-time faculty, about 30 part-time faculty and no shortage of visitors and guests. A current list of faculty is kept at gd.risd.edu. Full-time teach 6 courses a year, advise graduates and undergraduates and contribute to department culture. These are our current full-time faculty: John Caserta, Lucinda Hitchcock, James Goggin, Bethany Johns, Aki Nurosi, Hammett Nurosi, Paul Soulellis, Nancy Skolos, Anastasiia Raina, Ramon Tejada, Franz Werner.'
   title2: ""
   text2: ""
   _key: textblock
@@ -122,8 +126,8 @@ Builder:
   _uid: list_1554088166343_956
 - 
   featured: 'false'
-  twocolumns: 'true'
-  title: BFA
+  caption: BFA
+  cta: '(link: https://www.risd.edu/academics/graphic-design/contact/ text: Apply to RISD GD BFA.)'
   text: >
     Graphic Design graduates leave RISD
     prepared to work in almost any field
@@ -136,6 +140,8 @@ Builder:
     interactive media, and creating
     everything from package design to title
     sequences for film and television.TK
+  twocolumns: 'true'
+  title: BFA
   title2: MFA
   text2: >
     Rich, multifaceted and encompassing a
@@ -155,10 +161,48 @@ Builder:
   _key: textblock
   _uid: textblock_1554088580921_1589
 - 
+  featured: 'false'
+  caption: MFA
+  cta: '(link: https://www.risd.edu/academics/graphic-design/contact/ text: Apply to RISD GD BFA.)'
+  text: >
+    Graphic Design graduates leave RISD
+    prepared to work in almost any field
+    imaginable — from education to film,
+    television, publishing, retail and more.
+    Alumni follow a wide range of individual
+    paths, including running their own
+    design studios, working for large
+    corporations, specializing in web and
+    interactive media, and creating
+    everything from package design to title
+    sequences for film and television.TK
+  twocolumns: 'true'
+  title: BFA
+  title2: MFA
+  text2: >
+    Rich, multifaceted and encompassing a
+    broad range of media, Graphic Design at
+    RISD respects the foundations of formal,
+    aesthetic and analytical knowledge and
+    skills while exploring the ever-changing
+    context and function of visual
+    communication. In the studio students
+    learn the fundamental value of
+    typography, imagery, grids, systems and
+    more in the course of creating
+    everything from traditional books,
+    posters, logos and websites to apps,
+    interactive texts and other digital
+    media.TK
+  _key: textblock
+  _uid: textblock_1554324151463_905
+- 
   featured: 'true'
+  caption: ""
+  cta: ""
+  text: 'Monitor our digital footprint: (link: https://instagram.com/risd_gd text: Instagram) (link: https://vimeo.com/user13812896 text: Vimeo (Lectures)) (link: https://twitter.com/risd_gd text: Twitter) (link: https://www.are.na/risd-gd text: Are.na)'
   twocolumns: 'false'
   title: ""
-  text: 'Monitor our digital footprint: (link: https://instagram.com/risd_gd text: Instagram) (link: https://vimeo.com/user13812896 text: Vimeo (Lectures)) (link: https://twitter.com/risd_gd text: Twitter) (link: https://www.are.na/risd-gd text: Are.na)'
   title2: ""
   text2: ""
   _key: textblock

@@ -1,4 +1,6 @@
 <!doctype html>
+<!-- Welcome to RISD.GD. Designed by Rohan Chaurasia and Julian Kelly, and developed by Julian. -->
+<!-- The site is built on Kirby CMS, and uses Smoothstate.js for the page transitions. -->
 <html lang="en">
 <head>
 
@@ -7,16 +9,19 @@
   <title>
     <?php if($page->isHomePage()): ?>RISD Graphic Design<?php else: ?>RISD GD | <?= $page->title() ?><?php endif ?>
   </title>
+  <link rel="icon" 
+      type="image/png" 
+      href="<?php echo kirby()->urls()->assets() . '/img/favicon.png' ?>">
 
   <?= css(['assets/lib/normalize.css', '@auto']) ?>
-  <?= css(['assets/lib/grid.css', '@auto']) ?>
   <?= js('assets/lib/jquery-3.3.1.min.js') ?>
   <?= js('assets/lib/jquery.smoothState.min.js') ?>
   <?= js('assets/lib/jquery.marquee.min.js') ?>
+  <?= js('assets/lib/text-balancer.standalone.js') ?>
   <?= js('assets/js/index.js') ?>
   <?= css(['assets/lib/flickity.css', '@auto']) ?>
   <?= js('assets/lib/flickity.pkgd.min.js') ?>
-  <?= css(['assets/css/main.css', '@auto']) ?>
+  <?= css(['assets/css/main-4-6-2.css', '@auto']) ?>
 
 </head>
 
@@ -34,7 +39,7 @@
     <nav id="nav" data-current="<?= $currentNum ?>">
       <?php foreach ($site->children()->listed() as $item): ?>
 
-        <div id="pane--<?= $item->num() ?>" class="nav--pane <?php if($item->isActive() or $page->parent() == $item):?> __isactive <?php endif ?>"> 
+        <div id="pane--<?= $item->num() ?>" class="nav--pane <?php if($item->isActive() or $page->parent() == $item):?> pane--handle__active <?php endif ?>"> 
 
           <?php if($item->title()->toString() == 'Notices' && $page->isHomePage()): ?>
 
@@ -45,9 +50,10 @@
                       <?= $notice->title() ?><span class="marquee--marker">NOTICES</span>
                     <?php endforeach ?>
                   </div>
-                </a>
+                </div>
+              </a>
 
-              <?php elseif($item->isHomePage() and $page->isChildOf('home')): ?>
+              <?php elseif($item->isHomePage() and $page->template()->name() == "internal"): ?>
 
                 <a data-target="<?= $item->num() ?>" href="<?= $item->url() ?>">
                   <div class="pane--handle">

@@ -6,9 +6,6 @@
                 <img src="<?= $image->url() ?>">
         </div>
     <?php endforeach ?>
-    <div class="imagegrid--caption">
-        <?= $data->caption()->text() ?>
-    </div>
     <div class="imagegrid--description">
         <?= $data->description()->text() ?>
     </div>

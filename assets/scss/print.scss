@@ -1,0 +1,83 @@
+@font-face {
+    font-family: 'GT Walsheim';
+    src: url('../fonts/gt-walsheim-regular.ttf') format('truetype');
+  }
+
+// Most of these styles are the same as the original notices, save the different font
+
+html, body {
+    font-size: 30px;
+    font-family: 'GT Walsheim', Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+div {
+    box-sizing: border-box;
+}
+
+body.print {
+    height: 99%;
+}
+
+.notice {
+    position: relative;
+    height: 99%;
+
+    .notice--title {
+        padding: 3.8rem 0.8rem 0 0.8rem;
+        h2 {
+            font-size: 3.6rem;
+            letter-spacing: -0.05rem;
+            margin: 0;
+            line-height: 3.7rem;
+            font-weight: normal;
+        };
+    }
+    .notice--body {
+        font-size: 0.5rem;
+        line-height: 1.25;
+        max-width: 60%;
+        padding: 0.8rem;
+
+        p {
+            bottom: 0.5rem;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    }
+    .notice--tools {
+        display: none;
+    }
+
+    .notice--hidden, .notice--meta {
+        text-align: justify;
+        text-align-last: justify;
+        font-size: 1.6rem;
+        position: absolute;
+        left: 0.8rem;
+        right: 0.8rem;
+
+        .notice--location {
+            display: none;
+        }
+
+        p {
+            margin: 0;
+        }
+    }
+
+    .notice--meta {
+        top: 0.5rem;
+    }
+
+    .notice--hidden {
+        bottom: 0.5rem;
+    }
+
+    br {
+        display: none;
+    }
+}

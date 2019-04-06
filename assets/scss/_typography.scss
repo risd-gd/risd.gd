@@ -10,6 +10,7 @@
     font-size: $body;
     color: $black;
     line-height: 1.15em;
+    -webkit-font-smoothing: antialiased;
 
     @include breakpoints(font-size, $body-sm, $body-md, $body-lg, $body-xl);
 

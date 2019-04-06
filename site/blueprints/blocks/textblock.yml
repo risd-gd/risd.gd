@@ -4,13 +4,13 @@ fields:
     label: Featured?
     type: toggle
     width: 1/2
-  title:
-    label: Title
+  caption:
+    label: Caption
     type: text
     width: 1/2
     placeholder: Only appears when not featured.
   cta:
-    label: Text
+    label: Call to action
     type: textarea
     buttons:
       - link

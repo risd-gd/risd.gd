@@ -16,7 +16,7 @@ switch ($style) {
     <?php if($data->imageselect()->toFiles()->count() != 1): ?>
 
 
-        <div class="gallery--images carousel">
+        <div id= "<?= $data->_uid() ?>" class="gallery--images carousel">
 
             <?php 
             $images = $data->imageselect()->toFiles();
@@ -30,21 +30,20 @@ switch ($style) {
 
         </div>
 
-
     <?php else: ?>
 
         <div class="gallery--images">
-
             <img src="<?= $data->imageselect()->toFile()->url() ?>" >
-
         </div>
 
     <?php endif ?>
 
     <?php if($data->caption()->isNotEmpty()): ?>
+
         <div class="gallery--caption">
             <?= $data->caption()->kt() ?>
         </div>
+
     <?php endif ?>
 
 </section>

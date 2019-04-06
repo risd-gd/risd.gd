@@ -30,9 +30,11 @@ Builder:
   _uid: link_1553904173880_720
 - 
   featured: 'true'
+  caption: ""
+  cta: ""
+  text: 'Welcome new faculty member Ramon Tejada. (link: https://ramongd.com/ text: Learn more about his practice).'
   twocolumns: 'false'
   title: ""
-  text: 'Welcome new faculty member Ramon Tejada. (link: https://ramongd.com/ text: Learn more about his practice).'
   title2: ""
   text2: ""
   _key: textblock
@@ -40,7 +42,7 @@ Builder:
 - 
   imageselect:
     - dsc_0116.jpg
-  style: right
+  style: left
   caption: 'Our 2019 Senior Show just wrapped up. (link: http://endless-scroll.github.io text: View the website).'
   _key: gallery
   _uid: gallery_1553904263666_1014
