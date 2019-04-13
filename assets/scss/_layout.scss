@@ -743,33 +743,50 @@ main {
     grid-auto-flow: row dense;
 
     &.multimedia__right {
-        .multimedia--embed { @include col-collapse-md(#{'5 / 13'}); }
-        .multimedia--caption { @include col-collapse-md(#{'1 / 5'}); }
+        .multimedia--embed, .multimedia--video { 
+            @include col-collapse-md(#{'5 / 13'}); 
+
+            padding-left: 0;
+            @include bp-units(padding-left, 1);
+        }
+        .multimedia--caption { @include col-collapse-md(#{'2 / 5'}); }
     }
 
     &.multimedia__left {
-        @extend %block;
+        .multimedia--embed, .multimedia--video { 
+            @include col-collapse-md(#{'5 / 13'}); 
 
-        .multimedia--embed { @include col-collapse-md(#{'1 / 9'}); }
-        .multimedia--caption { @include col-collapse-md(#{'9 / 13'}); }
-
+            padding-right: 0;
+            @include bp-units(padding-right, 1);
+        }
+        .multimedia--caption { @include col-collapse-md(#{'2 / 5'}); }
     }
 
     &.multimedia__full {
 
-        .multimedia--embed { 
+        .multimedia--embed, .multimedia--video { 
             padding: 0;
             @include col-collapse-md(#{'1 / -1'}); 
         }
         .multimedia--caption { 
-            @include col-collapse-md(#{'5 / -1'}); 
+            @include col-collapse-md(#{'1 / -1'}); 
             @extend %full;
+            padding-top: $unit;
+            @include bp-units(padding-top, 1);
         }
     }
 
     .multimedia--caption {
         @extend %type--body;
-        align-self: center;
+        align-self: end;
+        @include bp-sm {
+            text-align: center;
+        }
+    }
+
+    video {
+        width: 100%;
+        display: block;
     }
 
 }

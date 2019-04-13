@@ -21,7 +21,7 @@
   <?= js('assets/js/index.js') ?>
   <?= css(['assets/lib/flickity.css', '@auto']) ?>
   <?= js('assets/lib/flickity.pkgd.min.js') ?>
-  <?= css(['assets/css/main-4-6-2.css', '@auto']) ?>
+  <?= css(['assets/css/main.css', '@auto']) ?>
 
 </head>
 
@@ -46,7 +46,7 @@
               <a data-target="<?= $item->num() ?>" href="<?= $item->url() ?>">
                 <div class="pane--handle __hasmarquee">
                   <div class="notices--marquee">
-                    <?php foreach ($item->children()->listed() as $notice): ?>
+                    <?php foreach ($item->children()->listed()->limit(5) as $notice): ?>
                       <?= $notice->title() ?><span class="marquee--marker">NOTICES</span>
                     <?php endforeach ?>
                   </div>

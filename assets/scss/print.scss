@@ -1,6 +1,9 @@
 @font-face {
     font-family: 'GT Walsheim';
-    src: url('../fonts/gt-walsheim-regular.ttf') format('truetype');
+    font-style: normal;
+    src: url('../fonts/GT-Walsheim-Regular.woff2') format('woff2'),
+         url('../fonts/GT-Walsheim-Regular.woff') format('woff');
+
   }
 
 // Most of these styles are the same as the original notices, save the different font
@@ -45,7 +48,7 @@ body.print {
         }
 
         a {
-            text-decoration: none;
+            color: inherit;
         }
     }
     .notice--tools {

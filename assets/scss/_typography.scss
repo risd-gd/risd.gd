@@ -1,6 +1,9 @@
 @font-face {
     font-family: 'GT Walsheim';
-    src: url('../fonts/gt-walsheim-regular.ttf') format('truetype');
+    font-style: normal;
+    src: url('../fonts/GT-Walsheim-Regular.woff2') format('woff2'),
+         url('../fonts/GT-Walsheim-Regular.woff') format('woff');
+
   }
 
 // All type sizing and styling is isolated to this file.
@@ -20,6 +23,10 @@
 
     a {
         text-decoration: none;
+    }
+
+    em {
+        font-style: italic;
     }
 }
 

@@ -6,10 +6,37 @@ Builder:
 
 - 
   style: full
-  embed: '<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/327392206?autoplay=1&title=0&byline=0&portrait=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>'
+  videofile:
+    - >
+      2019-bi-web-horizontal-2-mix-loop-53s.mp4
+  embed: |
+    <video
+    loop
+    autoplay
+    muted
+    playsinline
+    width="100%"
+    height="100%"
+    type="video/mp4"
+    id="video"
+    src="/media/pages/home/3299703124-1554680395/bi2019.mp4" style="transform: scale(1, 1.015);"
+    ></video>
   caption: ""
   _key: multimedia
-  _uid: multimedia_1553903761493_196
+  _uid: multimedia_1554414375792_2440
+- 
+  notice: >
+    notices/on-the-edge-of-normal-mfa-gd-biennial
+  _key: notice
+  _uid: notice_1553905115308_1731
+- 
+  caption: Watch on Vimeo
+  title: 'Visiting Designer Lecture: Richard The'
+  isinternal: 'false'
+  externallink: https://vimeo.com/321592368
+  internallink: ""
+  _key: link
+  _uid: link_1553904173880_720
 - 
   imageselect:
     - img_7294.jpg
@@ -21,18 +48,10 @@ Builder:
   _key: gallery
   _uid: gallery_1553904108258_354
 - 
-  caption: Watch on Vimeo
-  title: 'Visiting Designer Lecture: Richard The'
-  isinternal: 'true'
-  externallink: https://vimeo.com/321592368
-  internallink: home/subpage-test
-  _key: link
-  _uid: link_1553904173880_720
-- 
   featured: 'true'
   caption: ""
   cta: ""
-  text: 'Welcome new faculty member Ramon Tejada. (link: https://ramongd.com/ text: Learn more about his practice).'
+  text: '(link: https://www.instagram.com/p/Bv7TQb8F_nR/?utm_source=ig_web_copy_link text: Glimpse back) at student, faculty and alumni work (and faces) on display at this year’s RISD Unbound Book Fair.'
   twocolumns: 'false'
   title: ""
   title2: ""
@@ -40,17 +59,22 @@ Builder:
   _key: textblock
   _uid: textblock_1553904214924_895
 - 
+  notice: >
+    notices/as-not-fordethroning-our-absolutes
+  _key: notice
+  _uid: notice_1554671162030_2443
+- 
   imageselect:
     - dsc_0116.jpg
-  style: left
+  style: right
   caption: 'Our 2019 Senior Show just wrapped up. (link: http://endless-scroll.github.io text: View the website).'
   _key: gallery
   _uid: gallery_1553904263666_1014
 - 
   caption: Read all about it
   title: >
-    What Does "Posthuman Design" Actually
-    Mean?
+    What Does “Posthuman Design”
+    Actually Mean?
   isinternal: 'false'
   externallink: >
     https://eyeondesign.aiga.org/what-does-posthuman-design-actually-mean/
@@ -58,7 +82,12 @@ Builder:
   _key: link
   _uid: link_1553904473456_1610
 - 
-  notice: >
-    notices/faculty-search-lecture-anastasiia-raina
-  _key: notice
-  _uid: notice_1553905115308_1731
+  caption: Free download
+  title: >
+    Download Jack Fahnestock’s (BFA ’20)
+    font ‘TINY’ from Velvetyne
+  isinternal: 'false'
+  externallink: http://velvetyne.fr/fonts/tiny/
+  internallink: ""
+  _key: link
+  _uid: link_1554638306337_11372

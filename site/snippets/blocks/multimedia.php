@@ -13,12 +13,20 @@ switch ($style) {
         break;
 }
 ?>">
-    <div class="multimedia--embed">    
-        <?= $data->embed()->text() ?>
-    </div>
-    <?php if($data->caption()->isNotEmpty()): ?>
-        <div class="multimedia--caption">
-            <?= $data->caption()->kt() ?>
+    <?php if($data->videofile()->isNotEmpty()): ?>
+        <div class="multimedia--video">
+            <video autoplay muted loop>
+                <source src="<?= $data->videofile()->toFile()->url() ?>" type="video/<?= $data->videofile()->toFile()->extension() ?>">
+            </video>
         </div>
+    <?php else: ?>
+        <div class="multimedia--embed">    
+            <?= $data->embed()->text() ?>
+        </div>
+        <?php if($data->caption()->isNotEmpty()): ?>
+            <div class="multimedia--caption">
+                <?= $data->caption()->kt() ?>
+            </div>
+        <?php endif ?>
     <?php endif ?>
 </section>

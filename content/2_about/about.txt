@@ -10,11 +10,10 @@ Builder:
   cta: ""
   text: >
     RISD GD supports the fringe, the
-    nascent, and the highly evolved in order
-    to affect visual culture. We treat the
-    educational environment as a thriving
-    ecosystem that leads to change, not to
-    reaffirm the status quo.
+    nascent, and the highly evolved. We work
+    hard to nurture an ecosystem that leads
+    to new forms and ideas, and not one that
+    simply reaffirms the status quo.
   twocolumns: 'false'
   title: ""
   title2: ""
@@ -23,33 +22,43 @@ Builder:
   _uid: textblock_1553747142316_1204
 - 
   imageselect:
-    - screen-shot-2019-03-04-at-4.44.49-am.png
-    - 56a0020-x3.jpg
+    - 56a8874-x3.jpg
+    - img_1037_w.jpg
+    - 2019_seniorshow04.jpg
   style: full
-  caption: Views of the Design Center.
+  caption: ""
   _key: gallery
   _uid: gallery_1553829089401_355
 - 
-  caption: Upcoming Exhibitions
+  caption: Public exhibitions
   description: ""
   items:
     - 
       title: Graduate Biennial
       description: >
-        April 4 – 21. Opens Thursday, April at
-        7:30PM
-      externallink: ""
-    - 
-      title: Graduate Thesis Presentations
-      description: May 23 – June 1
-      externallink: ""
+        April 6 – 21. Opens Thursday, April
+        5th at 7pm
+      externallink: >
+        http://risd.gd/notices/on-the-edge-of-normal-mfa-gd-biennial
+      url: ""
     - 
       title: 'As Not For: Historical survey of work created by African-American graphic designers'
       description: April 11 – 25
-      externallink: ""
-  cta: >
-    Students and faculty may propose
-    exhibitions.
+      externallink: >
+        http://risd.gd/notices/as-not-fordethroning-our-absolutes
+      url: ""
+    - 
+      title: RISD Grad Show 2019
+      description: >
+        May 23 – June 1, Opens May 22nd,
+        6–8pm
+      externallink: https://www.risd.edu/gradshow/
+      url: ""
+    - 
+      title: 2018 GD Triennial
+      description: Fall 2018
+      externallink: http://risdgdtriennial2018.risd.gd/
+  cta: 'The college hosts between two and four student exhibitions per year in its public galleries. RISD GD has its own exhibit and event space, The GD Commons. Learn more at (link: https://commons.risd.gd text: commons.risd.gd)'
   _key: list
   _uid: list_1553834975100_462
 - 
@@ -57,37 +66,14 @@ Builder:
     - 2019_seniorshow11.jpg
     - dsc_0116.jpg
   caption: ""
-  description: Views of our 2019 Senior Show.
+  description: From the 2019 Senior Show
   _key: imagegrid
   _uid: imagegrid_1554087864101_330
-- 
-  caption: Recent Projects
-  description: ""
-  items:
-    - 
-      title: Senior Show 2019
-      description: >
-        March 7 – 12, Opens Thursday, March 7
-        at 6PM
-      externallink: ""
-    - 
-      title: risdgd2018triennial.risd.gd
-      description: 2018 Triennial
-      externallink: ""
-    - 
-      title: '#RISDVOTE2018'
-      description: >
-        Sophomore Instagram posts to get out the
-        vote
-      externallink: ""
-  cta: 'See an archive of websites including past exhibitions at (link: http://archive.risd.gd text: archive.risd.gd)'
-  _key: list
-  _uid: list_1554087888352_510
 - 
   featured: 'true'
   caption: ""
   cta: ""
-  text: 'RISD GD has 11 full-time faculty, about 30 part-time faculty and no shortage of visitors and guests. A current list of faculty is kept at gd.risd.edu. Full-time teach 6 courses a year, advise graduates and undergraduates and contribute to department culture. These are our current full-time faculty: John Caserta, Lucinda Hitchcock, James Goggin, Bethany Johns, Aki Nurosi, Hammett Nurosi, Paul Soulellis, Nancy Skolos, Anastasiia Raina, Ramon Tejada, Franz Werner.'
+  text: 'RISD GD has 12 full-time faculty and 30 part-time faculty, and no shortage of visitors and guests. A list of everyone is on (link: https://www.risd.edu/academics/graphic-design/faculty text: risd.edu). Full-timers teach six courses a year, advise students and contribute to department and college culture. Our current full-time faculty are: (link: http://johncaserta.com/ text: John Caserta), (link: http://fromkeetra.com/ text: Keetra Dean Dixon), (link: http://practise.co.uk/ text: James Goggin), (link: https://lucindahitchcock.com/ text: Lucinda Hitchcock), (link: https://www.bethanyjohns.com/ text: Bethany Johns), (link: https://www.risd.edu/people/aki-nurosi/ text: Aki Nurosi), (link: https://www.risd.edu/people/hammett-nurosi/ text: Hammett Nurosi), (link: http://www.posthumanpolymythology.com/ text: Anastasiia Raina), (link: http://skolos-wedell.com/ text: Nancy Skolos), (link: https://soulellis.com/ text: Paul Soulellis), (link: https://ramongd.com/ text: Ramon Tejada), (link: https://www.imvdesign.com/ text: Franz Werner).'
   twocolumns: 'false'
   title: ""
   title2: ""
@@ -95,115 +81,141 @@ Builder:
   _key: textblock
   _uid: textblock_1554088152985_866
 - 
-  caption: In the Classroom
+  imageselect:
+    - 19.jpg
+  style: full
+  caption: >
+    X, Y, and Z, a fall elective taught by
+    James Goggin, looks at scale and space
+    in design
+  _key: gallery
+  _uid: gallery_1554552064997_5513
+- 
+  caption: In the classroom
   description: ""
   items:
     - 
       title: Urgency Lab
       description: Paul Soulellis
-      externallink: https://soulellis.com/index.html
+      externallink: >
+        https://soulellis.com/teaching/urgencylab/
     - 
-      title: Women of GD
-      description: Tori Hinn, BFA 2015
-      externallink: ""
+      title: Design in the Posthuman Age
+      description: Anastasiia Raina
+      externallink: >
+        https://eyeondesign.aiga.org/what-does-posthuman-design-actually-mean/
     - 
-      title: Test Pattern
-      description: Cem Eskinazi, MFA 2017
-      externallink: ""
+      title: X, Y, and Z
+      description: James Goggin
+      externallink: http://xyz.practise.studio
     - 
-      title: Nice to Meet You
-      description: Can Yang, BFA 2018
-      externallink: ""
-  cta: >
-    A paragraph that sets the stage for
-    variety of classes. BFA vs MFA should be
-    considered. A paragraph that sets the
-    stage for variety of classes. BFA vs MFA
-    should be considered. A paragraph that
-    sets the stage for variety of classes.
-    BFA vs MFA should be considered.
+      title: Decolonizing Design
+      description: Ramon Tejada
+      externallink: >
+        https://ramongd.com/Decolonizing-graphic-Design_
+    - 
+      title: Graphic Design for the Web
+      description: Minkyoung Kim
+      externallink: >
+        http://minkyoungkim.com/teaching/gdfws19/
+    - 
+      title: 'The Web & Democracy'
+      description: John Caserta
+      externallink: http://wd.risd.gd
+    - 
+      title: Design Studio
+      description: 'Our two-year core undergraduate studio '
+      externallink: http://ds1820.risd.gd
+  cta: 'RISD GD runs 110 courses a year that teach BFA and MFA candidates fundamentals as well as new topics in design. See our Spring 2019 electives microsite for a look at one semester of electives. (link: http://sp19.risd.gd text: sp19.risd.gd)'
   _key: list
-  _uid: list_1554088166343_956
+  _uid: list_1554549874264_1404
 - 
-  featured: 'false'
-  caption: BFA
-  cta: '(link: https://www.risd.edu/academics/graphic-design/contact/ text: Apply to RISD GD BFA.)'
-  text: >
-    Graphic Design graduates leave RISD
-    prepared to work in almost any field
-    imaginable — from education to film,
-    television, publishing, retail and more.
-    Alumni follow a wide range of individual
-    paths, including running their own
-    design studios, working for large
-    corporations, specializing in web and
-    interactive media, and creating
-    everything from package design to title
-    sequences for film and television.TK
-  twocolumns: 'true'
-  title: BFA
-  title2: MFA
-  text2: >
-    Rich, multifaceted and encompassing a
-    broad range of media, Graphic Design at
-    RISD respects the foundations of formal,
-    aesthetic and analytical knowledge and
-    skills while exploring the ever-changing
-    context and function of visual
-    communication. In the studio students
-    learn the fundamental value of
-    typography, imagery, grids, systems and
-    more in the course of creating
-    everything from traditional books,
-    posters, logos and websites to apps,
-    interactive texts and other digital
-    media.TK
-  _key: textblock
-  _uid: textblock_1554088580921_1589
+  imageselect:
+    - 56a0020-x3.jpg
+  style: full
+  caption: ""
+  _key: gallery
+  _uid: gallery_1554551764004_4229
 - 
-  featured: 'false'
-  caption: MFA
-  cta: '(link: https://www.risd.edu/academics/graphic-design/contact/ text: Apply to RISD GD BFA.)'
-  text: >
-    Graphic Design graduates leave RISD
-    prepared to work in almost any field
-    imaginable — from education to film,
-    television, publishing, retail and more.
-    Alumni follow a wide range of individual
-    paths, including running their own
-    design studios, working for large
-    corporations, specializing in web and
-    interactive media, and creating
-    everything from package design to title
-    sequences for film and television.TK
-  twocolumns: 'true'
-  title: BFA
-  title2: MFA
-  text2: >
-    Rich, multifaceted and encompassing a
-    broad range of media, Graphic Design at
-    RISD respects the foundations of formal,
-    aesthetic and analytical knowledge and
-    skills while exploring the ever-changing
-    context and function of visual
-    communication. In the studio students
-    learn the fundamental value of
-    typography, imagery, grids, systems and
-    more in the course of creating
-    everything from traditional books,
-    posters, logos and websites to apps,
-    interactive texts and other digital
-    media.TK
-  _key: textblock
-  _uid: textblock_1554324151463_905
+  caption: Read all about it
+  title: >
+    A collection of press about the
+    Department
+  isinternal: 'false'
+  externallink: https://www.are.na/risd-gd/risd-gd-press
+  internallink: ""
+  _key: link
+  _uid: link_1554655808372_3667
+- 
+  caption: Alumni directory
+  title: >
+    We’ve starting a rolling directory of
+    alumni on are.na
+  isinternal: 'false'
+  externallink: >
+    https://www.are.na/risd-gd/risd-gd-alumni
+  internallink: ""
+  _key: link
+  _uid: link_1554655966127_3859
 - 
   featured: 'true'
   caption: ""
   cta: ""
-  text: 'Monitor our digital footprint: (link: https://instagram.com/risd_gd text: Instagram) (link: https://vimeo.com/user13812896 text: Vimeo (Lectures)) (link: https://twitter.com/risd_gd text: Twitter) (link: https://www.are.na/risd-gd text: Are.na)'
+  text: 'General information about the Department and the College (including how to apply) is at (link: http://gd.risd.edu/ text: gd.risd.edu)'
+  _key: textblock
+  _uid: textblock_1554656198657_4057
+- 
+  caption: Take a look
+  description: ""
+  items:
+    - 
+      title: Alphabets
+      description: >
+        Thirty alphabets in a broadside
+        publication
+      externallink: >
+        https://draw-down.com/collections/new-titles/products/newly-formed-alphabet-2020
+    - 
+      title: Anti-Anti-Aliasing
+      description: 'A 3-day workshop by Mindy Seu & Jon Gacnik'
+      externallink: http://antiantialiasing.risd.gd/
+    - 
+      title: Test Pattern
+      description: Cem Eskinazi, MFA 2017
+      externallink: >
+        https://draw-down.com/products/test-pattern-cem-eskinazi
+    - 
+      title: Nice to Meet You
+      description: Can Yang, BFA 2018
+      externallink: >
+        https://draw-down.com/products/nice-to-meet-you-can-yang
+    - 
+      title: flags.risd.gd
+      description: Designs for 4 unused public flagpoles
+      externallink: http://flags.risd.gd
+    - 
+      title: '#risdvote2018'
+      description: Instagram images to get out the vote
+      externallink: >
+        https://www.instagram.com/explore/tags/risdvote2018/
+  cta: 'Student work appears on walls and screens, in public and behind closed doors. These are recent projects that were intentionally pushed into wider view. (link: https://docs.google.com/spreadsheets/d/13w4WJlAxMhTFQVoxYy_apmEgW--6wz1XyB22U362uLI text: See an archive of our web projects)'
+  _key: list
+  _uid: list_1554088166343_956
+- 
+  featured: 'true'
+  caption: ""
+  cta: ""
+  text: 'We are active on these platforms: (link: https://instagram.com/risd_gd text: Instagram), (link: https://vimeo.com/user13812896 text: Vimeo), (link: https://github.com/risd-gd text: Github) & (link: https://www.are.na/risd-gd text: Are.na)'
   twocolumns: 'false'
   title: ""
   title2: ""
   text2: ""
   _key: textblock
   _uid: textblock_1554088274284_1343
+- 
+  featured: 'false'
+  caption: ""
+  cta: ""
+  text: 'The website was designed and developed by 2019 BFA Candidates (link: https://juliankellydesign.com text: Julian Kelly) and (link: http://rohanchau.com text: Rohan Chaurasia), and maintained by the (link: http://risdguild.com text: RISD Design Guild). Faculty advisers are James Goggin and John Caserta. Current typeface is (link: https://www.grillitype.com/typeface/gt-walsheim text: GT Walsheim), licensed from Grilli Type. We welcome submissions of fonts, images and news from students, faculty and alumni. Contact risd.gd@risd.edu'
+  _key: textblock
+  _uid: textblock_1554417273019_3979

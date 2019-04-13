@@ -4,13 +4,21 @@ fields:
     label: Style
     type: select
     default: full
+    width: 1/2
     options:
       right: Right aligned
       left: Left aligned
       full: Full width
+  videofile: 
+    label: Select video
+    type: files
+    multiple: false
+    query: page.videos
+    width: 1/2
   embed:
     label: Embedded HTML
     type: textarea
+    placeholder: If the image select is blank, the block will default to this, where you can embed videos and websites.
     buttons: false
   caption:
     label: Caption
