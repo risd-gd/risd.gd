@@ -1,15 +1,6 @@
-@font-face {
-    font-family: 'GT Walsheim';
-    font-style: normal;
-    src: url('../fonts/GT-Walsheim-Regular.woff2') format('woff2'),
-         url('../fonts/GT-Walsheim-Regular.woff') format('woff');
-
-  }
-
 // All type sizing and styling is isolated to this file.
 
 %type--default {
-    font-family: 'GT Walsheim';
     font-size: $body;
     color: $black;
     line-height: 1.15em;

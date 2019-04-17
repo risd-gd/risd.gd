@@ -17,7 +17,7 @@ tabs:
 
   files:
     label: Files
-    icon: file
+    icon: upload
     sections:
       files:
         extends: sections/files

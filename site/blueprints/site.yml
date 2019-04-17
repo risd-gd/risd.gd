@@ -1,16 +1,48 @@
 title: Site
 
-columns:
-  - width: 1/2
-    sections:
-      pages: 
-        type: pages
-        layout: cards
-      
-      subpages:
-        extends: sections/subpages
+tabs:
+  home:
+    label: RISD.GD
+    icon: bolt
+    columns:
+      - width: 1/2
+        sections:
+          pages: 
+            type: pages
+            layout: cards
+          
+          subpages:
+            extends: sections/subpages
 
-  - width: 1/2
-    sections:
-      notices:
-        extends: sections/notices
+      - width: 1/2
+        sections:
+          notices:
+            extends: sections/notices
+  fonts:
+    label: Typeface
+    icon: headline
+    columns:
+      - width: 1/2
+        fields:
+          info: 
+            type: info
+            text: |
+              Uploading multiple fonts (for example, WOFF and WOFF2), will set each successive font as an fallback for older browsers. In general, OTFs are fine.
+          fontname:
+            label: Font name
+            type: text
+          regularfont:
+            type: files
+            label: Regular font
+            multiple: false
+          italicfont:
+            type: files
+            label: Italic font
+            multiple: false
+      - width: 1/2
+        sections: 
+          fonts:
+            label: Upload font files
+            layout: list
+            extends: sections/files
+

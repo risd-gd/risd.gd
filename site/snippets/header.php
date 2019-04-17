@@ -6,6 +6,8 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="description" content="<?= $page->description()->text() ?>">
+  <meta name="keywords" content="<?php foreach ($page->keywords()->split() as $keyword) {echo($keyword . ', ');}; ?>">
   <title>
     <?php if($page->isHomePage()): ?>RISD Graphic Design<?php else: ?>RISD GD | <?= $page->title() ?><?php endif ?>
   </title>
@@ -23,7 +25,17 @@
   <?= js('assets/lib/flickity.pkgd.min.js') ?>
   <?= css(['assets/css/main.css', '@auto']) ?>
 
+
+
 </head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-137714894-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-137714894-1');
+</script>
 
 <?php 
   $currentNum = 0;
@@ -35,6 +47,24 @@
 ?>
 
 <body>
+  <style>
+  
+  @font-face {
+    font-family: '<?= $site->fontname()->text() ?>';
+    font-style: normal;
+    src: url('<?= $site->regularfont()->toFile()->url() ?>');
+  }
+
+  @font-face {
+    font-family: '<?= $site->fontname()->text() ?>';
+    font-style: italic;
+    src: url('<?= $site->italicfont()->toFile()->url() ?>');
+  }
+
+  body {
+    font-family: '<?= $site->fontname()->text() ?>';
+  }
+  </style>
   <div id="anim--container">
     <nav id="nav" data-current="<?= $currentNum ?>">
       <?php foreach ($site->children()->listed() as $item): ?>

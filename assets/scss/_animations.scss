@@ -12,7 +12,7 @@
     to {opacity: 0;};
 }
 
-// Media queries and animations...don't have fun together. So we have to separate them out.
+
 
 @keyframes expand {
     from { height: $handle; };

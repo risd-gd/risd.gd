@@ -1,9 +1,7 @@
 <section class="notice <?php if($page->template()->name() == "notice"): ?> notice__isolated<?php endif ?><?php if($page->template()->name() != "notices"): ?> notice__active<?php endif ?>">
     <div class="notice--meta">
-        <p>
-            <span class="notice--timing"><?= $notice->timing()->text() ?><br /></span>
-            <span class="notice--location"><?= $notice->location()->text() ?></span>
-        </p>
+            <div class="notice--timing"><?= $notice->timing()->text() ?></div>
+            <div class="notice--location"><?= $notice->location()->text() ?></div>
     </div>
     <div class="notice--title">
         <h2><?= $notice->title() ?></h2>
@@ -24,6 +22,6 @@
         </a>
     </div>
     <div class="notice--hidden">
-        <p>risd.gd/notices <?= $notice->location()->text() ?></p>
+        risd.gd/notices
     </div>
 </section>

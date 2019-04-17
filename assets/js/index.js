@@ -59,8 +59,8 @@
                 $iframe.contents().find("body").append($currentNotice.clone());
             }
 
-            function print() {
-                updateiframe();
+            function print(currentNotice) {
+                updateiframe(currentNotice);
                 
                 window.frames["printf"].focus();
                 window.frames["printf"].print();
@@ -75,7 +75,7 @@
             $printButton.click(function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                print();
+                print($(this).parent().parent().parent());
             })
 
 

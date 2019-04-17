@@ -1,3 +1,17 @@
 Title: RISD Graphic Design
 
 ----
+
+Fontname: GT Walsheim
+
+----
+
+Regularfont: 
+
+- gt-walsheim-regular.woff2
+
+----
+
+Italicfont: 
+
+- gt-walsheim-regular-oblique.woff2

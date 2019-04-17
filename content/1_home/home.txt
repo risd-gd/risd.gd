@@ -5,7 +5,7 @@ Title: risd.gd
 Builder: 
 
 - 
-  style: full
+  style: left
   videofile:
     - >
       2019-bi-web-horizontal-2-mix-loop-53s.mp4
@@ -21,7 +21,7 @@ Builder:
     id="video"
     src="/media/pages/home/3299703124-1554680395/bi2019.mp4" style="transform: scale(1, 1.015);"
     ></video>
-  caption: ""
+  caption: Here is a caption for this video.
   _key: multimedia
   _uid: multimedia_1554414375792_2440
 - 
@@ -91,3 +91,11 @@ Builder:
   internallink: ""
   _key: link
   _uid: link_1554638306337_11372
+
+----
+
+Keywords: graphic, design
+
+----
+
+Description: RISD Graphic Design.

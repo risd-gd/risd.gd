@@ -23,10 +23,10 @@ switch ($style) {
         <div class="multimedia--embed">    
             <?= $data->embed()->text() ?>
         </div>
-        <?php if($data->caption()->isNotEmpty()): ?>
-            <div class="multimedia--caption">
-                <?= $data->caption()->kt() ?>
-            </div>
-        <?php endif ?>
+    <?php endif ?>
+    <?php if($data->caption()->isNotEmpty()): ?>
+        <div class="multimedia--caption">
+            <?= $data->caption()->kt() ?>
+        </div>
     <?php endif ?>
 </section>

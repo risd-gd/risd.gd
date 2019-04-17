@@ -17,7 +17,14 @@ tabs:
 
   files:
     label: Files
-    icon: file
+    icon: upload
     sections:
       files:
         extends: sections/files
+  
+  metadata:
+    label: Metadata
+    icon: globe
+    sections:
+      metadata:
+        extends: sections/metadata

@@ -566,6 +566,7 @@ main {
             padding-bottom: $unit * 3;
             @include bp-units(padding-bottom, 3);
         }
+
         @include bp-sm- {
             .flickity-page-dots {
                 width: 20%;
@@ -594,13 +595,18 @@ main {
     }
 
     .gallery--images {
+        @include bp-sm {
+            padding: 0;
+        }
+
         grid-column: #{'1 / 9'};
-        padding: -3 * $unit;
 
         img {
             display: block;
             width: 100%;
         }
+
+        
     }
 
     .gallery--caption {
@@ -746,6 +752,9 @@ main {
         .multimedia--embed, .multimedia--video { 
             @include col-collapse-md(#{'5 / 13'}); 
 
+            @include bp-md {
+                padding: 0;
+            }
             padding-left: 0;
             @include bp-units(padding-left, 1);
         }
@@ -756,10 +765,21 @@ main {
         .multimedia--embed, .multimedia--video { 
             @include col-collapse-md(#{'5 / 13'}); 
 
+            @include bp-md {
+                padding: 0;
+            }
+
             padding-right: 0;
             @include bp-units(padding-right, 1);
         }
         .multimedia--caption { @include col-collapse-md(#{'2 / 5'}); }
+    }
+
+    &.multimedia__left, &.multimedia__right {
+        .multimedia--caption {
+            padding-bottom: $unit * 3;
+            @include bp-units(padding-bottom, 3);
+        }
     }
 
     &.multimedia__full {
@@ -808,6 +828,6 @@ main {
     .imagegrid--description {
         @extend %full;
         @extend %type--body;
-        @include col-collapse-md(#{'1 / 4'});
+        @include col-collapse-md(#{'1 / 7'});
     }
 }
