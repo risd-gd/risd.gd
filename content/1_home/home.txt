@@ -5,48 +5,13 @@ Title: risd.gd
 Builder: 
 
 - 
-  style: left
+  style: full
   videofile:
-    - >
-      2019-bi-web-horizontal-2-mix-loop-53s.mp4
-  embed: |
-    <video
-    loop
-    autoplay
-    muted
-    playsinline
-    width="100%"
-    height="100%"
-    type="video/mp4"
-    id="video"
-    src="/media/pages/home/3299703124-1554680395/bi2019.mp4" style="transform: scale(1, 1.015);"
-    ></video>
-  caption: Here is a caption for this video.
+    - risd-grad-show_2019.mp4
+  embed: ""
+  caption: 'The RISD Grad Show opens Thursday, May 22nd from 6–8pm.  (link: https://www.risd.edu/gradshow/ text: See website)'
   _key: multimedia
-  _uid: multimedia_1554414375792_2440
-- 
-  notice: >
-    notices/on-the-edge-of-normal-mfa-gd-biennial
-  _key: notice
-  _uid: notice_1553905115308_1731
-- 
-  caption: Watch on Vimeo
-  title: 'Visiting Designer Lecture: Richard The'
-  isinternal: 'false'
-  externallink: https://vimeo.com/321592368
-  internallink: ""
-  _key: link
-  _uid: link_1553904173880_720
-- 
-  imageselect:
-    - img_7294.jpg
-    - img_7307.jpg
-    - img_7313.jpg
-    - img_7315.jpg
-  style: left
-  caption: 'Installation by (link: https://rohanchau.com/ text: Rohan Chaurasia), (link: https://juliankellydesign.com text: Julian Kelly), and (link: https://vimeo.com/user46697547 text: Fabiola Millan) engaging Olneyville’s Big Top Flea Market.'
-  _key: gallery
-  _uid: gallery_1553904108258_354
+  _uid: multimedia_1556840308516_2510
 - 
   featured: 'true'
   caption: ""
@@ -59,17 +24,56 @@ Builder:
   _key: textblock
   _uid: textblock_1553904214924_895
 - 
-  notice: >
-    notices/as-not-fordethroning-our-absolutes
-  _key: notice
-  _uid: notice_1554671162030_2443
+  style: full
+  videofile: [ ]
+  embed: '<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/332065146?autoplay=1&loop=1&title=0&byline=0&portrait=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>'
+  caption: 'Documentation from the 2019 MFA Biennial. (link: https://vimeo.com/332065146 text: See Vimeo)'
+  _key: multimedia
+  _uid: multimedia_1556886566011_1102
 - 
   imageselect:
-    - dsc_0116.jpg
-  style: right
-  caption: 'Our 2019 Senior Show just wrapped up. (link: http://endless-scroll.github.io text: View the website).'
+    - dsc_0158.jpg
+    - 2019_seniorshow03.jpg
+    - 2019_seniorshow04.jpg
+    - dsc_0036.jpg
+  style: left
+  caption: 'Views of the 2019 senior show. See website with link to student work at (link: http://endless-scroll.risd.gd text: endless-scroll.risd.gd)'
   _key: gallery
-  _uid: gallery_1553904263666_1014
+  _uid: gallery_1553904108258_354
+- 
+  notice: notices/browse-our-fall-2019-electives
+  _key: notice
+  _uid: notice_1556650774526_4371
+- 
+  style: full
+  videofile: [ ]
+  embed: '<div style="padding:63.53% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/333429384?loop=1&title=0&byline=0&portrait=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>'
+  caption: 'Zoo Somaini, BFA 2019. (link: https://vimeo.com/333429384 text: See Vimeo)'
+  _key: multimedia
+  _uid: multimedia_1556240168082_1378
+- 
+  imageselect:
+    - draw.jpg
+    - img_7743.jpg
+    - img_2854.jpg
+    - img_1420.jpg
+  style: left
+  caption: >
+    “The type designer imagines
+    typography, then figures out how to make
+    the parts to express it.” From Cyrus
+    Highsmith’s graduate Type Design
+    course.
+  _key: gallery
+  _uid: gallery_1554980265407_999
+- 
+  caption: Watch on Vimeo
+  title: 'Visiting Designer Lecture: Richard The'
+  isinternal: 'false'
+  externallink: https://vimeo.com/321592368
+  internallink: ""
+  _key: link
+  _uid: link_1553904173880_720
 - 
   caption: Read all about it
   title: >
@@ -94,8 +98,8 @@ Builder:
 
 ----
 
-Keywords: graphic, design
+Keywords: Graphic Design, RISD Graphic Design, graphic design education, graphic design undergraduate
 
 ----
 
-Description: RISD Graphic Design.
+Description: RISD Graphic Design supports the fringe, the nascent, and the highly evolved. We work hard to nurture an ecosystem that leads to new forms and ideas, and not one that simply reaffirms the status quo.

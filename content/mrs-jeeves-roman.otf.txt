@@ -6,4 +6,4 @@ Template: image
 
 ----
 
-Sort: 5
+Sort: 7

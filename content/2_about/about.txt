@@ -23,8 +23,9 @@ Builder:
 - 
   imageselect:
     - 56a8874-x3.jpg
+    - 56a8528-x3.jpg
     - img_1037_w.jpg
-    - 2019_seniorshow04.jpg
+    - img_7294.jpg
   style: full
   caption: ""
   _key: gallery
@@ -34,41 +35,42 @@ Builder:
   description: ""
   items:
     - 
-      title: Graduate Biennial
+      title: 'RISD Grad Show 2019 '
       description: >
-        April 6 – 21. Opens Thursday, April
-        5th at 7pm
-      externallink: >
-        http://risd.gd/notices/on-the-edge-of-normal-mfa-gd-biennial
-      url: ""
-    - 
-      title: 'As Not For: Historical survey of work created by African-American graphic designers'
-      description: April 11 – 25
-      externallink: >
-        http://risd.gd/notices/as-not-fordethroning-our-absolutes
-      url: ""
-    - 
-      title: RISD Grad Show 2019
-      description: >
-        May 23 – June 1, Opens May 22nd,
+        May 23 – June 1. Opens May 22nd,
         6–8pm
       externallink: https://www.risd.edu/gradshow/
       url: ""
     - 
+      title: 'As Not For: Historical survey of work created by African-American graphic designers'
+      description: April 11 – 25, 2019
+      externallink: >
+        http://risd.gd/notices/as-not-fordethroning-our-absolutes
+      url: ""
+    - 
+      title: Graduate Biennial
+      description: April 6 – 21, 2019
+      externallink: >
+        http://risd.gd/notices/on-the-edge-of-normal-mfa-gd-biennial
+      url: ""
+    - 
+      title: 2019 Senior Show
+      description: March 7 – 12, 2019
+      externallink: http://endless-scroll.risd.gd
+    - 
       title: 2018 GD Triennial
-      description: Fall 2018
+      description: Oct 4 – 14, 2018
       externallink: http://risdgdtriennial2018.risd.gd/
   cta: 'The college hosts between two and four student exhibitions per year in its public galleries. RISD GD has its own exhibit and event space, The GD Commons. Learn more at (link: https://commons.risd.gd text: commons.risd.gd)'
   _key: list
   _uid: list_1553834975100_462
 - 
-  imageselect:
-    - 2019_seniorshow11.jpg
-    - dsc_0116.jpg
+  style: full
+  videofile: [ ]
+  embed: '<div style="padding:62.5% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/329658333?autoplay=1&loop=1&title=0&byline=0&portrait=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>'
   caption: ""
-  description: From the 2019 Senior Show
-  _key: imagegrid
-  _uid: imagegrid_1554087864101_330
+  _key: multimedia
+  _uid: multimedia_1554945950705_1626
 - 
   featured: 'true'
   caption: ""
@@ -105,19 +107,29 @@ Builder:
       externallink: >
         https://eyeondesign.aiga.org/what-does-posthuman-design-actually-mean/
     - 
-      title: X, Y, and Z
-      description: James Goggin
-      externallink: http://xyz.practise.studio
+      title: Newly Formed
+      description: Kathleen and Christopher Sleboda
+      externallink: >
+        https://www.instagram.com/newlyformed_official/
     - 
       title: Decolonizing Design
       description: Ramon Tejada
       externallink: >
         https://ramongd.com/Decolonizing-graphic-Design_
     - 
+      title: X, Y, and Z
+      description: James Goggin
+      externallink: http://xyz.practise.studio
+    - 
       title: Graphic Design for the Web
       description: Minkyoung Kim
       externallink: >
         http://minkyoungkim.com/teaching/gdfws19/
+    - 
+      title: Sentiment Analysis
+      description: Rob Giampietro
+      externallink: >
+        https://linedandunlined.com/archive/sentiment-analysis
     - 
       title: 'The Web & Democracy'
       description: John Caserta
@@ -126,7 +138,7 @@ Builder:
       title: Design Studio
       description: 'Our two-year core undergraduate studio '
       externallink: http://ds1820.risd.gd
-  cta: 'RISD GD runs 110 courses a year that teach BFA and MFA candidates fundamentals as well as new topics in design. See our Spring 2019 electives microsite for a look at one semester of electives. (link: http://sp19.risd.gd text: sp19.risd.gd)'
+  cta: 'RISD GD runs 110 courses a year that teach BFA and MFA candidates fundamentals and help generate new knowledge in design. See our (link: http://sp19.risd.gd text: Spring 2019) electives microsite for a look at one semester of electives.'
   _key: list
   _uid: list_1554549874264_1404
 - 
@@ -164,6 +176,14 @@ Builder:
   text: 'General information about the Department and the College (including how to apply) is at (link: http://gd.risd.edu/ text: gd.risd.edu)'
   _key: textblock
   _uid: textblock_1554656198657_4057
+- 
+  style: full
+  videofile:
+    - ds1_zoom.mp4
+  embed: ""
+  caption: ""
+  _key: multimedia
+  _uid: multimedia_1556500778078_7849
 - 
   caption: Take a look
   description: ""
@@ -216,6 +236,6 @@ Builder:
   featured: 'false'
   caption: ""
   cta: ""
-  text: 'The website was designed and developed by 2019 BFA Candidates (link: https://juliankellydesign.com text: Julian Kelly) and (link: http://rohanchau.com text: Rohan Chaurasia), and maintained by the (link: http://risdguild.com text: RISD Design Guild). Faculty advisers are James Goggin and John Caserta. Current typeface is (link: https://www.grillitype.com/typeface/gt-walsheim text: GT Walsheim), licensed from Grilli Type. We welcome submissions of fonts, images and news from students, faculty and alumni. Contact risd.gd@risd.edu'
+  text: 'The website was designed and developed by 2019 BFA Candidates (link: https://juliankellydesign.com text: Julian Kelly) and (link: http://rohanchau.com text: Rohan Chaurasia), and maintained by the (link: http://risdguild.com text: RISD Design Guild). Faculty advisers are James Goggin and John Caserta. Current typeface is Chaver, drawn by Olivia Orr (BFA 2020) in the Spring 2019 Type Design course taught by Richard Lipton. We welcome submissions of fonts, images and news from students, faculty and alumni. Contact risd.gd@risd.edu'
   _key: textblock
   _uid: textblock_1554417273019_3979

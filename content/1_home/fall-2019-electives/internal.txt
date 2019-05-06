@@ -1,0 +1,187 @@
+Title: Fall 2019 Electives
+
+----
+
+Builder: 
+
+- 
+  featured: 'true'
+  caption: ""
+  cta: ""
+  text: Fall 2019 Electives
+  _key: textblock
+  _uid: textblock_1556501199784_11429
+- 
+  caption: Monday
+  description: ""
+  items:
+    - 
+      title: Design in the Posthuman Age
+      description: >
+        1:10–6:10pm / Anastasiia Raina. (to be
+        listed ~ May 15)
+      externallink: >
+        https://eyeondesign.aiga.org/what-does-posthuman-design-actually-mean/
+    - 
+      title: Interactive Text
+      description: 1:10–6:10pm / Rafael Attias
+      externallink: ""
+    - 
+      title: Package Graphics
+      description: 1:10–6:10pm / Aki Nurosi
+      externallink: ""
+    - 
+      title: Reframing the Poster
+      description: 1:10–6:10pm / Nancy Skolos
+      externallink: ""
+    - 
+      title: Computer Utopias
+      description: 1:10–6:10pm / Chris Novello
+      externallink: >
+        http://chrisnovello.com/teaching/risd/computer-utopias/
+  cta: ""
+  _key: list
+  _uid: list_1556485763774_662
+- 
+  caption: Tuesday
+  description: ""
+  items:
+    - 
+      title: Print on Paper
+      description: '1:10–6:10pm / Jan Fairbairn (new!) This class foregrounds tactility—the sense most unique to printed objects. The course covers advanced concepts in use of color, form, layout and pagination to create more intimately produced printed objects. Projects will be student-driven, resulting in a range of hand-produced zines, posters, booklets, posters, prints, paper sculptures, masks and other concrete forms.   Readings, contemporary issues and class discussions will spark themes that encourage students to generate their own content that finds its form into small editioned works.  This course will encourage experimentation, collaboration and visual storytelling. Students will be given an overview of Risograph printing. '
+      externallink: ""
+    - 
+      title: 'Open Re/Search (& DP)'
+      description: 1:10–6:10pm / Hammett Nurosi
+      externallink: ""
+    - 
+      title: Practice of Interaction Design
+      description: >
+        (Course being cancelled) / Jodi Leo is
+        now unavailable for fall :(
+      externallink: ""
+    - 
+      title: Designing with Color
+      description: 1:10–6:10pm / Aki Nurosi
+      externallink: ""
+    - 
+      title: Programming Foundations
+      description: '1:10–6:10pm / Chris Novello (new! to be listed ~ May 10 ) / Draft description: <p>The first goal of the course is to nurture foundations in programmatic thinking. </p>  <p>You’ll learn to code. You will develop agility with fundamental programmatic primitives like: functions, loops, variables, conditional logic, recursion, & data structures. We’ll journey across a number of programming paradigms and techniques: imperative, declarative, objects & messaging, functional & code-as-data, asynchronous & event-driven, etc. You’ll make realtime multiplayer software via websockets, and query popular network services by learning http & REST basics. Begin to gain a programmer’s command of your own machine, understanding the terminal and command line tools. Our targets will be the browser and node.js, so we’ll work in Javascript and languages with a good WASM story.</p>  <p>The second goal of the class is to destroy computation.</P>  <p>Come to question everything in the course. Wonder if code is the right notation / instrument for composing computer media. Recognize a drastic literacy asymmetry in the world. See the hazards of “UI/UX” culture, hazards of how civilization currently regards computation. Consider how client-server relates to governance & truth, and how utopian rhetorics of decentralization could summon new kinds of problems for society. Understand machine-learning as painting. What are new software attitudes? How do we incubate new voices in computation? </P>  <p>No background with code required. Open to majors, non-majors, graduate students. Fine artists strongly encouraged. </p>'
+      externallink: ""
+    - 
+      title: Graduate Studio Elective
+      description: 1:10–6:10pm / TBA (may move days)
+      externallink: ""
+  cta: ""
+  _key: list
+  _uid: list_1556485963492_844
+- 
+  caption: Wednesday
+  description: ""
+  items:
+    - 
+      title: Graphic Design for the Web
+      description: 11:20am–4:20pm / Minkyoung Kim
+      externallink: http://gdfortheweb.minkyoungkim.com/
+  cta: ""
+  _key: list
+  _uid: list_1556497975643_1980
+- 
+  caption: Thursday
+  description: ""
+  items:
+    - 
+      title: Brand Identity
+      description: 8am–1pm / Rich Rose
+      externallink: ""
+    - 
+      title: Type Design
+      description: 8am–1pm / Richard Lipton
+      externallink: ""
+  cta: ""
+  _key: list
+  _uid: list_1556498042996_2238
+- 
+  caption: Friday
+  description: ""
+  items:
+    - 
+      title: 'Wkshp: Photo/Graphic'
+      description: 1:10–6:10pm / Franz Werner
+      externallink: ""
+    - 
+      title: 'Wkshp: Pre-Press and Risograph'
+      description: 1:10–6:10pm / TBA
+      externallink: ""
+    - 
+      title: 'Wkshp: Motion Graphics'
+      description: >
+        1:10–6:10pm / Weixi Zeng (new) This
+        workshop will serve as an introduction
+        to motion graphics — an increasingly
+        essential addition to the graphic design
+        toolkit. We will jump right into
+        developing a professional workflow for
+        After Effects, plus learning how it
+        works in unison with programs like
+        Illustrator and Photoshop. Through a
+        series of in-class demos, quick motion
+        sketches, and a larger scale project,
+        students will acquire and understand
+        various techniques to animate. This
+        workshop will also touch on principles
+        of graphic design and typography,
+        especially the many ways motion can be
+        used to elevate them. In addition,
+        students will learn to observe and pay
+        attention to details, understand how
+        timing and pacing work in storytelling,
+        and potentially open a door for further
+        inquiry into motion graphics as an
+        integral part to their artistic
+        practice. (No prior experience with
+        After Effects required, must be
+        proficient in Adobe Illustrator and
+        Photoshop.)
+      externallink: ""
+    - 
+      title: 'Wkshp: Calligraphy'
+      description: 1:10–6:10pm / Richard Lipton
+      externallink: ""
+    - 
+      title: 'Wkshp: JavaScript Libraries'
+      description: >
+        1:10–6:10pm / Bobby Joe Smith (new) As
+        a programming language, JavaScript
+        provides tremendous potential for
+        artistic expression. Built on top of the
+        language are powerful libraries that
+        make it easier for programmers to
+        transform their websites into platforms
+        for a wide range of applications, such
+        as, interactive 3D models, responsive
+        scalable vector graphics, virtual
+        reality, creative computation, physical
+        computing, spatial audio, desktop
+        applications, and more! In this workshop
+        students will be introduced to a variety
+        of front-end libraries that will open up
+        new avenues for their work on the web.
+        The aim of this workshop is to provide a
+        positive and supportive learning
+        environment for students to experiment
+        with contemporary front-end libraries,
+        grow their web programming skills, and
+        explore the web as a medium for creative
+        expression. Readings, projects, and
+        exercises will encourage critical
+        thinking about the web as a space for a
+        creative practice and prompt students to
+        design new possibilities for the
+        internet.
+      externallink: ""
+  cta: >
+    Workshops are 1 credit and last 4 weeks.
+    Mix and match.
+  _key: list
+  _uid: list_1556498135137_2610

@@ -8,7 +8,7 @@ Fontname: GT Walsheim
 
 Regularfont: 
 
-- gt-walsheim-regular.woff2
+- chaver.otf
 
 ----
 

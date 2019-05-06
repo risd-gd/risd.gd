@@ -1,5 +1,26 @@
-Title: Another subpage?
+Title: New Faculty Appointees
 
 ----
 
 Builder: 
+
+- 
+  featured: 'true'
+  caption: ""
+  cta: ""
+  text: >
+    This presumably is large text that could
+    introduce the topic and issue.
+  _key: textblock
+  _uid: textblock_1555159067330_464
+- 
+  caption: Caption for list
+  description: Description for list
+  items:
+    - 
+      title: Name of person hired
+      description: Description for that person
+      externallink: http://google.com
+  cta: call to action
+  _key: list
+  _uid: list_1555159116419_852
