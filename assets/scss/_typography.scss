@@ -38,6 +38,12 @@
     }
 }
 
+::selection {
+  background: $black;
+  color: $white;
+}
+
+
 %type--body__upper {
     @extend %type--body;
     text-transform: uppercase;

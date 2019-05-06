@@ -27,14 +27,24 @@ nav#nav {
     pointer-events: none;
     z-index: 100;
 
+    @include bp-sm {
+        box-shadow: 0px 5px 10px rgba(0,0,0,0.1);
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-content: stretch;
+    }
+
     .nav--pane {
         height: $handle;
         @include breakpoints(height, $handle-sm, $handle-md, $handle-lg, $handle-xl);
         transition: 0.25s;
-        border-bottom: 1px solid $black;
         @include bp-sm- {
             box-shadow: 0px -5px 10px rgba(0,0,0,0.1);
             border-bottom: none;
+        }
+        @include bp-sm {
+            flex-grow: 1;
         }
     
 
@@ -55,6 +65,10 @@ nav#nav {
                 0 $unit-xl * 2
             );
             text-align: left;
+            
+            @include bp-sm {
+                justify-content: center;
+            }
 
             .pane--subpagetitle {
                 @include bp-sm {
@@ -66,6 +80,7 @@ nav#nav {
         &.pane--handle__active {
             @include bp-sm {
                 background: $white;
+                border-bottom: 4px solid $black;
             }
             @include bp-sm- {
                 height: calc(100vh - #{$handle} * 2);
@@ -89,15 +104,15 @@ nav#nav {
 
 
         &:last-child {
-            @include bp-sm {
-                background: $misterworldwides-yellow;
-            }
             &.anim--expand, &.anim--shrink {
                 // background: $misterworldwides-yellow;
             }
 
             &:not(.pane--handle__active) {
                 background: $misterworldwides-yellow;
+                @include bp-sm {
+                    background: $white;
+                }
             }
 
             .pane--handle {
@@ -136,14 +151,14 @@ nav#nav {
 main {
 
     &#home, &#internal {
-        padding-top: $handle * 3;
+        padding-top: $handle;
         @include breakpoints(padding-top, $handle-sm, $handle-md, $handle-lg, $handle-xl);
         margin-bottom: $handle;
         @include breakpoints(margin-bottom, $handle-sm * 2, $handle-md * 2, $handle-lg * 2, $handle-xl * 2);
     }
 
     &#about {
-        padding-top: $handle * 3;
+        padding-top: $handle;
         @include breakpoints(padding-top, $handle-sm * 2, $handle-md * 2, $handle-lg * 2, $handle-xl * 2);
         margin-bottom: $handle;
         @include breakpoints(margin-bottom, $handle-sm, $handle-md, $handle-lg, $handle-xl);
@@ -151,19 +166,19 @@ main {
 
     &#notices {
         background: $misterworldwides-yellow;
-        padding-top: $handle * 3;
+        padding-top: $handle;
         @include breakpoints(padding-top, $handle-sm * 3, $handle-md * 3, $handle-lg * 3, $handle-xl * 3);
     }
 
     &#notice {
         background: $misterworldwides-yellow;
-        padding-top: $handle * 3;
+        padding-top: $handle;
         display: flex;
         align-items: center;
         justify-content: center;
 
 
-        min-height: calc(100vh - #{$handle} * 2);
+        min-height: calc(100vh - #{$handle});
         @include breakpoints(
             min-height,
             calc(100vh - #{$handle-sm} * 2),

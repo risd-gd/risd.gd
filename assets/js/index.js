@@ -14,14 +14,22 @@
         var marquee = function() {
             var $marqueeContainer = $('.notices--marquee');
 
-            $marqueeContainer.marquee({
-                speed: 30,
-                gap: 0,
-                delayBeforeStart: 0,
-                direction: 'left',
-                duplicated: true,
-                startVisible: true
-            });
+            if ($(window).width() > 700) {
+                
+                $marqueeContainer.marquee({
+                    speed: 30,
+                    gap: 0,
+                    delayBeforeStart: 0,
+                    direction: 'left',
+                    duplicated: true,
+                    startVisible: true
+                });
+            
+            } else {
+                $marqueeContainer.parent().append(`Notices`);
+                $marqueeContainer.parent().removeClass(`__hasmarquee`);
+                $marqueeContainer.remove();
+            }
         }
 
         var carousel = function() {
@@ -32,7 +40,8 @@
                 contain: true,
                 adaptiveHeight: true,
                 wrapAround: true,
-                autoPlay: 3000
+                autoPlay: 3000,
+                lazyLoad: true
               });
         }
 
