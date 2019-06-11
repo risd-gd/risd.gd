@@ -15,17 +15,13 @@
       type="image/png" 
       href="<?php echo kirby()->urls()->assets() . '/img/favicon.png' ?>">
 
-  <?= css(['assets/lib/normalize.css', '@auto']) ?>
   <?= js('assets/lib/jquery-3.3.1.min.js') ?>
   <?= js('assets/lib/jquery.smoothState.min.js') ?>
   <?= js('assets/lib/jquery.marquee.min.js') ?>
-  <?= js('assets/lib/text-balancer.standalone.js') ?>
-  <?= js('assets/js/index.js') ?>
+  <?= js('assets/js/index-5-6.js') ?>
   <?= css(['assets/lib/flickity.css', '@auto']) ?>
   <?= js('assets/lib/flickity.pkgd.min.js') ?>
   <?= css(['assets/css/main.css', '@auto']) ?>
-
-
 
 </head>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-137714894-1"></script>

@@ -47,7 +47,7 @@
 
         // A lot of the following code is informed by the original notices.risd.gd site
         var notices = function() {
-            var $notices = $('.notice'),
+            var $notices = $('.notice__interactive'),
                 $printButton = $('.button--print'),
                 $iframe = $('#printf'),
                 iframeCss = $iframe.data('css');

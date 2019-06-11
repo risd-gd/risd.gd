@@ -33,7 +33,7 @@ nav#nav .nav--pane .pane--handle p, .notice .notice--meta p, .notice .notice--bo
 
 ::selection {
   background: #111111;
-  color: #ffffff; }
+  color: #fff; }
 
 nav#nav .nav--pane .pane--handle {
   text-transform: uppercase;
@@ -209,7 +209,7 @@ a {
 body, html {
   margin: 0;
   padding: 0;
-  background: #ffffff; }
+  background: #fff; }
 
 div {
   box-sizing: border-box; }
@@ -289,7 +289,7 @@ nav#nav {
           display: none; } }
     @media (max-width: 699px) {
       nav#nav .nav--pane.pane--handle__active {
-        background: #ffffff;
+        background: #fff;
         border-bottom: 4px solid #111111; } }
     @media (min-width: 700px) {
       nav#nav .nav--pane.pane--handle__active {
@@ -310,14 +310,14 @@ nav#nav {
         nav#nav .nav--pane.pane--handle__active .pane--handle {
           mix-blend-mode: difference; } }
     nav#nav .nav--pane:not(.pane--handle__active) {
-      background: #ffffff; }
+      background: #fff; }
     nav#nav .nav--pane:last-child {
       white-space: nowrap; }
       nav#nav .nav--pane:last-child:not(.pane--handle__active) {
         background: #FFF974; }
         @media (max-width: 699px) {
           nav#nav .nav--pane:last-child:not(.pane--handle__active) {
-            background: #ffffff; } }
+            background: #fff; } }
       nav#nav .nav--pane:last-child .pane--handle {
         position: relative; }
         nav#nav .nav--pane:last-child .pane--handle.__hasmarquee {
@@ -711,9 +711,9 @@ main #content {
     stroke: #2C3DDE; }
   .link:hover {
     background: #2C3DDE;
-    color: #ffffff; }
+    color: #fff; }
     .link:hover svg {
-      stroke: #ffffff; }
+      stroke: #fff; }
   .link .link--caption {
     grid-column: 1 / 4; }
     @media (max-width: 699px) {
@@ -926,7 +926,7 @@ main #content {
         bottom: 30px; } }
     .gallery .flickity-page-dots .dot {
       background: transparent;
-      border: 1px solid #ffffff;
+      border: 1px solid #fff;
       opacity: 1;
       width: 10px;
       height: 10px; }
@@ -955,7 +955,7 @@ main #content {
         .gallery .flickity-page-dots .dot {
           height: 15px; } }
       .gallery .flickity-page-dots .dot.is-selected {
-        background: #ffffff; }
+        background: #fff; }
   .gallery .flickity-prev-next-button {
     top: 50%;
     bottom: 0;
