@@ -1,6 +1,5 @@
 <!doctype html>
 <!-- Welcome to RISD.GD. Designed by Rohan Chaurasia and Julian Kelly, and developed by Julian. -->
-<!-- The site is built on Kirby CMS, and uses Smoothstate.js for the page transitions. -->
 <html lang="en">
 <head>
 

@@ -173,9 +173,6 @@ main {
     &#notice {
         background: $misterworldwides-yellow;
         padding-top: $handle;
-        display: flex;
-        align-items: center;
-        justify-content: center;
 
 
         min-height: calc(100vh - #{$handle});
@@ -186,7 +183,10 @@ main {
             calc(100vh - #{$handle-lg} * 2),
             calc(100vh - #{$handle-xl} * 2)
 
-        )
+        );
+        @include bp-sm- {
+            padding-top: $handle-sm * 2;
+        }
     }
 
     #content {
@@ -318,7 +318,10 @@ main {
     &.notice__isolated {
         border-top: none;
         grid-auto-flow: row dense;
-        grid-template-rows: auto auto 1fr; 
+        grid-template-rows: auto auto 1fr;
+        @include bp-sm- {
+            padding-top: $unit-sm * 6;
+        }
         
         .notice--title {
             h2 {
@@ -336,9 +339,6 @@ main {
 
         .notice--tools {
             grid-row: 3;
-            .button--permalink {
-                display: none;
-            }
 
             @include bp-sm { 
                 display: none;
