@@ -37,12 +37,14 @@ nav#nav {
 
     .nav--pane {
         height: $handle;
-        @include breakpoints(height, $handle-sm, $handle-md, $handle-lg, $handle-xl);
         transition: 0.25s;
+
         @include bp-sm- {
+            height: $handle-sm;
             box-shadow: 0px -5px 10px rgba(0,0,0,0.1);
             border-bottom: none;
         }
+
         @include bp-sm {
             flex-grow: 1;
         }
@@ -51,20 +53,16 @@ nav#nav {
         .pane--handle {
             @extend %type--body__upper;
             height: $handle;
-            @include breakpoints(height, $handle-sm, $handle-md, $handle-lg, $handle-xl);
             display: flex;
             align-items: center;
             pointer-events: all;
             padding: 0 $unit;
-
-            @include breakpoints(
-                padding,
-                0 $unit-sm * 2,
-                0 $unit-md * 2,
-                0 $unit-lg * 2,
-                0 $unit-xl * 2
-            );
             text-align: left;
+
+            @include bp-sm- {
+                height: $handle-sm;
+                padding: 0 $unit-sm * 2;
+            }
             
             @include bp-sm {
                 justify-content: center;
@@ -84,13 +82,11 @@ nav#nav {
             }
             @include bp-sm- {
                 height: calc(100vh - #{$handle} * 2);
-                @include breakpoints(
-                    height,
-                    calc(100vh - #{$handle-sm} * 2),
-                    calc(100vh - #{$handle-md} * 2),
-                    calc(100vh - #{$handle-lg} * 2),
-                    calc(100vh - #{$handle-xl} * 2)
-                );
+
+                @include bp-sm- {
+                    height: calc(100vh - #{$handle-sm} * 2),
+                }
+
                 .pane--handle {
                     mix-blend-mode: difference;
                 }
@@ -104,9 +100,6 @@ nav#nav {
 
 
         &:last-child {
-            &.anim--expand, &.anim--shrink {
-                // background: $misterworldwides-yellow;
-            }
 
             &:not(.pane--handle__active) {
                 background: $misterworldwides-yellow;
@@ -152,39 +145,40 @@ main {
 
     &#home, &#internal {
         padding-top: $handle;
-        @include breakpoints(padding-top, $handle-sm, $handle-md, $handle-lg, $handle-xl);
         margin-bottom: $handle;
-        @include breakpoints(margin-bottom, $handle-sm * 2, $handle-md * 2, $handle-lg * 2, $handle-xl * 2);
+
+        @include bp-sm- {
+            padding-top: $handle-sm;
+            margin-bottom: $handle-sm * 2;
+        }
     }
 
     &#about {
         padding-top: $handle;
-        @include breakpoints(padding-top, $handle-sm * 2, $handle-md * 2, $handle-lg * 2, $handle-xl * 2);
         margin-bottom: $handle;
-        @include breakpoints(margin-bottom, $handle-sm, $handle-md, $handle-lg, $handle-xl);
+
+        @include bp-sm- {
+            padding-top: $handle-sm * 2;
+            margin-bottom: $handle-sm;
+        }
     }
 
     &#notices {
         background: $misterworldwides-yellow;
         padding-top: $handle;
-        @include breakpoints(padding-top, $handle-sm * 3, $handle-md * 3, $handle-lg * 3, $handle-xl * 3);
+
+        @include bp-sm- {
+            padding-top: $handle-sm * 3;
+        }
     }
 
     &#notice {
         background: $misterworldwides-yellow;
         padding-top: $handle;
-
-
         min-height: calc(100vh - #{$handle});
-        @include breakpoints(
-            min-height,
-            calc(100vh - #{$handle-sm} * 2),
-            calc(100vh - #{$handle-md} * 2),
-            calc(100vh - #{$handle-lg} * 2),
-            calc(100vh - #{$handle-xl} * 2)
 
-        );
         @include bp-sm- {
+            min-height: calc(100vh - #{$handle-sm} * 2);
             padding-top: $handle-sm * 2;
         }
     }
@@ -200,15 +194,7 @@ main {
 // The resultant CSS isn't that DRY, but the SCSS is more readable.
 
 %block {
-    // padding: $unit * 1;
     border-top: 1px solid $transparentblack;
-    // @include breakpoints(
-    //     padding, 
-    //     $unit-sm * 1, 
-    //     $unit-md * 1, 
-    //     $unit-lg * 1, 
-    //     $unit-xl * 1
-    // );
 }
 
 %collapsepaddingbottom {
@@ -220,33 +206,32 @@ main {
 %grid {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    // grid-gap: $unit * 1.5;
 
 
     & > div, & > a {
         box-sizing: border-box;
         padding: $unit * 2;
-        @include bp-units(padding, 1);
+
+        @include bp-sm- {
+            padding: $unit-sm;
+        }
     }
-
-
-    // @include breakpoints(
-    //     grid-gap, 
-    //     $unit-sm * 1.5, 
-    //     $unit-md * 1.5, 
-    //     $unit-lg * 1.5, 
-    //     $unit-xl * 1.5
-    // );
 }
 
 %grid--paddingleft {
     padding-left: $unit * 2;
-    @include bp-units (padding-left, 2);
+
+    @include bp-sm- {
+        padding-left: $unit-sm * 2;
+    }
 }
 
 %grid--paddingright {
     padding-right: $unit * 2;
-    @include bp-units (padding-right, 2);
+
+    @include bp-sm- {
+        padding-right: $unit-sm * 2;
+    }
 }
 
 // Gridline code
@@ -266,31 +251,39 @@ main {
 %iconresize {
     width: $unit * 4;
     height: $unit * 4;
-    @include bp-units(width, 2.5);
-    @include bp-units(height, 2.5);
+
+    @include bp-sm- {
+        width: $unit-sm * 2.5;
+        height: $unit-sm * 2.5;
+    }
 }
 
 // When we have a full screen block, and just need padding for the other elements
 %full { 
     padding: $unit * 2;
-    @include bp-units(padding, 2);
-    padding-top: $unit * 1;
-    @include bp-units(padding-top, 1);
+    padding-top: $unit;
+
+    @include bp-sm- {
+        padding: $unit-sm * 2;
+        padding-top: $unit-sm;
+    }
 }
 
 // Collapse only at the smallest size
 @mixin col-collapse-sm ($full) {
-    grid-column: $full;
-    @include bp-sm {
-        grid-column: 1 / -1;
+    grid-column: 1 / -1;
+
+    @include bp-sm- {
+        grid-column: $full;
     }
 }
 
 // Collapse at medium sizes
 @mixin col-collapse-md ($full) {
-    grid-column: $full;
-    @include bp-sm {
-        grid-column: 1 / -1;
+    grid-column: 1 / -1;
+
+    @include bp-sm- {
+        grid-column: $full;
     }
 }
 
@@ -372,7 +365,9 @@ main {
 
     .notice--title {
         @include col-collapse-md(#{'5 / 13'});
-        @include bp-units(padding-right, 2);
+        @include bp-sm- {
+            padding-right: $unit-sm * 2;
+        }
     }
 
     .notice--tools {
@@ -402,7 +397,9 @@ main {
     .notice--body {
         @extend %type--body;
         @include col-collapse-md(#{'5 / 13'});
-        @include bp-units(padding-right, 2);
+        @include bp-sm- {
+            padding-right: $unit-sm * 2;
+        }
     }
 
     .notice--hidden {
@@ -423,13 +420,9 @@ main {
         grid-column: 1 / -1;
         padding: $unit * 4 $unit * 3;
 
-        @include breakpoints(
-            padding,
-            $unit-sm * 6 $unit-sm * 3,
-            $unit-md * 6 $unit-md * 3,
-            $unit-lg * 6 $unit-lg * 3,
-            $unit-xl * 6 $unit-xl * 3
-        )
+        @include bp-sm- {
+            padding: $unit-sm * 6 $unit-sm * 3;
+        }
     }
 
     .textblock--caption {
@@ -442,10 +435,11 @@ main {
     .textblock--content {
         @extend %type--body;
         @include col-collapse-sm(#{'5 / 13'});
-        grid-row: 1 / 3;
-        @include bp-units(padding-right, 2);
-        @include bp-sm {
-            grid-row: auto;
+        grid-row: auto;
+
+        @include bp-sm- {
+            padding-right: $unit-sm * 3;
+            grid-row: 1 / 3;
         }
     }
 
@@ -490,7 +484,10 @@ main {
         @extend %type--heading;
         @include col-collapse-sm(#{'5 / 10'});
         padding-right: $unit * 2.5;
-        @include bp-units(padding-right, 2.5);
+
+        @include bp-sm- {
+            padding-right: $unit-sm * 2.5;
+        }
     }
     .link--icon {
         grid-column: 12 / 13;
@@ -503,7 +500,9 @@ main {
         display: flex;
         align-items: center;
         padding-right: $unit * 2;
-        @include bp-units(padding-right, 2);
+        @include bp-sm- {
+            padding-right: $unit-sm * 2;
+        }
 
         @include bp-sm {
             display: none;
@@ -530,18 +529,17 @@ main {
             @include col-collapse-md(#{'5 / -1'}); 
             
             padding-left: 0;
-            @include bp-units(padding-left, 1);
+            @include bp-sm- {
+                padding-left: $unit-sm;
+            }
         }
         .flickity-page-dots {
             text-align: right;
             right: calc(100% + #{$unit});
-            @include breakpoints(
-                right,
-                calc(100% + #{$unit-sm}),
-                calc(100% + #{$unit-md}),
-                calc(100% + #{$unit-lg}),
-                calc(100% + #{$unit-xl})
-            );
+
+            @include bp-sm- {
+                right: calc(100% + #{$unit-sm});
+            }
         }
         .gallery--caption { @include col-collapse-md(#{'2 / 5'}); }
     }
@@ -551,8 +549,9 @@ main {
             @include col-collapse-md(#{'1 / 9'}); 
 
             padding-right: 0;
-
-            @include bp-units(padding-right, 1);
+            @include bp-sm- {
+                padding-right: $unit-sm;
+            }
 
             @include bp-sm {
                 padding: 0;
@@ -563,13 +562,9 @@ main {
             .flickity-page-dots {
                 text-align: left;
                 left: calc(100% + #{$unit});
-                @include breakpoints(
-                    left,
-                    calc(100% + #{$unit-sm}),
-                    calc(100% + #{$unit-md}),
-                    calc(100% + #{$unit-lg}),
-                    calc(100% + #{$unit-xl})
-                );
+                @include bp-sm- {
+                    left: calc(100% + #{$unit-sm});
+                }
             }
         }
         .gallery--caption { @include col-collapse-md(#{'9 / 12'}); }
@@ -579,7 +574,9 @@ main {
     &.gallery__left, &.gallery__right {
         .gallery--caption {
             padding-bottom: $unit * 3;
-            @include bp-units(padding-bottom, 3);
+            @include bp-sm- {
+                padding-bottom: $unit-sm * 3;
+            }
         }
 
         @include bp-sm- {
@@ -605,7 +602,10 @@ main {
             @include col-collapse-md(#{'1 / -1'}); 
             @extend %full;
             padding-top: $unit;
-            @include bp-units(padding-top, 1);
+
+            @include bp-sm- {
+                padding-top: $unit-sm;
+            }
         }
     }
 
@@ -635,7 +635,10 @@ main {
     // Following is code specific to Flickity, our carousel library
     .flickity-page-dots {
         bottom: $unit;
-        @include bp-units(bottom, 1);
+
+        @include bp-sm- {
+            bottom: $unit-sm;
+        }
 
         width: 100%;
 
@@ -644,10 +647,12 @@ main {
             border: 1px solid $white;
             opacity: 1;
             width: $unit;
-            @include bp-units(width, 0.5);
-
             height: $unit;
-            @include bp-units(height, 0.5);
+
+            @include bp-sm- {
+                width: $unit-sm * 0.5;
+                height: $unit-sm * 0.5;
+            }
 
             &.is-selected {
                 background: $white;
@@ -710,18 +715,22 @@ main {
         @include col-collapse-md(#{'5 / 13'});
         display: block;
         grid-row: span 1;
+        position: relative;
+
         @include bp-sm- {
             padding-left: 0;
             padding-right: 0;
+            margin-left: $unit-sm;
+            margin-right: $unit-sm * 2;
         }
-        @include bp-units (margin-left, 1);
-        @include bp-units (margin-right, 2);
-        position: relative;
 
         .item--title {
             @extend %type--heading;
             padding-right: $unit * 2.5;
-            @include bp-units(padding-right, 2.5);
+
+            @include bp-sm- {
+                padding-right: $unit-sm * 2.5;
+            }
         }
         .item--icon {
             position: absolute;
@@ -745,7 +754,10 @@ main {
             padding-top: 13px;
             align-self: end;
             padding-right: $unit * 2.5;
-            @include bp-units(padding-right, 2.5);
+
+            @include bp-sm- {
+                padding-right: $unit-sm * 2.5;
+            }
         }
 
         &.list--item__interactive:hover {
@@ -771,7 +783,10 @@ main {
                 padding: 0;
             }
             padding-left: 0;
-            @include bp-units(padding-left, 1);
+
+            @include bp-sm- {
+                padding-left: $unit-sm;
+            }
         }
         .multimedia--caption { @include col-collapse-md(#{'2 / 5'}); }
     }
@@ -785,7 +800,10 @@ main {
             }
 
             padding-right: 0;
-            @include bp-units(padding-right, 1);
+
+            @include bp-sm- {
+                padding-right: $unit-sm;
+            }
         }
         .multimedia--caption { @include col-collapse-md(#{'2 / 5'}); }
     }
@@ -793,7 +811,10 @@ main {
     &.multimedia__left, &.multimedia__right {
         .multimedia--caption {
             padding-bottom: $unit * 3;
-            @include bp-units(padding-bottom, 3);
+
+            @include bp-sm- {
+                padding-bottom: $unit-sm * 3;
+            }
         }
     }
 
@@ -807,7 +828,10 @@ main {
             @include col-collapse-md(#{'1 / -1'}); 
             @extend %full;
             padding-top: $unit;
-            @include bp-units(padding-top, 1);
+            
+            @include bp-sm- {
+                padding-top: $unit-sm;
+            }
         }
     }
 

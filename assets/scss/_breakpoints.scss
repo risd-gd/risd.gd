@@ -80,14 +80,3 @@ $sol: 700px; // small windows, iPads
       #{$property}: $xl;
     }
 }
-
-// We frequently have to scale things by unit values. This makes it easier
-@mixin bp-units($property, $multiplier) {
-  @include breakpoints(
-    $property,
-    $unit-sm * $multiplier,
-    $unit-md * $multiplier,
-    $unit-lg * $multiplier,
-    $unit-xl * $multiplier
-  )
-}

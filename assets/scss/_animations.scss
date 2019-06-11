@@ -1,6 +1,4 @@
 // This page contains the animations for page transitions and hovers
-// DRY (Don't Repeat Yourself) code is lame and unreadable. We're talking about a couple more kilobytes here
-// That's why this is all mixins, so the SCSS is readable.
 
 
 @keyframes fadein {
@@ -12,56 +10,14 @@
     to {opacity: 0;};
 }
 
-
-
 @keyframes expand {
-    from { height: $handle; };
-    to { height: calc(100vh - #{$handle}  * 2); }
-}
-
-@keyframes expand-sm {
     from { height: $handle-sm; };
     to { height: calc(100vh - #{$handle-sm} * 2); }
 }
 
-@keyframes expand-md {
-    from { height: $handle-md; };
-    to { height: calc(100vh - #{$handle-md} * 2); }
-}
-
-@keyframes expand-lg {
-    from { height: $handle-lg; };
-    to { height: calc(100vh - #{$handle-lg} * 2); }
-}
-
-@keyframes expand-xl {
-    from { height: $handle-xl; };
-    to { height: calc(100vh - #{$handle-xl} * 2); } 
-}
-
 @keyframes shrink {
-    from { height: calc(100vh - #{$handle} * 2); }
-    to { height: $handle; };
-}
-
-@keyframes shrink-sm {
     from { height: calc(100vh - #{$handle-sm} * 2); }
     to { height: $handle-sm; };
-}
-
-@keyframes shrink-md {
-    from { height: calc(100vh - #{$handle-md} * 2); }
-    to { height: $handle-md; };
-}
-
-@keyframes shrink-lg {
-    from { height: calc(100vh - #{$handle-lg} * 2); }
-    to { height: $handle-lg; };
-}
-
-@keyframes shrink-xl {
-    from { height: calc(100vh - #{$handle-xl} * 2); }
-    to { height: $handle-xl; };
 }
 
 %anim {
@@ -73,22 +29,17 @@
 
 .anim--shrink {
     @extend %anim;
-    animation-name: shrink;
-    @include breakpoints(animation-name, shrink-sm, shrink-md, shrink-lg, shrink-xl);
-
-
-    @include bp-sm {
-        animation-name: none;
+    animation-name: none;
+    @include bp-sm- {
+        animation-name: shrink;
     }
 }
 
 .anim--expand {
     @extend %anim;
-    animation-name: expand;
-    @include breakpoints(animation-name, expand-sm, expand-md, expand-lg, expand-xl);
-
-    @include bp-sm {
-        animation-name: none;
+    animation-name: none;
+    @include bp-sm- {
+        animation-name: expand;
     }
 }
 
