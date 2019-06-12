@@ -168,6 +168,7 @@ main {
         padding-top: $handle;
 
         @include bp-sm- {
+            min-height: calc(100vh - #{$handle-sm} * 2);
             padding-top: $handle-sm * 3;
         }
     }
@@ -331,6 +332,7 @@ main {
         }
 
         .notice--tools {
+            padding-top: 0;
             grid-row: 3;
 
             @include bp-sm { 
@@ -341,10 +343,12 @@ main {
 
         .notice--body {
             @include col-collapse-md(#{'7 / 13'});
-            grid-row: 1 / 4;
+            grid-row: auto;
             @extend %grid--paddingright;
-            @include bp-sm {
-                grid-row: auto;
+            padding-top: $unit;
+            @include bp-sm- {
+                grid-row: 1 / 4;
+                padding-top: $unit-sm;
             }
         }
 
@@ -373,6 +377,7 @@ main {
     .notice--tools {
         @include col-collapse-md(#{'1 / 5'});
         @extend %grid--paddingleft;
+        padding-top: 0;
 
         .notice--button {
             background: none;
@@ -397,6 +402,7 @@ main {
     .notice--body {
         @extend %type--body;
         @include col-collapse-md(#{'5 / 13'});
+        padding-top: 0;
         @include bp-sm- {
             padding-right: $unit-sm * 2;
         }
@@ -404,6 +410,56 @@ main {
 
     .notice--hidden {
         display: none;
+    }
+}
+
+#pagination {
+    @extend %block;
+    @extend %grid;
+
+    .pagination--num {
+        @extend %type--heading__upper;
+        grid-column: span 6;
+        display: flex;
+        align-items: center;
+        @include bp-sm- {
+            grid-column: 5 / 7;
+        }
+    }
+
+    .pagination--next, .pagination--prev {
+        @extend %type--heading__upper;
+        grid-column: span 3;
+        display: flex;
+        align-items: center;
+        padding-right: $unit * 2;
+
+        @include bp-sm- {
+            grid-column: span 1;
+        }
+        svg {
+            @extend %iconresize;
+            stroke: $black;
+        }
+        &:hover {
+            background: $black;
+            color: $misterworldwides-yellow;
+
+            svg {
+                stroke: $misterworldwides-yellow;
+            }
+        }
+    }
+
+    .pagination--prev {
+        text-align: right;
+    }
+
+    .pagination--next {
+    }
+
+    a {
+        display: block;
     }
 }
 
@@ -828,7 +884,7 @@ main {
             @include col-collapse-md(#{'1 / -1'}); 
             @extend %full;
             padding-top: $unit;
-            
+
             @include bp-sm- {
                 padding-top: $unit-sm;
             }

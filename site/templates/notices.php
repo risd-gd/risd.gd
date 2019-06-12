@@ -31,27 +31,28 @@
         </div>
       </section>
     <?php endforeach ?>
+    <?php if ($notices->pagination()->hasPages()): ?>
+        <div id="pagination">
+            
+            <div class="pagination--num">
+                <?= $notices->pagination()->page() . ' / ' . $notices->pagination()->pages() ?>
+            </div>
+
+            <?php if ($notices->pagination()->hasPrevPage()): ?>
+            <a class="pagination--prev" href="<?= $notices->pagination()->prevPageURL() ?>" data-target=3>
+                <?php snippet('svg/svg-newer') ?>
+            </a>
+            <?php endif ?>
+
+            <?php if ($notices->pagination()->hasNextPage()): ?>
+            <a class="pagination--next" href="<?= $notices->pagination()->nextPageURL() ?>" data-target=3> 
+                 <?php snippet('svg/svg-older') ?>
+            </a>
+            <?php endif ?>
+
+        </div>
+    <?php endif ?>
   </div>
-  <?php if ($notices->pagination()->hasPages()): ?>
-    <div id="pagination">
-
-    <?php if ($notices->pagination()->hasNextPage()): ?>
-    <a class="pagination--next" href="<?= $notices->pagination()->nextPageURL() ?>">
-        ‹ older posts
-    </a>
-    <?php endif ?>
-
-    <?php if ($notices->pagination()->hasPrevPage()): ?>
-    <a class="pagination--prev" href="<?= $notices->pagination()->prevPageURL() ?>">
-        newer posts ›
-    </a>
-    <?php endif ?>
-    <div class="">
-        <?= $notices->pagination()->page() . '/' . $notices->pagination()->pages() ?>
-    </div>
-
-    </div>
-<?php endif ?>
 </main>
 
 

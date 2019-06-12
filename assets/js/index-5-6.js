@@ -110,7 +110,7 @@
             onStart: {
                 duration: 500,
                 render: function (url, $container) {
-                    $site.animate({scrollTop: 0});
+                    // $site.animate({scrollTop: 0});
                 }
             },
             onReady: {
