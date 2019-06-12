@@ -2,7 +2,7 @@
 
 <main id="notices">
   <div id="content" class="anim--fadein">
-    <?php foreach ($notices = $page->children()->listed()->paginate(10) as $notice): ?>
+    <?php foreach ($notices = $page->children()->listed()->paginate(15) as $notice): ?>
       <section class="notice notice__interactive">
         <div class="notice--meta">
             <div class="notice--timing"><?= $notice->timing()->text() ?></div>
