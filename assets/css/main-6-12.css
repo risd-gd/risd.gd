@@ -287,7 +287,7 @@ nav#nav .nav--pane .pane--handle {
 }
 @media (min-width: 700px) and (min-width: 700px) {
   nav#nav .nav--pane.pane--handle__active {
-    height: calc(100vh - 2rem * 2);
+    height: calc(100vh - 2rem * 1);
   }
 }
 @media (min-width: 700px) {

@@ -84,7 +84,7 @@ nav#nav {
                 height: calc(100vh - #{$handle} * 2);
 
                 @include bp-sm- {
-                    height: calc(100vh - #{$handle-sm} * 2),
+                    height: calc(100vh - #{$handle-sm} * 1),
                 }
 
                 .pane--handle {
