@@ -1,5 +1,8 @@
 # Kirby .htaccess
 
+# php_value opcache.revalidate_freq 0
+
+
 # rewrite rules
 <IfModule mod_rewrite.c>
 
@@ -21,9 +24,17 @@ RewriteEngine on
 #
 # RewriteBase /
 
+
+
 # block files and folders beginning with a dot, such as .git
 # except for the .well-known folder, which is used for Let's Encrypt and security.txt
 RewriteRule (^|/)\.(?!well-known\/) index.php [L]
+
+# block direct access to Kirby and the Panel sources
+RewriteRule ^kirby/(.*) index.php [L]
+
+# block all files in the site folder from being accessed directly
+RewriteRule ^site/(.*) index.php [L]
 
 # block text files in the content folder from being accessed directly
 RewriteRule ^content/(.*)\.(txt|md|mdown)$ index.php [L]

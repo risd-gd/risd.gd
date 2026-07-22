@@ -1,105 +1,17 @@
-Title: risd.gd
+Title: Home
 
 ----
 
-Builder: 
-
-- 
-  style: full
-  videofile:
-    - risd-grad-show_2019.mp4
-  embed: ""
-  caption: 'The RISD Grad Show opens Thursday, May 22nd from 6–8pm.  (link: https://www.risd.edu/gradshow/ text: See website)'
-  _key: multimedia
-  _uid: multimedia_1556840308516_2510
-- 
-  featured: 'true'
-  caption: ""
-  cta: ""
-  text: '(link: https://www.instagram.com/p/Bv7TQb8F_nR/?utm_source=ig_web_copy_link text: Glimpse back) at student, faculty and alumni work (and faces) on display at this year’s RISD Unbound Book Fair.'
-  twocolumns: 'false'
-  title: ""
-  title2: ""
-  text2: ""
-  _key: textblock
-  _uid: textblock_1553904214924_895
-- 
-  style: full
-  videofile: [ ]
-  embed: '<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/332065146?autoplay=1&loop=1&title=0&byline=0&portrait=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>'
-  caption: 'Documentation from the 2019 MFA Biennial. (link: https://vimeo.com/332065146 text: See Vimeo)'
-  _key: multimedia
-  _uid: multimedia_1556886566011_1102
-- 
-  imageselect:
-    - dsc_0158.jpg
-    - 2019_seniorshow03.jpg
-    - 2019_seniorshow04.jpg
-    - dsc_0036.jpg
-  style: left
-  caption: 'Views of the 2019 senior show. See website with link to student work at (link: http://endless-scroll.risd.gd text: endless-scroll.risd.gd)'
-  _key: gallery
-  _uid: gallery_1553904108258_354
-- 
-  notice: notices/browse-our-fall-2019-electives
-  _key: notice
-  _uid: notice_1556650774526_4371
-- 
-  style: full
-  videofile: [ ]
-  embed: '<div style="padding:63.53% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/333429384?loop=1&title=0&byline=0&portrait=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>'
-  caption: 'Zoo Somaini, BFA 2019. (link: https://vimeo.com/333429384 text: See Vimeo)'
-  _key: multimedia
-  _uid: multimedia_1556240168082_1378
-- 
-  imageselect:
-    - draw.jpg
-    - img_7743.jpg
-    - img_2854.jpg
-    - img_1420.jpg
-  style: left
-  caption: >
-    “The type designer imagines
-    typography, then figures out how to make
-    the parts to express it.” From Cyrus
-    Highsmith’s graduate Type Design
-    course.
-  _key: gallery
-  _uid: gallery_1554980265407_999
-- 
-  caption: Watch on Vimeo
-  title: 'Visiting Designer Lecture: Richard The'
-  isinternal: 'false'
-  externallink: https://vimeo.com/321592368
-  internallink: ""
-  _key: link
-  _uid: link_1553904173880_720
-- 
-  caption: Read all about it
-  title: >
-    What Does “Posthuman Design”
-    Actually Mean?
-  isinternal: 'false'
-  externallink: >
-    https://eyeondesign.aiga.org/what-does-posthuman-design-actually-mean/
-  internallink: ""
-  _key: link
-  _uid: link_1553904473456_1610
-- 
-  caption: Free download
-  title: >
-    Download Jack Fahnestock’s (BFA ’20)
-    font ‘TINY’ from Velvetyne
-  isinternal: 'false'
-  externallink: http://velvetyne.fr/fonts/tiny/
-  internallink: ""
-  _key: link
-  _uid: link_1554638306337_11372
+Blocks: [{"content":{"title":"HERE FOR NOW: RISD Graphic Design Senior Show","mediatype":"video","videofile":["file://OBQjdtU7Ay1m32g9"],"galleryfile":[],"width_video":"full-width","width_gallery":"right","embed":"","caption":"HERE FOR NOW: RISD Graphic Design Senior Show\n**-*Woods-Gerry Gallery: March 21 to April 1, 2025\n**->OPENING RECEPTION: Thursday, March 20, 6:00-7:30pm"},"id":"c0dacd9e-9a5a-4e9e-b944-877eed9f98df","isHidden":false,"type":"media"},{"content":{"title":"💐SPRING @ RISD GD","mediatype":"image","videofile":["file://MYdj4AQWNOqvb0wg"],"galleryfile":["file://MYdj4AQWNOqvb0wg"],"width_video":"half-width","width_gallery":"right","embed":"","caption":"→Talk: HERE @ RISD WITH DR. CHERYL D. MILLER \nThursday, February 20, 2025–6:30 pm \n\n→Talk + Workshop: MASATO NAKADA/Happening Studio\nCreative Web Coding Workshop \nMarch 21–22, 2025\n\t\n→Talk + Book Signing: JON KEY\nBlack, Queer & Untold: \nA New Archive of Designers, Artists and Trailblazers\nAs part of the UNBOUND Book Fair \nSaturday, April 5, 2025\n\n→Talk + Workshop: ALICIA MÁRQUEZ\nApril 25–26, 2025\n\nSpring '25 @ RISD GD identity and poster designed by Selina Wu."},"id":"6cc50279-1b1d-4445-8232-7a821f187365","isHidden":false,"type":"media"},{"content":{"title":" HERE @ RISD ","mediatype":"image","videofile":[],"galleryfile":["file://s0ku94Bj9U2dsKF9","file://BoVDHmSAMS535m15","file://VnMH2e55HAD7mHlC","file://USxgPYrZ1oHeSJsu"],"width_video":"","width_gallery":"full","embed":"","caption":"HERE @ RISD WITH DR. CHERYL D. MILLER’s Book Talk and signing, Metcalf Auditorium, RISD Museum, Thursday, February 20, 2025. The talk, moderated by RISD ID Associate Professor, Jess Brown, was filled with warmth, laughter, and insightful conversations—blending history, wisdom, and inspiration for the path ahead."},"id":"a1649502-cc4b-4b40-9ec2-0bf35eb46c2b","isHidden":false,"type":"media"},{"content":{"title":"Wintersession Collection","mediatype":"image","videofile":[],"galleryfile":["file://MWmqhkUJk1xiWjqN","file://wZ1XlksUHM38eatQ","file://A1Vr8HDDQ3HAAbfb","file://Rlvv0wzmgtvVtjy2"],"width_video":"","width_gallery":"right","embed":"","caption":"\"Wintersession Collection\" Part 01 showcasing GD WS 25 Courses taught by our graduate students: Jo Zixuan, Saachi Mehta, Osmond Tshuma, Selina Wu and Luisa Heindl."},"id":"bce78585-b3ec-4f9c-b41f-e059e144cb92","isHidden":false,"type":"media"},{"content":{"title":"Welcome to Spring Semester 2025!","mediatype":"image","videofile":[],"galleryfile":["file://H08zFEe1XWh1prWD"],"width_video":"","width_gallery":"full","embed":"","caption":"Welcome to Spring Semester 2025!"},"id":"ba042925-4603-4e2f-86ba-0e9a8f4b7d9d","isHidden":false,"type":"media"},{"content":{"title":"ATLAS","mediatype":"image","videofile":[],"galleryfile":["file://eslN2QrdBJMG3YMo"],"width_video":"","width_gallery":"full","embed":"","caption":"ATLAS, fall 2024 edition: A project of the Graduate Studio 1 cohort led by Bethany Johns and Ramon Tejada on view in GD Commons until 11/30/24. Installation design by Clara Cayosa in collaboration with Ramon Tejada."},"id":"524f6a6d-1c1d-4c71-aaf2-b0bb02a41358","isHidden":false,"type":"media"},{"content":{"title":"Faculty News: Elizabeth Goodspeed — Young Gun Winners","mediatype":"image","videofile":[],"galleryfile":["file://6szppfymAUoB2YU9"],"width_video":"","width_gallery":"left","embed":"","caption":"Congratulations to RISD Brown Dual Degree alum and faculty member, Elizabeth Goodspeed for being selected as one of this year’s Young Guns Winners! From the One Club’s website: Elizabeth Goodspeed is an independent designer and art director based in Providence, Rhode Island. She’s collaborated with many studios, including Interbrand, Pentagram, Mythology, High Tide, and Gander, and has also worked directly with clients like Herman Miller, Phaidon / Monacelli, HBO, Google, and The Whitney Museum. In addition to her creative practice, Elizabeth is also the US Editor-at-large for It’s Nice That, publishes a newsletter about design history called \"Casual Archivist,\" and writes for a range of publications like Fast Company, PORT, and AIGA Eye on Design about visual culture and other trend- and archive-related topics. She teaches at RISD and Parsons."},"id":"f43f39dc-8058-49fc-b80b-b56c23c69c3a","isHidden":false,"type":"media"},{"content":{"title":"AMALGAM #5","mediatype":"image","videofile":[],"galleryfile":["file://C9Jc3lrL6UNdmDsF"],"width_video":"full-width","width_gallery":"right","embed":"","caption":"To celebrate the launch of AMALGAM #5, curated, designed, and produced by (link: https://www.risd.edu/academics/graphic-design/faculty/pouya-ahmadi text: Associate Professor, Pouya Ahmadi), RISD GD is holding an event on Wednesday, October 30th, from 5:00–7:00 pm in the GD Commons.\n    The fifth installment of Amalgam delves into the politics of alienation, exploring how these dynamics act as conduits for violence in its many forms.\n    The launch, moderated by Katherine Cooper, will feature a brief note by the editor and designer, Pouya Ahmadi, followed by readings from the issue and a conversation between the editor and contributors, Zoe Samudzi, Saman Sajasi, Stephanie Choi, and German Pallares Avita"},"id":"03a22f16-d9f2-4333-b262-2ed1e70015d3","isHidden":false,"type":"media"},{"content":{"title":"Faculty News: Douglass Scott — AAS","mediatype":"image","videofile":[],"galleryfile":["file://aGVhi5Kj9RDOJfhX"],"width_video":"full-width","width_gallery":"left","embed":"","caption":"Congratulations to (link: https://www.risd.edu/academics/graphic-design/faculty/doug-scott text: Senior Critic Douglass Scott) who has been elected to membership in the (link: https://www.americanantiquarian.org text: American Antiquarian Society (AAS)), a 212-year-old national research library and community of learners dedicated to discovering and sharing a deeper understanding of the American past. AAS members range from scholars, collectors, and librarians to artists, writers, and history enthusiasts. Since the Society’s founding in 1812, fourteen United States presidents, more than seventy-five Pulitzer Prize winners, scores of Bancroft Prize winners, many Guggenheim fellows, and several MacArthur Award winners have been elected to membership"},"id":"d51b48a0-772b-4a09-b6a5-02f58cf07525","isHidden":false,"type":"media"},{"content":{"title":"GD and NCSS workshop","mediatype":"image","videofile":[],"galleryfile":["file://aPl5yzZO8q678Glt"],"width_video":"","width_gallery":"full","embed":"","caption":"(link: https://www.risd.edu/academics/graphic-design/faculty/anastasiia-raina text: Associate Professor Anastasiia Raina) organized an engaging two-day workshop for graduate and undergraduate students hosted by the GD department and NCSS (Nature-Culture Sustainability Studies). This event was held in collaboration with Laura Maria Gonzalez, a faculty member from Cornell University and a researcher at the MIT Media Lab, specializing in computational design, 3D printing, and synthetic biology. The workshop explored nature's diverse patterns and biomorphic structures to inspire innovative approaches to shaping letterforms."},"id":"e8374bbc-68c1-4829-85ee-63911894b134","isHidden":false,"type":"media"},{"content":{"title":"Fall 2024 Speaker Series","mediatype":"video","videofile":["file://HERieSt2nql98OAx"],"galleryfile":[],"width_video":"full-width","width_gallery":"","embed":"","caption":"We’re pleased to announce the Fall 2024 Speaker Series. Please join us in person to hear from: (link: https://risd.gd/notices/fall-speaker-series-annika-hansteen-izora text: Annika Hansteen-Izora), (link: https://risd.gd/notices/fall-speaker-series-ece-canli text: Ece Canli), and (link: https://risd.gd/notices/fall-speaker-series-livia-foldes text: Livia Foldes)."},"id":"838a670f-b044-4fbc-b4c7-c7473427e140","isHidden":false,"type":"media"},{"content":{"title":"2024 Triennial ","mediatype":"image","videofile":[],"galleryfile":["file://03lxQhEW1HAM3rfD","file://elcwpAKsuftAbUur","file://i91dXJX4MZApPMX1"],"width_video":"full-width","width_gallery":"full","embed":"","caption":"Please visit *Expiration Date,* the 2024 Graphic Design Triennial Exhibition. Opening Reception was on view from October 11th to the 20th.  See the website at <a href=\"https://expirationdate.risd.gd/\" target=\"_new\">expirationdate.risd.gd</a>."},"id":"ee12091e-72e9-474a-a9d8-479323ab6f74","isHidden":false,"type":"media"},{"content":{"title":"Faculty News: Ramon Tajeda — Vicek Prize","mediatype":"image","videofile":[],"galleryfile":["file://uafcLheAkcCNfJHH"],"width_video":"full-width","width_gallery":"full","embed":"","caption":"RISD Graphic Design is thrilled to announce that (link: https://www.risd.edu/academics/graphic-design/faculty/ramon-tejada text: Associate Professor Ramon Tejada) has been awarded the 2024 Vilcek Prize in Design. (link: https://vilcek.org/prizes/prize-recipients/ramon-tejada/ text: From the Vilcek Foundation website): “The Vilcek Prizes are awarded to immigrants with a legacy of major accomplishment in the biomedical sciences and the arts and humanities, including: literature, culinary arts, music, filmmaking, architecture, dance, design, fashion, theatre, and visual arts. The Vilcek Prize includes a $100,000 cash award. Ramon Tejada receives the Vilcek Prize in Design for his leadership and commitment to accessibility and decolonization in design practices, and for his pedagogical approach that centers collaboration, inclusion, and radical innovation.” Congratulations Ramon!"},"id":"1f9b5416-2367-449c-85fa-33a895c02569","isHidden":false,"type":"media"},{"content":{"title":"Overlap/Dissolve","mediatype":"image","videofile":[],"galleryfile":["file://bOptIaIpRkH8cO3L"],"width_video":"full-width","width_gallery":"left","embed":"","caption":"To celebrate the launch of their newly-published book (link: https://www.amazon.com/dp/1957183314?ref_=cm_sw_r_cp_ud_dp_ZM3THD6SGRZSY10DCV4H text: Overlap/Dissolve), (link: https://www.risd.edu/academics/graphic-design/faculty/nancy-skolos text: Nancy Skolos) and (link: https://www.risd.edu/academics/graphic-design/faculty/tom-wedell text: Tom Wedell) mounted an exhibition of 36 posters in the GD Commons."},"id":"f3904a6c-79af-4025-88e7-3eae161954a8","isHidden":false,"type":"media"},{"content":{"title":"BFA DP Presentation ","mediatype":"image","videofile":[],"galleryfile":["file://WIC5M7clQzJGpNUt"],"width_video":"full-width","width_gallery":"right","embed":"","caption":"Graduating seniors finish with a semester-long degree project. Pictured here is Mizuki Hanada and her project “Collect(ive) Intentions,” advised by Lucy Hitchcock."},"id":"c2f26e93-1036-4026-8c79-4e9e3b998f9c","isHidden":false,"type":"media"},{"content":{"title":"MFA Thesis Presentation","mediatype":"image","videofile":[],"galleryfile":["file://PwexSqDozSQG53oH"],"width_video":"full-width","width_gallery":"left","embed":"","caption":"'Masters students present their body of work in a gallery setting and submit a catalog raisonné to the library. *Pictured: (link: https://zoepulley.com/ text: Zoë Pulley) presenting her thesis, titled “Surfacing.”*'"},"id":"ce8b641d-f8b3-4072-9338-89e95e12e31a","isHidden":false,"type":"media"},{"content":{"title":"The Inauguration of President Crystal Willams","mediatype":"image","videofile":[],"galleryfile":["file://BPjYog7UiOj3dq7t","file://YliyUxe1Se0IX01u","file://RfI5qSoANpL5XVcI"],"width_video":"full-width","width_gallery":"right","embed":"","caption":"To celebrate the inauguration of President Crystal Willams, students and faculty contributed works and printed materials to “New Space(s),” a 2-day collective reading room installation in the GD commons."},"id":"eb314fd3-b4f2-4852-a71a-e112ae5c8c0e","isHidden":false,"type":"media"},{"content":{"title":"Student Work: OnX Variable","mediatype":"video","videofile":["file://gr2jS2rb7YilC9Hy"],"galleryfile":[],"width_video":"full-width","width_gallery":"right","embed":"","caption":"*OnX Variable* is a custom typeface and website from Hwan Lee (BFA 2023). (link: https://hwlee40.github.io/webtype-jacob/projects/project3/index.html text: See the project.)"},"id":"6c58c6aa-f192-4858-8b81-4be4eb8bd369","isHidden":false,"type":"media"},{"content":{"title":"Junior Review","mediatype":"image","videofile":[],"galleryfile":["file://lmkiZyD5d495ZH2B"],"width_video":"full-width","width_gallery":"full","embed":"","caption":"Undergraduate juniors exhibit their body of work from the entire academic year  to the RISD community in a *book-fair* type format."},"id":"05cf4fb6-0457-47c2-b47f-2138b5a5191c","isHidden":false,"type":"media"},{"content":{"caption":"FEATURED","title":"Sun Ho Lee (MFA 2023) and her thesis work featured on CBS Evening News.","isinternal":"false","externallink":"https://www.youtube.com/watch?v=816QjEsqmBc","internallink":""},"id":"c94c36a7-c595-4721-b001-0a46836e61de","isHidden":false,"type":"link"},{"content":{"caption":"Open Call","title":"New Spaces in GD: A 2-day collective reading room installation in the GD Commons","isinternal":"false","externallink":"https://risd.gd/notices/open-call-new-spaces-in-gd-reading-room","internallink":""},"id":"bcbb53bc-1482-40bd-8a11-b5eaa66fae6b","isHidden":false,"type":"link"},{"content":{"caption":"Check it out","title":"RISD faculty Christopher + Kathleen Sleboda & alumnus Bobby Joe Smith III speaking at Ezhishin conference","isinternal":"false","externallink":"https://www.typedrivesculture.com/ezhishin","internallink":""},"id":"4e060417-95f6-4de0-aaaf-0483149c5518","isHidden":false,"type":"link"},{"content":{"caption":"Buy student work","title":" The M3DIUM X RISD Collection sells NFTs from students and alumni","isinternal":"false","externallink":"https://opensea.io/collection/m3dium-risd","internallink":""},"id":"f67bc75f-9b05-4c34-bad2-0d23689e6d31","isHidden":false,"type":"link"},{"content":{"caption":"Check it out","title":"Sophomores completed the year by making collaborative mini-sites","isinternal":"false","externallink":"https://lexicon22.glitch.me","internallink":""},"id":"58e80fae-4e20-4179-ab64-9c069608925c","isHidden":false,"type":"link"},{"content":{"caption":"Recently Published","title":"<em>I Got Something to Say — Poster Inventory, 2013–2021</em> from faculty Kathleen and Christopher Sleboda.","isinternal":"false","externallink":"https://draw-down.com/products/i-got-something-to-say-poster-inventory-2013-2021","internallink":""},"id":"bd13b240-c32b-45ba-be2b-7d74dc4982ef","isHidden":false,"type":"link"},{"content":{"caption":"Give it a look","title":"Watch faculty member Richard Lipton present the research that led to <em>Dunhill Script,</em> his latest typeface.","isinternal":"false","externallink":"https://youtu.be/_zmodHxs1XY","internallink":""},"id":"b7c91b65-b273-487e-913a-899bc845f0a4","isHidden":false,"type":"link"},{"content":{"title":"Student Work: Tide Machine","mediatype":"image","videofile":[],"galleryfile":["file://Sxgf1PSkkNsjYYBO"],"width_video":"full-width","width_gallery":"full","embed":"","caption":"*(link: https://www.lian.land/tide-machine/ text: Tide Machine)* pulls data from ocean tide stations across the world to display the rise and fall of water levels at your location. Created in Graduate Studio 2 by (link: https://www.lian.land/ text: Lian Fumerton-Liu), MFA 2023 (with assistance from Colin Dunn)."},"id":"3736c312-8568-4f2f-8078-ad83e682cd2f","isHidden":false,"type":"media"},{"content":{"title":"Student Work: Recycled Pages","mediatype":"image","videofile":[],"galleryfile":["file://3ZcCAWdUc2vGUeXK"],"width_video":"full-width","width_gallery":"full","embed":"","caption":"*Recycled Pages*, an exhibition of photographs of in-situ paper-based collages by Ben Denzer (MFA 2023), was up in the GD Commons in early April. (link: https://bendenzer.com/Recycled-Pages text: See photographs of the exhibition)."},"id":"b20b8e2d-5667-45af-896d-4a4821f0db0d","isHidden":false,"type":"media"},{"content":{"title":"Code Lab","mediatype":"image","videofile":[],"galleryfile":["file://JonxWD3jwUMog49E","file://fD0UAJ8cPYvxPq5J","file://yAPOQmf7iDhRPVFE","file://RTlDcqvzDZsou07F"],"width_video":"full-width","width_gallery":"left","embed":"","caption":"Code Lab, organized by faculty Minkyoung Kim and Marie Otsuka, ran weekly tutoring sessions and workshops throughout the spring semester. Photographs from an AR workshop offered by Halim Lee (MFA 2023), who also designed the identity system for Code Lab. (link: http://risdcodelab.org/ text: More information on Code Lab.)"},"id":"d4e81b27-ab4e-4d9f-a43a-360c070a42d2","isHidden":false,"type":"media"},{"content":{"title":"The Black Biennial","mediatype":"image","videofile":[],"galleryfile":["file://x6fxgUYl0lGDstKP","file://Hxo9ZvSHUxqxxtEY","file://BXnEV20CdaQSTWTl","file://mPgQQDU23SmLBvPv"],"width_video":"full-width","width_gallery":"right","embed":"","caption":"*(link: https://www.risd.edu/news/stories/the-black-biennial-2022 text: The Black Biennial)* was a student-led exhibition that brought together Black artists, designers and makers. Jenni Oughton's (MFA 2023) *(link: http://www.jennioughton.com/graphic-design#/incomplete-archive-of-capturing-blackness/ text: An Incomplete Archive of Capturing Blackness)* solicited visitors to suggest stories or artists that they believe have been “written out” of traditional narratives of Black History. Identity by Zoë Pulley (MFA 2023)."},"id":"529dde35-c9a0-41d4-a482-57aaaf883e03","isHidden":false,"type":"media"},{"content":{"title":"Student Work: Marigold","mediatype":"image","videofile":[],"galleryfile":["file://y3K0tbK3bdPzgl8I"],"width_video":"full-width","width_gallery":"left","embed":"","caption":"<em>Marigold,</em> from MFA student Serena Ho, is a colored ornamental typeface inspired by the organic forms of the plant kingdom. <a href=\"https://sph2116.github.io/project3-input-output/about.html\" target=_new>See more and download.</a>"},"id":"fb97a93d-606f-45fb-b87f-b933f70274ae","isHidden":false,"type":"media"},{"content":{"featured":"true","caption":"","cta":"","text":"Thank you for visiting. For information on how and when to apply to our programs, visit (link: https://www.risd.edu/admissions text: risd.edu)"},"id":"1e064876-c077-4df6-9983-0fa4132b2165","isHidden":false,"type":"textblock"}]
 
 ----
 
-Keywords: Graphic Design, RISD Graphic Design, graphic design education, graphic design undergraduate
+Keywords: Graphic Design, RISD Graphic Design, graphic design education, graphic design undergraduate, risd graphic design faculty, risd gd, RISD GD, MFA graphic design programs, RISD
 
 ----
 
-Description: RISD Graphic Design supports the fringe, the nascent, and the highly evolved. We work hard to nurture an ecosystem that leads to new forms and ideas, and not one that simply reaffirms the status quo.
+Description: We produce unique ideas, projects and people.
+
+----
+
+Uuid: bPpB6rhxPN4pBfDp
