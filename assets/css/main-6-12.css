@@ -302,7 +302,7 @@ nav#nav .nav--pane:last-child {
   white-space: nowrap;
 }
 nav#nav .nav--pane:last-child:not(.pane--handle__active) {
-  background: #FFF974;
+  background: #ffffff;
 }
 @media (max-width: 699px) {
   nav#nav .nav--pane:last-child:not(.pane--handle__active) {
@@ -349,7 +349,7 @@ main#about {
   }
 }
 main#notices {
-  background: #FFF974;
+  background: #ffffff;
   padding-top: 40px;
 }
 @media (min-width: 700px) {
@@ -359,7 +359,7 @@ main#notices {
   }
 }
 main#notice {
-  background: #FFF974;
+  background: #ffffff;
   padding-top: 40px;
   min-height: calc(100vh - 40px);
 }
@@ -452,7 +452,7 @@ main #content {
 }
 
 .notice {
-  background: #FFF974;
+  background: #ffffff;
   grid-auto-flow: row dense;
 }
 .notice:not(.notice__active) .notice--tools, .notice:not(.notice__active) .notice--body {
@@ -460,11 +460,11 @@ main #content {
 }
 .notice:not(.notice__active):hover {
   background: #111111;
-  color: #FFF974;
+  color: #ffffff;
   cursor: pointer;
 }
 .notice:not(.notice__active):hover svg {
-  stroke: #FFF974;
+  stroke: #ffffff;
 }
 .notice.notice__isolated {
   border-top: none;
@@ -612,10 +612,10 @@ main #content {
 }
 #pagination .pagination--next:hover, #pagination .pagination--prev:hover {
   background: #111111;
-  color: #FFF974;
+  color: #ffffff;
 }
 #pagination .pagination--next:hover svg, #pagination .pagination--prev:hover svg {
-  stroke: #FFF974;
+  stroke: #ffffff;
 }
 #pagination .pagination--prev {
   text-align: right;
