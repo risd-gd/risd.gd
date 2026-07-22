@@ -2,136 +2,105 @@
 
 namespace Kirby\Cache;
 
+use Memcached as MemcachedExt;
+
 /**
-* Memcached Driver
-*
-* @package   Kirby Cache
-* @author    Bastian Allgeier <bastian@getkirby.com>
-* @link      http://getkirby.com
-* @copyright Bastian Allgeier
-* @license   MIT
-*/
+ * Memcached Driver
+ *
+ * @package   Kirby Cache
+ * @author    Bastian Allgeier <bastian@getkirby.com>
+ * @link      https://getkirby.com
+ * @copyright Bastian Allgeier
+ * @license   https://opensource.org/licenses/MIT
+ */
 class MemCached extends Cache
 {
+	/**
+	 * Store for the memcache connection
+	 */
+	protected MemcachedExt $connection;
 
-    /**
-     * store for the memache connection
-     * @var Memcached
-     */
-    protected $connection;
+	/**
+	 * Stores whether the connection was successful
+	 */
+	protected bool $enabled;
 
-    /**
-     * Set all parameters which are needed for the memcache client
-     * see defaults for available parameters
-     *
-     * @param array $params
-     */
-    public function __construct(array $params = [])
-    {
-        $defaults = [
-            'host'    => 'localhost',
-            'port'    => 11211,
-            'prefix'  => null,
-        ];
+	/**
+	 * Sets all parameters which are needed to connect to Memcached
+	 *
+	 * @param array $options 'host'   (default: localhost)
+	 *                       'port'   (default: 11211)
+	 *                       'prefix' (default: null)
+	 */
+	public function __construct(array $options = [])
+	{
+		$defaults = [
+			'host'    => 'localhost',
+			'port'    => 11211,
+			'prefix'  => null,
+		];
 
-        parent::__construct(array_merge($defaults, $params));
+		parent::__construct(array_merge($defaults, $options));
 
-        $this->connection = new \Memcached();
-        $this->connection->addServer($this->options['host'], $this->options['port']);
-    }
+		$this->connection = new MemcachedExt();
+		$this->enabled = $this->connection->addServer(
+			$this->options['host'],
+			$this->options['port']
+		);
+	}
 
-    /**
-     * Write an item to the cache for a given number of minutes.
-     *
-     * <code>
-     *    // Put an item in the cache for 15 minutes
-     *    Cache::set('value', 'my value', 15);
-     * </code>
-     *
-     * @param  string  $key
-     * @param  mixed   $value
-     * @param  int     $minutes
-     * @return void
-     */
-    public function set(string $key, $value, int $minutes = 0)
-    {
-        return $this->connection->set($this->key($key), $this->value($value, $minutes)->toJson(), $this->expiration($minutes));
-    }
+	/**
+	 * Returns whether the cache is ready to
+	 * store values
+	 */
+	public function enabled(): bool
+	{
+		return $this->enabled;
+	}
 
-    /**
-     * Returns the full keyname
-     * including the prefix (if set)
-     *
-     * @param  string $key
-     * @return string
-     */
-    public function key(string $key): string
-    {
-        return $this->options['prefix'] . $key;
-    }
+	/**
+	 * Writes an item to the cache for a given number of minutes and
+	 * returns whether the operation was successful
+	 *
+	 * <code>
+	 *   // put an item in the cache for 15 minutes
+	 *   $cache->set('value', 'my value', 15);
+	 * </code>
+	 */
+	public function set(string $key, $value, int $minutes = 0): bool
+	{
+		$key     = $this->key($key);
+		$value   = (new Value($value, $minutes))->toJson();
+		$expires = $this->expiration($minutes);
+		return $this->connection->set($key, $value, $expires);
+	}
 
-    /**
-     * Retrieve the CacheValue object from the cache.
-     *
-     * @param  string  $key
-     * @return object  CacheValue
-     */
-    public function retrieve(string $key)
-    {
-        return Value::fromJson($this->connection->get($this->key($key)));
-    }
+	/**
+	 * Internal method to retrieve the raw cache value;
+	 * needs to return a Value object or null if not found
+	 */
+	public function retrieve(string $key): Value|null
+	{
+		$value = $this->connection->get($this->key($key));
+		return Value::fromJson($value);
+	}
 
-    /**
-     * Remove an item from the cache
-     *
-     * @param  string  $key
-     * @return boolean
-     */
-    public function remove(string $key): bool
-    {
-        return $this->connection->delete($this->key($key));
-    }
+	/**
+	 * Removes an item from the cache and returns
+	 * whether the operation was successful
+	 */
+	public function remove(string $key): bool
+	{
+		return $this->connection->delete($this->key($key));
+	}
 
-    /**
-     * Checks when an item in the cache expires
-     *
-     * @param  string $key
-     * @return int
-     */
-    public function expires(string $key): int
-    {
-        return parent::expires($this->key($key));
-    }
-
-    /**
-     * Checks if an item in the cache is expired
-     *
-     * @param  string $key
-     * @return boolean
-     */
-    public function expired(string $key): bool
-    {
-        return parent::expired($this->key($key));
-    }
-
-    /**
-     * Checks when the cache has been created
-     *
-     * @param  string $key
-     * @return int
-     */
-    public function created(string $key): int
-    {
-        return parent::created($this->key($key));
-    }
-
-    /**
-     * Flush the entire cache directory
-     *
-     * @return boolean
-     */
-    public function flush(): bool
-    {
-        return $this->connection->flush();
-    }
+	/**
+	 * Flushes the entire cache and returns
+	 * whether the operation was successful;
+	 * WARNING: Memcached only supports flushing the whole cache at once!
+	 */
+	public function flush(): bool
+	{
+		return $this->connection->flush();
+	}
 }

@@ -11,10 +11,16 @@ tabs:
   content:
     label: Content
     icon: page
-    sections:
-      builder:
-        extends: sections/builder
-
+    fields:
+      blocks:
+        label: Blocks
+        type: blocks
+        fieldsets:
+          - textblock
+          - media
+          - listblock
+          - link
+          - abouttext
   files:
     label: Files
     icon: upload

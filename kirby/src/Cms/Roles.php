@@ -2,9 +2,6 @@
 
 namespace Kirby\Cms;
 
-use Kirby\Toolkit\Dir;
-use Kirby\Toolkit\F;
-
 /**
  * Extension of the Collection class that
  * introduces `Roles::factory()` to convert an
@@ -12,65 +9,138 @@ use Kirby\Toolkit\F;
  * collection with Role objects. It also has
  * a `Roles::load()` method that handles loading
  * role definitions from disk.
+ *
+ * @package   Kirby Cms
+ * @author    Bastian Allgeier <bastian@getkirby.com>
+ * @link      https://getkirby.com
+ * @copyright Bastian Allgeier
+ * @license   https://getkirby.com/license
  */
 class Roles extends Collection
 {
-    public static function factory(array $roles, array $inject = []): self
-    {
-        $collection = new static;
+	/**
+	 * All registered roles methods
+	 */
+	public static array $methods = [];
 
-        // read all user blueprints
-        foreach ($roles as $props) {
-            $role = Role::factory($props, $inject);
-            $collection->set($role->id(), $role);
-        }
+	/**
+	 * Returns a filtered list of all
+	 * roles that can be changed by the
+	 * current user
+	 *
+	 * Use with `$kirby->roles()`. For retrieving
+	 * which roles are available for a specific user,
+	 * use `$user->roles()` without additional filters.
+	 *
+	 * @return $this|static
+	 * @throws \Exception
+	 */
+	public function canBeChanged(): static
+	{
+		if (App::instance()->user()?->isAdmin() !== true) {
+			return $this->filter(function ($role) {
+				$newUser = new User([
+					'email' => 'test@getkirby.com',
+					'role'  => $role->id()
+				]);
 
-        // always include the admin role
-        if ($collection->find('admin') === null) {
-            $collection->set('admin', Role::admin());
-        }
+				return $newUser->permissions()->can('changeRole');
+			});
+		}
 
-        // return the collection sorted by name
-        return $collection->sortBy('name', 'asc');
-    }
+		return $this;
+	}
 
-    public static function load(string $root = null, array $inject = []): self
-    {
-        $roles = new static;
+	/**
+	 * Returns a filtered list of all
+	 * roles that can be created by the
+	 * current user.
+	 *
+	 * Use with `$kirby->roles()`.
+	 *
+	 * @return $this|static
+	 * @throws \Exception
+	 */
+	public function canBeCreated(): static
+	{
+		if (App::instance()->user()?->isAdmin() !== true) {
+			return $this->filter(function ($role) {
+				$newUser = new User([
+					'email' => 'test@getkirby.com',
+					'role'  => $role->id()
+				]);
 
-        // load roles from plugins
-        foreach (App::instance()->extensions('blueprints') as $blueprintName => $blueprint) {
-            if (substr($blueprintName, 0, 6) !== 'users/') {
-                continue;
-            }
+				return $newUser->permissions()->can('create');
+			});
+		}
 
-            if (is_array($blueprint) === true) {
-                $role = Role::factory($blueprint, $inject);
-            } else {
-                $role = Role::load($blueprint, $inject);
-            }
+		return $this;
+	}
 
-            $roles->set($role->id(), $role);
-        }
+	public static function factory(array $roles, array $inject = []): static
+	{
+		$collection = new static();
 
-        // load roles from directory
-        if ($root !== null) {
-            foreach (Dir::read($root) as $filename) {
-                if ($filename === 'default.yml') {
-                    continue;
-                }
+		// read all user blueprints
+		foreach ($roles as $props) {
+			$role = Role::factory($props, $inject);
+			$collection->set($role->id(), $role);
+		}
 
-                $role = Role::load($root . '/' . $filename, $inject);
-                $roles->set($role->id(), $role);
-            }
-        }
+		// always include the admin role
+		if ($collection->find('admin') === null) {
+			$collection->set('admin', Role::admin());
+		}
 
-        // always include the admin role
-        if ($roles->find('admin') === null) {
-            $roles->set('admin', Role::admin($inject));
-        }
+		// return the collection sorted by name
+		return $collection->sort('name', 'asc');
+	}
 
-        // return the collection sorted by name
-        return $roles->sortBy('name', 'asc');
-    }
+	public static function load(string|null $root = null, array $inject = []): static
+	{
+		$kirby = App::instance();
+		$roles = new static();
+
+		// load roles from plugins
+		foreach ($kirby->extensions('blueprints') as $blueprintName => $blueprint) {
+			if (substr($blueprintName, 0, 6) !== 'users/') {
+				continue;
+			}
+
+			// callback option can be return array or blueprint file path
+			if (is_callable($blueprint) === true) {
+				$blueprint = $blueprint($kirby);
+			}
+
+			if (is_array($blueprint) === true) {
+				$role = Role::factory($blueprint, $inject);
+			} else {
+				$role = Role::load($blueprint, $inject);
+			}
+
+			$roles->set($role->id(), $role);
+		}
+
+		// load roles from directory
+		if ($root !== null) {
+			foreach (glob($root . '/*.yml') as $file) {
+				$filename = basename($file);
+
+				if ($filename === 'default.yml') {
+					continue;
+				}
+
+				$role = Role::load($file, $inject);
+				$roles->set($role->id(), $role);
+			}
+		}
+
+		// always include the admin role
+		if ($roles->find('admin') === null) {
+			$roles->set('admin', Role::admin($inject));
+		}
+
+		// return the collection sorted by name
+		return $roles->sort('name', 'asc');
+	}
 }

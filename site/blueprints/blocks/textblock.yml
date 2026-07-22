@@ -1,4 +1,6 @@
-label: Text Block
+title: Text
+label: "{{ text }}"
+icon: text
 fields:
   featured: 
     label: Featured?

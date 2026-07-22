@@ -1,17 +1,17 @@
 <section class="textblock">
-<?php if($data->featured()->isTrue()): ?>
+<?php if($block->featured()->isTrue()): ?>
     <div class="textblock--feature">
-        <?= $data->text()->kt() ?>
+        <?= $block->text()->kt() ?>
     </div>
 <?php else: ?>
     <div class="textblock--caption">
-        <?= $data->caption()->text() ?>
+        <?= $block->caption()->text() ?>
     </div>
     <div class="textblock--content">
-        <?= $data->text()->kt() ?>
+        <?= $block->text()->kt() ?>
     </div>
     <div class="textblock--cta">
-        <?= $data->cta()->kt() ?>
+        <?= $block->cta()->kt() ?>
     </div>
 <?php endif ?>
 </section>

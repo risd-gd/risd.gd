@@ -1,4 +1,6 @@
-label: Link
+title: link
+label: "{{caption}}: {{title}} [{{internallink}}{{externallink}}]"
+icon: url
 fields:
   caption:
     label: Caption

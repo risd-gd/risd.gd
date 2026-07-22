@@ -2,76 +2,82 @@
 
 namespace Kirby\Cache;
 
+use APCUIterator;
+
 /**
  * APCu Cache Driver
  *
  * @package   Kirby Cache
  * @author    Bastian Allgeier <bastian@getkirby.com>
- * @link      http://getkirby.com
+ * @link      https://getkirby.com
  * @copyright Bastian Allgeier
- * @license   MIT
+ * @license   https://opensource.org/licenses/MIT
  */
 class ApcuCache extends Cache
 {
+	/**
+	 * Returns whether the cache is ready to
+	 * store values
+	 */
+	public function enabled(): bool
+	{
+		return apcu_enabled();
+	}
 
-    /**
-     * Write an item to the cache for a given number of minutes.
-     *
-     * <code>
-     *    // Put an item in the cache for 15 minutes
-     *    Cache::set('value', 'my value', 15);
-     * </code>
-     *
-     * @param  string  $key
-     * @param  mixed   $value
-     * @param  int     $minutes
-     * @return void
-     */
-    public function set(string $key, $value, int $minutes = 0)
-    {
-        return apcu_store($key, $this->value($value, $minutes)->toJson(), $this->expiration($minutes));
-    }
+	/**
+	 * Determines if an item exists in the cache
+	 */
+	public function exists(string $key): bool
+	{
+		return apcu_exists($this->key($key));
+	}
 
-    /**
-     * Retrieve an item from the cache.
-     *
-     * @param  string  $key
-     * @return mixed
-     */
-    public function retrieve(string $key)
-    {
-        return Value::fromJson(apcu_fetch($key));
-    }
+	/**
+	 * Flushes the entire cache and returns
+	 * whether the operation was successful
+	 */
+	public function flush(): bool
+	{
+		if (empty($this->options['prefix']) === false) {
+			return apcu_delete(new APCUIterator('!^' . preg_quote($this->options['prefix']) . '!'));
+		}
 
-    /**
-     * Checks if the current key exists in cache
-     *
-     * @param  string  $key
-     * @return boolean
-     */
-    public function exists(string $key): bool
-    {
-        return apcu_exists($key);
-    }
+		return apcu_clear_cache();
+	}
 
-    /**
-     * Remove an item from the cache
-     *
-     * @param  string  $key
-     * @return boolean
-     */
-    public function remove(string $key): bool
-    {
-        return apcu_delete($key);
-    }
+	/**
+	 * Removes an item from the cache and returns
+	 * whether the operation was successful
+	 */
+	public function remove(string $key): bool
+	{
+		return apcu_delete($this->key($key));
+	}
 
-    /**
-     * Flush the entire cache directory
-     *
-     * @return boolean
-     */
-    public function flush(): bool
-    {
-        return apcu_clear_cache();
-    }
+	/**
+	 * Internal method to retrieve the raw cache value;
+	 * needs to return a Value object or null if not found
+	 */
+	public function retrieve(string $key): Value|null
+	{
+		$value = apcu_fetch($this->key($key));
+		return Value::fromJson($value);
+	}
+
+	/**
+	 * Writes an item to the cache for a given number of minutes and
+	 * returns whether the operation was successful
+	 *
+	 * <code>
+	 *   // put an item in the cache for 15 minutes
+	 *   $cache->set('value', 'my value', 15);
+	 * </code>
+	 */
+	public function set(string $key, $value, int $minutes = 0): bool
+	{
+		$key     = $this->key($key);
+		$value   = (new Value($value, $minutes))->toJson();
+		$expires = $this->expiration($minutes);
+		return apcu_store($key, $value, $expires);
+	}
 }

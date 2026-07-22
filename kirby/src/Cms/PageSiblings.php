@@ -2,187 +2,130 @@
 
 namespace Kirby\Cms;
 
+/**
+ * PageSiblings
+ *
+ * @package   Kirby Cms
+ * @author    Bastian Allgeier <bastian@getkirby.com>
+ * @link      https://getkirby.com
+ * @copyright Bastian Allgeier
+ * @license   https://getkirby.com/license
+ */
 trait PageSiblings
 {
+	/**
+	 * Checks if there's a next listed
+	 * page in the siblings collection
+	 *
+	 * @param \Kirby\Cms\Collection|null $collection
+	 */
+	public function hasNextListed($collection = null): bool
+	{
+		return $this->nextListed($collection) !== null;
+	}
 
-    /**
-     * @deprecated 3.0.0 Use `Page::hasNextUnlisted` instead
-     * @return boolean
-     */
-    public function hasNextInvisible(): bool
-    {
-        return $this->hasNextUnlisted();
-    }
+	/**
+	 * Checks if there's a next unlisted
+	 * page in the siblings collection
+	 *
+	 * @param \Kirby\Cms\Collection|null $collection
+	 */
+	public function hasNextUnlisted($collection = null): bool
+	{
+		return $this->nextUnlisted($collection) !== null;
+	}
 
-    /**
-     * Checks if there's a next listed
-     * page in the siblings collection
-     *
-     * @return bool
-     */
-    public function hasNextListed(): bool
-    {
-        return $this->nextListed() !== null;
-    }
+	/**
+	 * Checks if there's a previous listed
+	 * page in the siblings collection
+	 *
+	 * @param \Kirby\Cms\Collection|null $collection
+	 */
+	public function hasPrevListed($collection = null): bool
+	{
+		return $this->prevListed($collection) !== null;
+	}
 
-    /**
-     * @deprecated Use `Page::hasNextListed` instead
-     * @return boolean
-     */
-    public function hasNextVisible(): bool
-    {
-        return $this->hasNextListed();
-    }
+	/**
+	 * Checks if there's a previous unlisted
+	 * page in the siblings collection
+	 *
+	 * @param \Kirby\Cms\Collection|null $collection
+	 */
+	public function hasPrevUnlisted($collection = null): bool
+	{
+		return $this->prevUnlisted($collection) !== null;
+	}
 
-    /**
-     * Checks if there's a next unlisted
-     * page in the siblings collection
-     *
-     * @return bool
-     */
-    public function hasNextUnlisted(): bool
-    {
-        return $this->nextUnlisted() !== null;
-    }
+	/**
+	 * Returns the next listed page if it exists
+	 *
+	 * @param \Kirby\Cms\Collection|null $collection
+	 *
+	 * @return \Kirby\Cms\Page|null
+	 */
+	public function nextListed($collection = null)
+	{
+		return $this->nextAll($collection)->listed()->first();
+	}
 
-    /**
-     * @deprecated Use `Page::hasPrevUnlisted` instead
-     * @return boolean
-     */
-    public function hasPrevInvisible(): bool
-    {
-        return $this->hasPrevUnlisted();
-    }
+	/**
+	 * Returns the next unlisted page if it exists
+	 *
+	 * @param \Kirby\Cms\Collection|null $collection
+	 *
+	 * @return \Kirby\Cms\Page|null
+	 */
+	public function nextUnlisted($collection = null)
+	{
+		return $this->nextAll($collection)->unlisted()->first();
+	}
 
-    /**
-     * Checks if there's a previous listed
-     * page in the siblings collection
-     *
-     * @return bool
-     */
-    public function hasPrevListed(): bool
-    {
-        return $this->prevListed() !== null;
-    }
+	/**
+	 * Returns the previous listed page
+	 *
+	 * @param \Kirby\Cms\Collection|null $collection
+	 *
+	 * @return \Kirby\Cms\Page|null
+	 */
+	public function prevListed($collection = null)
+	{
+		return $this->prevAll($collection)->listed()->last();
+	}
 
-    /**
-     * Checks if there's a previous unlisted
-     * page in the siblings collection
-     *
-     * @return bool
-     */
-    public function hasPrevUnlisted(): bool
-    {
-        return $this->prevUnlisted() !== null;
-    }
+	/**
+	 * Returns the previous unlisted page
+	 *
+	 * @param \Kirby\Cms\Collection|null $collection
+	 *
+	 * @return \Kirby\Cms\Page|null
+	 */
+	public function prevUnlisted($collection = null)
+	{
+		return $this->prevAll($collection)->unlisted()->last();
+	}
 
-    /**
-     * @deprecated Use `Page::hasPrevListed instead`
-     * @return boolean
-     */
-    public function hasPrevVisible(): bool
-    {
-        return $this->hasPrevListed();
-    }
+	/**
+	 * Private siblings collector
+	 *
+	 * @return \Kirby\Cms\Collection
+	 */
+	protected function siblingsCollection()
+	{
+		if ($this->isDraft() === true) {
+			return $this->parentModel()->drafts();
+		}
 
-    /**
-     * @deprecated Use `Page::nextUnlisted()` instead
-     * @return self|null
-     */
-    public function nextInvisible()
-    {
-        return $this->nextUnlisted();
-    }
+		return $this->parentModel()->children();
+	}
 
-    /**
-     * Returns the next listed page if it exists
-     *
-     * @return self|null
-     */
-    public function nextListed()
-    {
-        return $this->nextAll()->listed()->first();
-    }
-
-    /**
-     * Returns the next unlisted page if it exists
-     *
-     * @return self|null
-     */
-    public function nextUnlisted()
-    {
-        return $this->nextAll()->unlisted()->first();
-    }
-
-    /**
-     * @deprecated Use `Page::prevListed()` instead
-     * @return self|null
-     */
-    public function nextVisible()
-    {
-        return $this->nextListed();
-    }
-
-    /**
-     * @deprecated Use `Page::prevUnlisted()` instead
-     * @return self|null
-     */
-    public function prevInvisible()
-    {
-        return $this->prevUnlisted();
-    }
-
-    /**
-     * Returns the previous listed page
-     *
-     * @return self|null
-     */
-    public function prevListed()
-    {
-        return $this->prevAll()->listed()->last();
-    }
-
-    /**
-     * Returns the previous unlisted page
-     *
-     * @return self|null
-     */
-    public function prevUnlisted()
-    {
-        return $this->prevAll()->unlisted()->first();
-    }
-
-    /**
-     * @deprecated Use `Page::prevListed()` instead
-     * @return self|null
-     */
-    public function prevVisible()
-    {
-        return $this->prevListed();
-    }
-
-    /**
-     * Private siblings collector
-     *
-     * @return Collection
-     */
-    protected function siblingsCollection()
-    {
-        if ($this->isDraft() === true) {
-            return $this->parentModel()->drafts();
-        } else {
-            return $this->parentModel()->children();
-        }
-    }
-
-    /**
-     * Returns siblings with the same template
-     *
-     * @param bool $self
-     * @return self
-     */
-    public function templateSiblings(bool $self = true)
-    {
-        return $this->siblings($self)->filterBy('intendedTemplate', $this->intendedTemplate()->name());
-    }
+	/**
+	 * Returns siblings with the same template
+	 *
+	 * @return \Kirby\Cms\Pages
+	 */
+	public function templateSiblings(bool $self = true)
+	{
+		return $this->siblings($self)->filter('intendedTemplate', $this->intendedTemplate()->name());
+	}
 }

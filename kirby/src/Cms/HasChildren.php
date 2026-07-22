@@ -2,249 +2,200 @@
 
 namespace Kirby\Cms;
 
+use Kirby\Filesystem\Dir;
 use Kirby\Toolkit\Str;
 
+/**
+ * HasChildren
+ *
+ * @package   Kirby Cms
+ * @author    Bastian Allgeier <bastian@getkirby.com>
+ * @link      https://getkirby.com
+ * @copyright Bastian Allgeier
+ * @license   https://getkirby.com/license
+ */
 trait HasChildren
 {
+	/**
+	 * The list of available published children
+	 */
+	public Pages|null $children = null;
 
-    /**
-     * The Pages collection
-     *
-     * @var Pages
-     */
-    public $children;
+	/**
+	 * The list of available draft children
+	 */
+	public Pages|null $drafts = null;
 
-    /**
-     * The list of available drafts
-     *
-     * @var Pages
-     */
-    public $drafts;
+	/**
+	 * The combined list of available published
+	 * and draft children
+	 */
+	public Pages|null $childrenAndDrafts = null;
 
-    /**
-     * Returns the Pages collection
-     *
-     * @return Pages
-     */
-    public function children()
-    {
-        if (is_a($this->children, 'Kirby\Cms\Pages') === true) {
-            return $this->children;
-        }
+	/**
+	 * Returns all published children
+	 */
+	public function children(): Pages
+	{
+		return $this->children ??= Pages::factory($this->inventory()['children'], $this);
+	}
 
-        return $this->children = Pages::factory($this->inventory()['children'], $this);
-    }
+	/**
+	 * Returns all published and draft children at the same time
+	 */
+	public function childrenAndDrafts(): Pages
+	{
+		return $this->childrenAndDrafts ??= $this->children()->merge($this->drafts());
+	}
 
-    /**
-     * Returns all children and drafts at the same time
-     *
-     * @return Pages
-     */
-    public function childrenAndDrafts()
-    {
-        return $this->children()->merge($this->drafts());
-    }
+	/**
+	 * Searches for a draft child by ID
+	 */
+	public function draft(string $path): Page|null
+	{
+		$path = str_replace('_drafts/', '', $path);
 
-    /**
-     * Return a list of ids for the model's
-     * toArray method
-     *
-     * @return array
-     */
-    protected function convertChildrenToArray(): array
-    {
-        return $this->children()->keys();
-    }
+		if (Str::contains($path, '/') === false) {
+			return $this->drafts()->find($path);
+		}
 
-    /**
-     * Searches for a child draft by id
-     *
-     * @param string $path
-     * @return Page|null
-     */
-    public function draft(string $path)
-    {
-        $path = str_replace('_drafts/', '', $path);
+		$parts  = explode('/', $path);
+		$parent = $this;
 
-        if (Str::contains($path, '/') === false) {
-            return $this->drafts()->find($path);
-        }
+		foreach ($parts as $slug) {
+			if ($page = $parent->find($slug)) {
+				$parent = $page;
+				continue;
+			}
 
-        $parts  = explode('/', $path);
-        $parent = $this;
+			if ($draft = $parent->drafts()->find($slug)) {
+				$parent = $draft;
+				continue;
+			}
 
-        foreach ($parts as $slug) {
-            if ($page = $parent->find($slug)) {
-                $parent = $page;
-                continue;
-            }
+			return null;
+		}
 
-            if ($draft = $parent->drafts()->find($slug)) {
-                $parent = $draft;
-                continue;
-            }
+		return $parent;
+	}
 
-            return null;
-        }
+	/**
+	 * Returns all draft children
+	 */
+	public function drafts(): Pages
+	{
+		if ($this->drafts instanceof Pages) {
+			return $this->drafts;
+		}
 
-        return $parent;
-    }
+		$kirby = $this->kirby();
 
-    /**
-     * Return all drafts of the model
-     *
-     * @return Pages
-     */
-    public function drafts()
-    {
-        if (is_a($this->drafts, 'Kirby\Cms\Pages') === true) {
-            return $this->drafts;
-        }
+		// create the inventory for all drafts
+		$inventory = Dir::inventory(
+			$this->root() . '/_drafts',
+			$kirby->contentExtension(),
+			$kirby->contentIgnore(),
+			$kirby->multilang()
+		);
 
-        $kirby = $this->kirby();
+		return $this->drafts = Pages::factory($inventory['children'], $this, true);
+	}
 
-        // create the inventory for all drafts
-        $inventory = Dir::inventory(
-            $this->root() . '/_drafts',
-            $kirby->contentExtension(),
-            $kirby->contentIgnore(),
-            $kirby->multilang()
-        );
+	/**
+	 * Finds one or multiple published children by ID
+	 */
+	public function find(string|array ...$arguments): Page|Pages|null
+	{
+		return $this->children()->find(...$arguments);
+	}
 
-        return $this->drafts = Pages::factory($inventory['children'], $this, true);
-    }
+	/**
+	 * Finds a single published or draft child
+	 */
+	public function findPageOrDraft(string $path): Page|null
+	{
+		return $this->children()->find($path) ?? $this->drafts()->find($path);
+	}
 
-    /**
-     * Finds one or multiple children by id
-     *
-     * @param string ...$arguments
-     * @return Pages
-     */
-    public function find(...$arguments)
-    {
-        return $this->children()->find(...$arguments);
-    }
+	/**
+	 * Returns a collection of all published children of published children
+	 */
+	public function grandChildren(): Pages
+	{
+		return $this->children()->children();
+	}
 
-    /**
-     * Finds a single page or draft
-     *
-     * @return Page|null
-     */
-    public function findPageOrDraft(string $path)
-    {
-        return $this->children()->find($path) ?? $this->drafts()->find($path);
-    }
+	/**
+	 * Checks if the model has any published children
+	 */
+	public function hasChildren(): bool
+	{
+		return $this->children()->count() > 0;
+	}
 
-    /**
-     * Returns a collection of all children of children
-     *
-     * @return Pages
-     */
-    public function grandChildren(): Pages
-    {
-        return $this->children()->children();
-    }
+	/**
+	 * Checks if the model has any draft children
+	 */
+	public function hasDrafts(): bool
+	{
+		return $this->drafts()->count() > 0;
+	}
 
-    /**
-     * Checks if the model has any children
-     *
-     * @return boolean
-     */
-    public function hasChildren(): bool
-    {
-        return $this->children()->count() > 0;
-    }
+	/**
+	 * Checks if the page has any listed children
+	 */
+	public function hasListedChildren(): bool
+	{
+		return $this->children()->listed()->count() > 0;
+	}
 
-    /**
-     * Checks if the model has any drafts
-     *
-     * @return boolean
-     */
-    public function hasDrafts(): bool
-    {
-        return $this->drafts()->count() > 0;
-    }
+	/**
+	 * Checks if the page has any unlisted children
+	 */
+	public function hasUnlistedChildren(): bool
+	{
+		return $this->children()->unlisted()->count() > 0;
+	}
 
-    /**
-     * @deprecated 3.0.0 Use `Page::hasUnlistedChildren` instead
-     * @return boolean
-     */
-    public function hasInvisibleChildren(): bool
-    {
-        return $this->children()->invisible()->count() > 0;
-    }
+	/**
+	 * Creates a flat child index
+	 *
+	 * @param bool $drafts If set to `true`, draft children are included
+	 */
+	public function index(bool $drafts = false): Pages
+	{
+		if ($drafts === true) {
+			return $this->childrenAndDrafts()->index($drafts);
+		}
 
-    /**
-     * Checks if the page has any listed children
-     *
-     * @return boolean
-     */
-    public function hasListedChildren(): bool
-    {
-        return $this->children()->listed()->count() > 0;
-    }
+		return $this->children()->index();
+	}
 
-    /**
-     * Checks if the page has any unlisted children
-     *
-     * @return boolean
-     */
-    public function hasUnlistedChildren(): bool
-    {
-        return $this->children()->unlisted()->count() > 0;
-    }
+	/**
+	 * Sets the published children collection
+	 *
+	 * @return $this
+	 */
+	protected function setChildren(array|null $children = null): static
+	{
+		if ($children !== null) {
+			$this->children = Pages::factory($children, $this);
+		}
 
-    /**
-     * @deprecated 3.0.0 Use `Page::hasListedChildren` instead
-     * @return boolean
-     */
-    public function hasVisibleChildren(): bool
-    {
-        return $this->children()->listed()->count() > 0;
-    }
+		return $this;
+	}
 
-    /**
-     * Creates a flat child index
-     *
-     * @param bool $drafts
-     * @return Pages
-     */
-    public function index(bool $drafts = false): Pages
-    {
-        if ($drafts === true) {
-            return $this->childrenAndDrafts()->index($drafts);
-        } else {
-            return $this->children()->index();
-        }
-    }
+	/**
+	 * Sets the draft children collection
+	 *
+	 * @return $this
+	 */
+	protected function setDrafts(array|null $drafts = null): static
+	{
+		if ($drafts !== null) {
+			$this->drafts = Pages::factory($drafts, $this, true);
+		}
 
-    /**
-     * Sets the Children collection
-     *
-     * @param array|null $children
-     * @return self
-     */
-    protected function setChildren(array $children = null)
-    {
-        if ($children !== null) {
-            $this->children = Pages::factory($children, $this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Sets the Drafts collection
-     *
-     * @param array|null $drafts
-     * @return self
-     */
-    protected function setDrafts(array $drafts = null)
-    {
-        if ($drafts !== null) {
-            $this->drafts = Pages::factory($drafts, $this, true);
-        }
-
-        return $this;
-    }
+		return $this;
+	}
 }

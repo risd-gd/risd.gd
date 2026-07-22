@@ -3,6 +3,7 @@
 namespace Kirby\Toolkit;
 
 use Exception;
+use Kirby\Filesystem\F;
 use Throwable;
 
 /**
@@ -10,130 +11,97 @@ use Throwable;
  *
  * @package   Kirby Toolkit
  * @author    Bastian Allgeier <bastian@getkirby.com>
- * @link      http://getkirby.com
+ * @link      https://getkirby.com
  * @copyright Bastian Allgeier
- * @license   MIT
+ * @license   https://opensource.org/licenses/MIT
  */
 class View
 {
+	/**
+	 * Creates a new view object
+	 */
+	public function __construct(
+		// The absolute path to the view file
+		protected string $file,
+		protected array $data = []
+	) {
+	}
 
-    /**
-     * The absolute path to the view file
-     *
-     * @var string
-     */
-    protected $file;
+	/**
+	 * Returns the view's data array without globals
+	 */
+	public function data(): array
+	{
+		return $this->data;
+	}
 
-    /**
-     * The view data
-     *
-     * @var array
-     */
-    protected $data = [];
+	/**
+	 * Checks if the template file exists
+	 */
+	public function exists(): bool
+	{
+		return is_file($this->file()) === true;
+	}
 
-    /**
-     * Creates a new view object
-     *
-     * @param string $file
-     * @param array  $data
-     */
-    public function __construct(string $file, array $data = [])
-    {
-        $this->file = $file;
-        $this->data = $data;
-    }
+	/**
+	 * Returns the view file
+	 */
+	public function file(): string
+	{
+		return $this->file;
+	}
 
-    /**
-     * Returns the view's data array
-     * without globals.
-     *
-     * @return array
-     */
-    public function data(): array
-    {
-        return $this->data;
-    }
+	/**
+	 * Creates an error message for the missing view exception
+	 */
+	protected function missingViewMessage(): string
+	{
+		return 'The view does not exist: ' . $this->file();
+	}
 
-    /**
-     * Checks if the template file exists
-     *
-     * @return boolean
-     */
-    public function exists(): bool
-    {
-        return file_exists($this->file()) === true;
-    }
+	/**
+	 * Renders the view
+	 */
+	public function render(): string
+	{
+		if ($this->exists() === false) {
+			throw new Exception($this->missingViewMessage());
+		}
 
-    /**
-     * Returns the view file
-     *
-     * @return string|false
-     */
-    public function file()
-    {
-        return $this->file;
-    }
+		ob_start();
 
-    /**
-     * Creates an error message for the missing view exception
-     *
-     * @return string
-     */
-    protected function missingViewMessage(): string
-    {
-        return 'The view does not exist: ' . $this->file();
-    }
+		try {
+			F::load($this->file(), null, $this->data());
+		} catch (Throwable $e) {
+			$exception = $e;
+		}
 
-    /**
-     * Renders the view
-     *
-     * @return string
-     */
-    public function render(): string
-    {
-        if ($this->exists() === false) {
-            throw new Exception($this->missingViewMessage());
-        }
+		$content = ob_get_contents();
+		ob_end_clean();
 
-        $exception = null;
+		if (($exception ?? null) !== null) {
+			throw $exception;
+		}
 
-        ob_start();
-        extract($this->data());
+		return $content;
+	}
 
-        try {
-            require $this->file();
-        } catch (Throwable $e) {
-            $exception = $e;
-        }
+	/**
+	 * @see ::render()
+	 */
+	public function toString(): string
+	{
+		return $this->render();
+	}
 
-        $content = ob_get_contents();
-        ob_end_clean();
-
-        if ($exception === null) {
-            return $content;
-        }
-
-        throw $exception;
-    }
-
-    /**
-     * Alias for View::render()
-     *
-     * @return string
-     */
-    public function toString(): string
-    {
-        return $this->render();
-    }
-
-    /**
-     * Magic string converter to enable
-     * converting view objects to string
-     *
-     * @return string
-     */
-    public function __toString(): string
-    {
-        return $this->render();
-    }
+	/**
+	 * Magic string converter to enable
+	 * converting view objects to string
+	 *
+	 * @see ::render()
+	 */
+	public function __toString(): string
+	{
+		return $this->render();
+	}
 }

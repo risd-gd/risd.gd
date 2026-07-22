@@ -4,17 +4,21 @@ fields:
   builder:
     type: builder
     fieldsets:
-      textblock:
-        extends: blocks/textblock
-      gallery: 
-        extends: blocks/gallery
-      list: 
-        extends: blocks/list
-      link:
-        extends: blocks/link
-      multimedia:
-        extends: blocks/multimedia
-      notice:
-        extends: blocks/notice
-      imagegrid:
-        extends: blocks/imagegrid
+      - abouttext
+      - textblock
+      # abouttext:
+      #   extends: blocks/abouttext
+      # textblock:
+      #   extends: blocks/textblock
+      # gallery: 
+      #   extends: blocks/gallery
+      # list: 
+      #   extends: blocks/list
+      # link:
+      #   extends: blocks/link
+      # multimedia:
+      #   extends: blocks/multimedia
+      # notice:
+      #   extends: blocks/notice
+      # imagegrid:
+      #   extends: blocks/imagegrid

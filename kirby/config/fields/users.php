@@ -1,101 +1,107 @@
 <?php
 
+use Kirby\Cms\App;
+use Kirby\Data\Data;
+use Kirby\Toolkit\A;
+
 return [
-    'props' => [
-        /**
-         * Unset inherited props
-         */
-        'after'       => null,
-        'autofocus'   => null,
-        'before'      => null,
-        'icon'        => null,
-        'placeholder' => null,
+	'mixins' => [
+		'layout',
+		'min',
+		'picker',
+		'userpicker'
+	],
+	'props' => [
+		/**
+		 * Unset inherited props
+		 */
+		'after'       => null,
+		'autofocus'   => null,
+		'before'      => null,
+		'icon'        => null,
+		'placeholder' => null,
 
-        /**
-         * Default selected user(s) when a new Page/File/User is created
-         */
-        'default' => function ($default = null) {
-            if ($default === false) {
-                return [];
-            }
+		/**
+		 * Default selected user(s) when a new page/file/user is created
+		 */
+		'default' => function (string|array|bool|null $default = null) {
+			return $default;
+		},
 
-            if ($default === null && $user = $this->kirby()->user()) {
-                return [
-                    $this->userResponse($user)
-                ];
-            }
+		'value' => function ($value = null) {
+			return $this->toUsers($value);
+		},
+	],
+	'computed' => [
+		'default' => function (): array {
+			if ($this->default === false) {
+				return [];
+			}
 
-            return $this->toUsers($default);
-        },
-        /**
-         * The placeholder text if no users have been selected yet
-         */
-        'empty' => function ($empty = null) {
-            return I18n::translate($empty, $empty);
-        },
-        /**
-         * The minimum number of required selected users
-         */
-        'min' => function (int $min = null) {
-            return $min;
-        },
-        /**
-         * The maximum number of allowed selected users
-         */
-        'max' => function (int $max = null) {
-            return $max;
-        },
-        /**
-         * If false, only a single user can be selected
-         */
-        'multiple' => function (bool $multiple = true) {
-            return $multiple;
-        },
-        'value' => function ($value = null) {
-            return $this->toUsers($value);
-        },
-    ],
-    'methods' => [
-        'userResponse' => function ($user) {
-            $avatar = function ($user) {
-                if ($avatar = $user->avatar()) {
-                    return [
-                        'url' => $avatar->crop(512)->url()
-                    ];
-                }
+			if (
+				$this->default === true &&
+				$user = $this->kirby()->user()
+			) {
+				return [
+					$this->userResponse($user)
+				];
+			}
 
-                return null;
-            };
+			return $this->toUsers($this->default);
+		}
+	],
+	'methods' => [
+		'userResponse' => function ($user) {
+			return $user->panel()->pickerData([
+				'info'   => $this->info,
+				'image'  => $this->image,
+				'layout' => $this->layout,
+				'text'   => $this->text,
+			]);
+		},
+		'toUsers' => function ($value = null): array {
+			$users = [];
+			$kirby = App::instance();
 
-            return [
-                'username' => $user->username(),
-                'id'       => $user->id(),
-                'email'    => $user->email(),
-                'avatar'   => $avatar($user)
-            ];
-        },
-        'toUsers' => function ($value = null) {
-            $users = [];
-            $kirby = kirby();
+			foreach (Data::decode($value, 'yaml') as $email) {
+				if (is_array($email) === true) {
+					$email = $email['email'] ?? null;
+				}
 
-            foreach (Yaml::decode($value) as $email) {
-                if (is_array($email) === true) {
-                    $email = $email['email'] ?? null;
-                }
+				if ($email !== null && ($user = $kirby->user($email))) {
+					$users[] = $this->userResponse($user);
+				}
+			}
 
-                if ($email !== null && ($user = $kirby->user($email))) {
-                    $users[] = $this->userResponse($user);
-                }
-            }
+			return $users;
+		}
+	],
+	'api' => function () {
+		return [
+			[
+				'pattern' => '/',
+				'action' => function () {
+					$field = $this->field();
 
-            return $users;
-        }
-    ],
-    'save' => function ($value = null) {
-        return A::pluck($value, 'email');
-    },
-    'validations' => [
-        'max',
-        'min'
-    ]
+					return $field->userpicker([
+						'image'  => $field->image(),
+						'info'   => $field->info(),
+						'layout' => $field->layout(),
+						'limit'  => $field->limit(),
+						'page'   => $this->requestQuery('page'),
+						'query'  => $field->query(),
+						'search' => $this->requestQuery('search'),
+						'text'   => $field->text()
+					]);
+				}
+			]
+		];
+	},
+	'save' => function ($value = null) {
+		return A::pluck($value, $this->store);
+	},
+	'validations' => [
+		'max',
+		'min'
+	]
 ];

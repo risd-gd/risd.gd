@@ -8,154 +8,209 @@ use Kirby\Exception\InvalidArgumentException;
  * Handles permission definition in each user
  * blueprint and wraps a couple useful methods
  * around it to check for available permissions.
+ *
+ * @package   Kirby Cms
+ * @author    Bastian Allgeier <bastian@getkirby.com>
+ * @link      https://getkirby.com
+ * @copyright Bastian Allgeier
+ * @license   https://getkirby.com/license
  */
 class Permissions
 {
-    protected $actions = [
-        'access' => [
-            'panel' => true,
-            'users' => true,
-            'site'  => true
-        ],
-        'files' => [
-            'changeName' => true,
-            'create'     => true,
-            'delete'     => true,
-            'replace'    => true,
-            'update'     => true
-        ],
-        'languages' => [
-            'create' => true,
-            'delete' => true
-        ],
-        'pages' => [
-            'changeSlug'     => true,
-            'changeStatus'   => true,
-            'changeTemplate' => true,
-            'changeTitle'    => true,
-            'create'         => true,
-            'delete'         => true,
-            'preview'        => true,
-            'read'           => true,
-            'sort'           => true,
-            'update'         => true
-        ],
-        'site' => [
-            'changeTitle' => true,
-            'update'      => true
-        ],
-        'users' => [
-            'changeEmail'    => true,
-            'changeLanguage' => true,
-            'changeName'     => true,
-            'changePassword' => true,
-            'changeRole'     => true,
-            'create'         => true,
-            'delete'         => true,
-            'update'         => true
-        ],
-        'user' => [
-            'changeEmail'    => true,
-            'changeLanguage' => true,
-            'changeName'     => true,
-            'changePassword' => true,
-            'changeRole'     => true,
-            'delete'         => true,
-            'update'         => true
-        ]
-    ];
+	public static array $extendedActions = [];
 
-    public function __construct($settings = [])
-    {
-        if (is_bool($settings) === true) {
-            return $this->setAll($settings);
-        }
+	protected array $actions = [
+		'access' => [
+			'account'   => true,
+			'languages' => true,
+			'panel'     => true,
+			'site'      => true,
+			'system'    => true,
+			'users'     => true,
+		],
+		'files' => [
+			'access'     	 => true,
+			'changeName'     => true,
+			'changeTemplate' => true,
+			'create'         => true,
+			'delete'         => true,
+			'list'           => true,
+			'read'           => true,
+			'replace'        => true,
+			'update'         => true
+		],
+		'languages' => [
+			'create' => true,
+			'delete' => true,
+			'update' => true
+		],
+		'pages' => [
+			'access'     	 => true,
+			'changeSlug'     => true,
+			'changeStatus'   => true,
+			'changeTemplate' => true,
+			'changeTitle'    => true,
+			'create'         => true,
+			'delete'         => true,
+			'duplicate'      => true,
+			'list'           => true,
+			'move'           => true,
+			'preview'        => true,
+			'read'           => true,
+			'sort'           => true,
+			'update'         => true
+		],
+		'site' => [
+			'changeTitle' => true,
+			'update'      => true
+		],
+		'users' => [
+			'changeEmail'    => true,
+			'changeLanguage' => true,
+			'changeName'     => true,
+			'changePassword' => true,
+			'changeRole'     => true,
+			'create'         => true,
+			'delete'         => true,
+			'update'         => true
+		],
+		'user' => [
+			'changeEmail'    => true,
+			'changeLanguage' => true,
+			'changeName'     => true,
+			'changePassword' => true,
+			'changeRole'     => true,
+			'delete'         => true,
+			'update'         => true
+		]
+	];
 
-        if (is_array($settings) === true) {
-            return $this->setCategories($settings);
-        }
-    }
+	/**
+	 * Permissions constructor
+	 *
+	 * @throws \Kirby\Exception\InvalidArgumentException
+	 */
+	public function __construct(array|bool|null $settings = [])
+	{
+		// dynamically register the extended actions
+		foreach (static::$extendedActions as $key => $actions) {
+			if (isset($this->actions[$key]) === true) {
+				throw new InvalidArgumentException('The action ' . $key . ' is already a core action');
+			}
 
-    public function for(string $category = null, string $action = null)
-    {
-        if ($action === null) {
-            if ($this->hasCategory($category) === false) {
-                return false;
-            }
+			$this->actions[$key] = $actions;
+		}
 
-            return $this->actions[$category];
-        }
+		if (is_array($settings) === true) {
+			return $this->setCategories($settings);
+		}
 
-        if ($this->hasAction($category, $action) === false) {
-            return false;
-        }
+		if (is_bool($settings) === true) {
+			return $this->setAll($settings);
+		}
+	}
 
-        return $this->actions[$category][$action];
-    }
+	public function for(
+		string|null $category = null,
+		string|null $action = null,
+		bool $default = false
+	): bool {
+		if ($action === null) {
+			if ($this->hasCategory($category) === false) {
+				return $default;
+			}
 
-    protected function hasAction(string $category, string $action)
-    {
-        return $this->hasCategory($category) === true && array_key_exists($action, $this->actions[$category]) === true;
-    }
+			return $this->actions[$category];
+		}
 
-    protected function hasCategory(string $category)
-    {
-        return array_key_exists($category, $this->actions) === true;
-    }
+		if ($this->hasAction($category, $action) === false) {
+			return $default;
+		}
 
-    protected function setAction(string $category, string $action, $setting)
-    {
-        // wildcard to overwrite the entire category
-        if ($action === '*') {
-            return $this->setCategory($category, $setting);
-        }
+		return $this->actions[$category][$action];
+	}
 
-        $this->actions[$category][$action] = $setting;
+	protected function hasAction(string $category, string $action): bool
+	{
+		return
+			$this->hasCategory($category) === true &&
+			array_key_exists($action, $this->actions[$category]) === true;
+	}
 
-        return $this;
-    }
+	protected function hasCategory(string $category): bool
+	{
+		return array_key_exists($category, $this->actions) === true;
+	}
 
-    protected function setAll(bool $setting)
-    {
-        foreach ($this->actions as $categoryName => $actions) {
-            $this->setCategory($categoryName, $setting);
-        }
+	/**
+	 * @return $this
+	 */
+	protected function setAction(
+		string $category,
+		string $action,
+		$setting
+	): static {
+		// wildcard to overwrite the entire category
+		if ($action === '*') {
+			return $this->setCategory($category, $setting);
+		}
 
-        return $this;
-    }
+		$this->actions[$category][$action] = $setting;
 
-    protected function setCategories(array $settings)
-    {
-        foreach ($settings as $categoryName => $categoryActions) {
-            if (is_bool($categoryActions) === true) {
-                $this->setCategory($categoryName, $categoryActions);
-            }
+		return $this;
+	}
 
-            if (is_array($categoryActions) === true) {
-                foreach ($categoryActions as $actionName => $actionSetting) {
-                    $this->setAction($categoryName, $actionName, $actionSetting);
-                }
-            }
-        }
+	/**
+	 * @return $this
+	 */
+	protected function setAll(bool $setting): static
+	{
+		foreach ($this->actions as $categoryName => $actions) {
+			$this->setCategory($categoryName, $setting);
+		}
 
-        return $this;
-    }
+		return $this;
+	}
 
-    protected function setCategory(string $category, bool $setting)
-    {
-        if ($this->hasCategory($category) === false) {
-            throw new InvalidArgumentException('Invalid permissions category');
-        }
+	/**
+	 * @return $this
+	 */
+	protected function setCategories(array $settings): static
+	{
+		foreach ($settings as $categoryName => $categoryActions) {
+			if (is_bool($categoryActions) === true) {
+				$this->setCategory($categoryName, $categoryActions);
+			}
 
-        foreach ($this->actions[$category] as $actionName => $actionSetting) {
-            $this->actions[$category][$actionName] = $setting;
-        }
+			if (is_array($categoryActions) === true) {
+				foreach ($categoryActions as $actionName => $actionSetting) {
+					$this->setAction($categoryName, $actionName, $actionSetting);
+				}
+			}
+		}
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function toArray(): array
-    {
-        return $this->actions;
-    }
+	/**
+	 * @return $this
+	 * @throws \Kirby\Exception\InvalidArgumentException
+	 */
+	protected function setCategory(string $category, bool $setting): static
+	{
+		if ($this->hasCategory($category) === false) {
+			throw new InvalidArgumentException('Invalid permissions category');
+		}
+
+		foreach ($this->actions[$category] as $actionName => $actionSetting) {
+			$this->actions[$category][$actionName] = $setting;
+		}
+
+		return $this;
+	}
+
+	public function toArray(): array
+	{
+		return $this->actions;
+	}
 }

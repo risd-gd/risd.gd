@@ -14,67 +14,57 @@ use ParsedownExtra;
  *
  * @package   Kirby Text
  * @author    Bastian Allgeier <bastian@getkirby.com>
- * @link      http://getkirby.com
+ * @link      https://getkirby.com
  * @copyright Bastian Allgeier
- * @license   MIT
+ * @license   https://opensource.org/licenses/MIT
  */
 class Markdown
 {
+	/**
+	 * Array with all configured options
+	 * for the parser
+	 */
+	protected array $options = [];
 
-    /**
-     * Array with all configured options
-     * for the parser
-     *
-     * @var array
-     */
-    protected $options = [];
+	/**
+	 * Returns default values for all
+	 * available parser options
+	 */
+	public function defaults(): array
+	{
+		return [
+			'breaks' => true,
+			'extra'  => false,
+			'safe'   => false
+		];
+	}
 
-    /**
-     * Returns default values for all
-     * available parser options
-     *
-     * @return array
-     */
-    public function defaults(): array
-    {
-        return [
-            'extra'  => false,
-            'breaks' => true
-        ];
-    }
+	/**
+	 * Creates a new Markdown parser
+	 * with the given options
+	 */
+	public function __construct(array $options = [])
+	{
+		$this->options = array_merge($this->defaults(), $options);
+	}
 
-    /**
-     * Creates a new Markdown parser
-     * with the given options
-     *
-     * @param array $options
-     */
-    public function __construct(array $options = [])
-    {
-        $this->options = array_merge($this->defaults(), $options);
-    }
+	/**
+	 * Parses the given text and returns the HTML
+	 */
+	public function parse(string|null $text = null, bool $inline = false): string
+	{
+		$parser = match ($this->options['extra']) {
+			true    => new ParsedownExtra(),
+			default => new Parsedown()
+		};
 
-    /**
-     * Parses the given text and returns the HTML
-     *
-     * @param  string $text
-     * @param  bool $inline
-     * @return string
-     */
-    public function parse(string $text, bool $inline = false): string
-    {
-        if ($this->options['extra'] === true) {
-            $parser = new ParsedownExtra;
-        } else {
-            $parser = new Parsedown;
-        }
+		$parser->setBreaksEnabled($this->options['breaks']);
+		$parser->setSafeMode($this->options['safe']);
 
-        $parser->setBreaksEnabled($this->options['breaks']);
+		if ($inline === true) {
+			return @$parser->line($text);
+		}
 
-        if ($inline === true) {
-            return @$parser->line($text);
-        } else {
-            return @$parser->text($text);
-        }
-    }
+		return @$parser->text($text);
+	}
 }

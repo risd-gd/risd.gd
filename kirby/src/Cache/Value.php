@@ -7,133 +7,131 @@ use Throwable;
 /**
  * Cache Value
  * Stores the value, creation timestamp and expiration timestamp
- * and makes it possible to store all three with a single cache key.
+ * and makes it possible to store all three with a single cache key
  *
  * @package   Kirby Cache
  * @author    Bastian Allgeier <bastian@getkirby.com>
- * @link      http://getkirby.com
+ * @link      https://getkirby.com
  * @copyright Bastian Allgeier
- * @license   MIT
+ * @license   https://opensource.org/licenses/MIT
  */
 class Value
 {
+	/**
+	 * Cached value
+	 */
+	protected $value;
 
-    /**
-     * the cached value
-     * @var mixed
-     */
-    protected $value;
+	/**
+	 * the number of minutes until the value expires
+	 * @todo Rename this property to $expiry to reflect
+	 *       both minutes and absolute timestamps
+	 */
+	protected int $minutes;
 
-    /**
-     * the expiration timestamp
-     * @var int
-     */
-    protected $expires;
+	/**
+	 * Creation timestamp
+	 */
+	protected int $created;
 
-    /**
-     * the creation timestamp
-     * @var int
-     */
-    protected $created;
+	/**
+	 * Constructor
+	 *
+	 * @param int $minutes the number of minutes until the value expires
+	 *                     or an absolute UNIX timestamp
+	 * @param int|null $created the UNIX timestamp when the value has been created
+	 *                          (defaults to the current time)
+	 */
+	public function __construct($value, int $minutes = 0, int|null $created = null)
+	{
+		$this->value   = $value;
+		$this->minutes = $minutes;
+		$this->created = $created ?? time();
+	}
 
-    /**
-     * Constructor
-     *
-     * @param mixed $value
-     * @param int   $minutes the number of minutes until the value expires
-     * @param int   $created the unix timestamp when the value has been created
-     */
-    public function __construct($value, int $minutes = 0, $created = null)
-    {
-        // keep forever if minutes are not defined
-        if ($minutes === 0) {
-            $minutes = 2628000;
-        }
+	/**
+	 * Returns the creation date as UNIX timestamp
+	 */
+	public function created(): int
+	{
+		return $this->created;
+	}
 
-        $this->value   = $value;
-        $this->minutes = $minutes;
-        $this->created = $created ?? time();
-    }
+	/**
+	 * Returns the expiration date as UNIX timestamp or
+	 * null if the value never expires
+	 */
+	public function expires(): int|null
+	{
+		// 0 = keep forever
+		if ($this->minutes === 0) {
+			return null;
+		}
 
-    /**
-     * Returns the creation date as UNIX timestamp
-     *
-     * @return int
-     */
-    public function created(): int
-    {
-        return $this->created;
-    }
+		if ($this->minutes > 1000000000) {
+			// absolute timestamp
+			return $this->minutes;
+		}
 
-    /**
-     * Returns the expiration date as UNIX timestamp
-     *
-     * @return int
-     */
-    public function expires(): int
-    {
-        return $this->created + ($this->minutes * 60);
-    }
+		return $this->created + ($this->minutes * 60);
+	}
 
-    /**
-     * Creates a value object from an array
-     *
-     * @param array $array
-     * @return array
-     */
-    public static function fromArray(array $array): self
-    {
-        return new static($array['value'] ?? null, $array['minutes'] ?? 0, $array['created'] ?? null);
-    }
+	/**
+	 * Creates a value object from an array
+	 */
+	public static function fromArray(array $array): static
+	{
+		return new static(
+			$array['value'] ?? null,
+			$array['minutes'] ?? 0,
+			$array['created'] ?? null
+		);
+	}
 
-    /**
-     * Creates a value object from a json string
-     *
-     * @param string $json
-     * @return array
-     */
-    public static function fromJson($json): self
-    {
-        try {
-            $array = json_decode($json, true) ?? [];
-        } catch (Throwable $e) {
-            $array = [];
-        }
+	/**
+	 * Creates a value object from a JSON string;
+	 * returns null on error
+	 */
+	public static function fromJson(string $json): static|null
+	{
+		try {
+			$array = json_decode($json, true);
 
-        return static::fromArray($array);
-    }
+			if (is_array($array) === true) {
+				return static::fromArray($array);
+			}
 
-    /**
-     * Convert the object to a json string
-     *
-     * @return string
-     */
-    public function toJson(): string
-    {
-        return json_encode($this->toArray());
-    }
+			return null;
+		} catch (Throwable) {
+			return null;
+		}
+	}
 
-    /**
-     * Convert the object to an array
-     *
-     * @return array
-     */
-    public function toArray(): array
-    {
-        return [
-            'created' => $this->created,
-            'minutes' => $this->minutes,
-            'value'   => $this->value,
-        ];
-    }
+	/**
+	 * Converts the object to a JSON string
+	 */
+	public function toJson(): string
+	{
+		return json_encode($this->toArray());
+	}
 
-    /**
-     * Returns the value
-     *
-     * @return mixed
-     */
-    public function value()
-    {
-        return $this->value;
-    }
+	/**
+	 * Converts the object to an array
+	 */
+	public function toArray(): array
+	{
+		return [
+			'created' => $this->created,
+			'minutes' => $this->minutes,
+			'value'   => $this->value,
+		];
+	}
+
+	/**
+	 * Returns the pure value
+	 */
+	public function value()
+	{
+		return $this->value;
+	}
 }

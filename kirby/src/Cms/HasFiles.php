@@ -2,219 +2,188 @@
 
 namespace Kirby\Cms;
 
-use Kirby\Toolkit\Str;
+use Kirby\Uuid\Uuid;
 
+/**
+ * HasFiles
+ *
+ * @package   Kirby Cms
+ * @author    Bastian Allgeier <bastian@getkirby.com>
+ * @link      https://getkirby.com
+ * @copyright Bastian Allgeier
+ * @license   https://getkirby.com/license
+ */
 trait HasFiles
 {
+	/**
+	 * The Files collection
+	 */
+	protected Files|array|null $files = null;
 
-    /**
-     * The Files collection
-     *
-     * @var Files
-     */
-    protected $files;
+	/**
+	 * Filters the Files collection by type audio
+	 */
+	public function audio(): Files
+	{
+		return $this->files()->filter('type', '==', 'audio');
+	}
 
-    /**
-     * Filters the Files collection by type audio
-     *
-     * @return Files
-     */
-    public function audio(): Files
-    {
-        return $this->files()->filterBy('type', '==', 'audio');
-    }
+	/**
+	 * Filters the Files collection by type code
+	 */
+	public function code(): Files
+	{
+		return $this->files()->filter('type', '==', 'code');
+	}
 
-    /**
-     * Filters the Files collection by type code
-     *
-     * @return Files
-     */
-    public function code(): Files
-    {
-        return $this->files()->filterBy('type', '==', 'code');
-    }
+	/**
+	 * Creates a new file
+	 *
+	 * @param bool $move If set to `true`, the source will be deleted
+	 */
+	public function createFile(array $props, bool $move = false): File
+	{
+		$props = array_merge($props, [
+			'parent' => $this,
+			'url'    => null
+		]);
 
-    /**
-     * Returns a list of file ids
-     * for the toArray method of the model
-     *
-     * @return array
-     */
-    protected function convertFilesToArray(): array
-    {
-        return $this->files()->keys();
-    }
+		return File::create($props, $move);
+	}
 
-    /**
-     * Creates a new file
-     *
-     * @param array $props
-     * @return File
-     */
-    public function createFile(array $props)
-    {
-        $props = array_merge($props, [
-            'parent' => $this,
-            'url'    => null
-        ]);
+	/**
+	 * Filters the Files collection by type documents
+	 */
+	public function documents(): Files
+	{
+		return $this->files()->filter('type', '==', 'document');
+	}
 
-        return File::create($props);
-    }
+	/**
+	 * Returns a specific file by filename or the first one
+	 */
+	public function file(
+		string|null $filename = null,
+		string $in = 'files'
+	): File|null {
+		if ($filename === null) {
+			return $this->$in()->first();
+		}
 
-    /**
-     * Filters the Files collection by type documents
-     *
-     * @return Files
-     */
-    public function documents(): Files
-    {
-        return $this->files()->filterBy('type', '==', 'document');
-    }
+		// find by global UUID
+		if (Uuid::is($filename, 'file') === true) {
+			return Uuid::for($filename, $this->$in())->model();
+		}
 
-    /**
-     * Returns a specific file by filename or the first one
-     *
-     * @param string $filename
-     * @param string $in
-     * @return File
-     */
-    public function file(string $filename = null, string $in = 'files')
-    {
-        if ($filename === null) {
-            return $this->$in()->first();
-        }
+		if (strpos($filename, '/') !== false) {
+			$path     = dirname($filename);
+			$filename = basename($filename);
 
-        if (strpos($filename, '/') !== false) {
-            $path     = dirname($filename);
-            $filename = basename($filename);
+			if ($page = $this->find($path)) {
+				return $page->$in()->find($filename);
+			}
 
-            if ($page = $this->find($path)) {
-                return $page->$in()->find($filename);
-            }
+			return null;
+		}
 
-            return null;
-        }
+		return $this->$in()->find($filename);
+	}
 
-        return $this->$in()->find($filename);
-    }
+	/**
+	 * Returns the Files collection
+	 */
+	public function files(): Files
+	{
+		if ($this->files instanceof Files) {
+			return $this->files;
+		}
 
-    /**
-     * Returns the Files collection
-     *
-     * @return Files
-     */
-    public function files(): Files
-    {
-        if (is_a($this->files, 'Kirby\Cms\Files') === true) {
-            return $this->files;
-        }
+		return $this->files = Files::factory($this->inventory()['files'], $this);
+	}
 
-        return $this->files = Files::factory($this->inventory()['files'], $this);
-    }
+	/**
+	 * Checks if the Files collection has any audio files
+	 */
+	public function hasAudio(): bool
+	{
+		return $this->audio()->count() > 0;
+	}
 
-    /**
-     * Checks if the Files collection has any audio files
-     *
-     * @return bool
-     */
-    public function hasAudio(): bool
-    {
-        return $this->audio()->count() > 0;
-    }
+	/**
+	 * Checks if the Files collection has any code files
+	 */
+	public function hasCode(): bool
+	{
+		return $this->code()->count() > 0;
+	}
 
-    /**
-     * Checks if the Files collection has any code files
-     *
-     * @return bool
-     */
-    public function hasCode(): bool
-    {
-        return $this->code()->count() > 0;
-    }
+	/**
+	 * Checks if the Files collection has any document files
+	 */
+	public function hasDocuments(): bool
+	{
+		return $this->documents()->count() > 0;
+	}
 
-    /**
-     * Checks if the Files collection has any document files
-     *
-     * @return bool
-     */
-    public function hasDocuments(): bool
-    {
-        return $this->documents()->count() > 0;
-    }
+	/**
+	 * Checks if the Files collection has any files
+	 */
+	public function hasFiles(): bool
+	{
+		return $this->files()->count() > 0;
+	}
 
-    /**
-     * Checks if the Files collection has any files
-     *
-     * @return bool
-     */
-    public function hasFiles(): bool
-    {
-        return $this->files()->count() > 0;
-    }
+	/**
+	 * Checks if the Files collection has any images
+	 */
+	public function hasImages(): bool
+	{
+		return $this->images()->count() > 0;
+	}
 
-    /**
-     * Checks if the Files collection has any images
-     *
-     * @return bool
-     */
-    public function hasImages(): bool
-    {
-        return $this->images()->count() > 0;
-    }
+	/**
+	 * Checks if the Files collection has any videos
+	 */
+	public function hasVideos(): bool
+	{
+		return $this->videos()->count() > 0;
+	}
 
-    /**
-     * Checks if the Files collection has any videos
-     *
-     * @return bool
-     */
-    public function hasVideos(): bool
-    {
-        return $this->videos()->count() > 0;
-    }
+	/**
+	 * Returns a specific image by filename or the first one
+	 */
+	public function image(string|null $filename = null): File|null
+	{
+		return $this->file($filename, 'images');
+	}
 
-    /**
-     * Returns a specific image by filename or the first one
-     *
-     * @param string $filename
-     * @return File
-     */
-    public function image(string $filename = null)
-    {
-        return $this->file($filename, 'images');
-    }
+	/**
+	 * Filters the Files collection by type image
+	 */
+	public function images(): Files
+	{
+		return $this->files()->filter('type', '==', 'image');
+	}
 
-    /**
-     * Filters the Files collection by type image
-     *
-     * @return Files
-     */
-    public function images(): Files
-    {
-        return $this->files()->filterBy('type', '==', 'image');
-    }
+	/**
+	 * Sets the Files collection
+	 *
+	 * @return $this
+	 */
+	protected function setFiles(array|null $files = null): static
+	{
+		if ($files !== null) {
+			$this->files = Files::factory($files, $this);
+		}
 
-    /**
-     * Sets the Files collection
-     *
-     * @param Files|null $files
-     * @return self
-     */
-    protected function setFiles(array $files = null): self
-    {
-        if ($files !== null) {
-            $this->files = Files::factory($files, $this);
-        }
+		return $this;
+	}
 
-        return $this;
-    }
-
-    /**
-     * Filters the Files collection by type videos
-     *
-     * @return Files
-     */
-    public function videos(): Files
-    {
-        return $this->files()->filterBy('type', '==', 'video');
-    }
+	/**
+	 * Filters the Files collection by type videos
+	 */
+	public function videos(): Files
+	{
+		return $this->files()->filter('type', '==', 'video');
+	}
 }

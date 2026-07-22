@@ -3,146 +3,178 @@
 namespace Kirby\Cms;
 
 use Kirby\Data\Data;
-use Kirby\Toolkit\Dir;
-use Kirby\Toolkit\F;
+use Kirby\Exception\InvalidArgumentException;
+use Kirby\Exception\NotFoundException;
+use Kirby\Filesystem\Dir;
+use Kirby\Filesystem\F;
 use Kirby\Toolkit\Str;
 use Throwable;
 
 /**
  * Handles all tasks to get the Media API
  * up and running and link files correctly
+ *
+ * @package   Kirby Cms
+ * @author    Bastian Allgeier <bastian@getkirby.com>
+ * @link      https://getkirby.com
+ * @copyright Bastian Allgeier
+ * @license   https://getkirby.com/license
  */
 class Media
 {
+	/**
+	 * Tries to find a file by model and filename
+	 * and to copy it to the media folder.
+	 */
+	public static function link(
+		Page|Site|User|null $model,
+		string $hash,
+		string $filename
+	): Response|false {
+		if ($model === null) {
+			return false;
+		}
 
-    /**
-     * Tries to find a job file for the
-     * given filename and then calls the thumb
-     * component to create a thumbnail accordingly
-     *
-     * @param Model $model
-     * @param string $hash
-     * @param string $filename
-     * @return Response|false
-     */
-    public static function thumb($model, string $hash, string $filename)
-    {
-        $kirby = App::instance();
+		// fix issues with spaces in filenames
+		$filename = urldecode($filename);
 
-        if (is_string($model) === true) {
-            // assets
-            $root = $kirby->root('media') . '/assets/' . $model . '/' . $hash;
-        } else {
-            // model files
-            $root = $model->mediaRoot() . '/' . $hash;
-        }
+		// try to find a file by model and filename
+		// this should work for all original files
+		if ($file = $model->file($filename)) {
+			// check if the request contained an outdated media hash
+			if ($file->mediaHash() !== $hash) {
+				// if at least the token was correct, redirect
+				if (Str::startsWith($hash, $file->mediaToken() . '-') === true) {
+					return Response::redirect($file->mediaUrl(), 307);
+				}
 
-        try {
-            $thumb   = $root . '/' . $filename;
-            $job     = $root . '/.jobs/' . $filename . '.json';
-            $options = Data::read($job);
+				// don't leak the correct token, render the error page
+				return false;
+			}
 
-            if (empty($options) === true) {
-                return false;
-            }
+			// send the file to the browser
+			return Response::file($file->publish()->mediaRoot());
+		}
 
-            if (is_string($model) === true) {
-                $source = $kirby->root('index') . '/' . $model . '/' . $options['filename'];
-            } else {
-                $source = $model->file($options['filename'])->root();
-            }
+		// try to generate a thumb for the file
+		try {
+			return static::thumb($model, $hash, $filename);
+		} catch (NotFoundException) {
+			// render the error page if there is no job for this filename
+			return false;
+		}
+	}
 
-            $kirby->thumb($source, $thumb, $options);
+	/**
+	 * Copy the file to the final media folder location
+	 */
+	public static function publish(File $file, string $dest): bool
+	{
+		// never publish risky files (e.g. HTML, PHP or Apache config files)
+		FileRules::validFile($file, false);
 
-            F::remove($job);
+		$src       = $file->root();
+		$version   = dirname($dest);
+		$directory = dirname($version);
 
-            return Response::file($thumb);
-        } catch (Throwable $e) {
-            return false;
-        }
-    }
+		// unpublish all files except stuff in the version folder
+		Media::unpublish($directory, $file, $version);
 
-    /**
-     * Tries to find a file by model and filename
-     * and to copy it to the media folder.
-     *
-     * @param Model $model
-     * @param string $hash
-     * @param string $filename
-     * @return Response|false
-     */
-    public static function link(Model $model = null, string $hash, string $filename)
-    {
-        if ($model === null) {
-            return false;
-        }
+		// copy/overwrite the file to the dest folder
+		return F::copy($src, $dest, true);
+	}
 
-        // fix issues with spaces in filenames
-        $filename = urldecode($filename);
+	/**
+	 * Tries to find a job file for the
+	 * given filename and then calls the thumb
+	 * component to create a thumbnail accordingly
+	 */
+	public static function thumb(
+		File|Page|Site|User|string $model,
+		string $hash,
+		string $filename
+	): Response|false {
+		$kirby = App::instance();
 
-        // try to find a file by model and filename
-        // this should work for all original files
-        if ($file = $model->file($filename)) {
+		$root = match (true) {
+			// assets
+			is_string($model)
+				=> $kirby->root('media') . '/assets/' . $model . '/' . $hash,
+			// parent files for file model that already included hash
+			$model instanceof File
+				=> dirname($model->mediaRoot()),
+			// model files
+			default
+			=> $model->mediaRoot() . '/' . $hash
+		};
 
-            // the media hash is outdated. redirect to the correct url
-            if ($file->mediaHash() !== $hash) {
-                return Response::redirect($file->mediaUrl(), 307);
-            }
+		$thumb = $root . '/' . $filename;
+		$job   = $root . '/.jobs/' . $filename . '.json';
 
-            // send the file to the browser
-            return Response::file($file->publish()->mediaRoot());
-        }
+		try {
+			$options = Data::read($job);
+		} catch (Throwable) {
+			// send a customized error message to make clearer what happened here
+			throw new NotFoundException('The thumbnail configuration could not be found');
+		}
 
-        // try to generate a thumb for the file
-        return static::thumb($model, $hash, $filename);
-    }
+		if (empty($options['filename']) === true) {
+			throw new InvalidArgumentException('Incomplete thumbnail configuration');
+		}
 
-    /**
-     * Copy the file to the final media folder location
-     *
-     * @param string $src
-     * @param string $dest
-     * @return boolean
-     */
-    public static function publish(string $src, string $dest): bool
-    {
-        $filename  = basename($src);
-        $version   = dirname($dest);
-        $directory = dirname($version);
+		try {
+			// find the correct source file depending on the model
+			// this adds support for custom assets
+			$source = match (true) {
+				is_string($model) === true
+					=> $kirby->root('index') . '/' . $model . '/' . $options['filename'],
+				default
+				=> $model->file($options['filename'])->root()
+			};
 
-        // unpublish all files except stuff in the version folder
-        Media::unpublish($directory, $filename, $version);
+			// generate the thumbnail and save it in the media folder
+			$kirby->thumb($source, $thumb, $options);
 
-        // copy/overwrite the file to the dest folder
-        return F::copy($src, $dest, true);
-    }
+			// remove the job file once the thumbnail has been created
+			F::remove($job);
 
-    /**
-     * Deletes all versions of the given filename
-     * within the parent directory
-     *
-     * @param string $directory
-     * @param string $filename
-     * @param string $ignore
-     * @return bool
-     */
-    public static function unpublish(string $directory, string $filename, string $ignore = null): bool
-    {
-        if (is_dir($directory) === false) {
-            return true;
-        }
+			// read the file and send it to the browser
+			return Response::file($thumb);
+		} catch (Throwable $e) {
+			// remove potentially broken thumbnails
+			F::remove($thumb);
+			throw $e;
+		}
+	}
 
-        $versions = glob($directory . '/' . crc32($filename) . '*', GLOB_ONLYDIR);
+	/**
+	 * Deletes all versions of the given file
+	 * within the parent directory
+	 */
+	public static function unpublish(
+		string $directory,
+		File $file,
+		string|null $ignore = null
+	): bool {
+		if (is_dir($directory) === false) {
+			return true;
+		}
 
-        // delete all versions of the file
-        foreach ($versions as $version) {
-            if ($version === $ignore) {
-                continue;
-            }
+		// get both old and new versions (pre and post Kirby 3.4.0)
+		$versions = array_merge(
+			glob($directory . '/' . crc32($file->filename()) . '-*', GLOB_ONLYDIR),
+			glob($directory . '/' . $file->mediaToken() . '-*', GLOB_ONLYDIR)
+		);
 
-            Dir::remove($version);
-        }
+		// delete all versions of the file
+		foreach ($versions as $version) {
+			if ($version === $ignore) {
+				continue;
+			}
 
-        return true;
-    }
+			Dir::remove($version);
+		}
+
+		return true;
+	}
 }

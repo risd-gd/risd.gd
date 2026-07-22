@@ -2,123 +2,117 @@
 
 namespace Kirby\Data;
 
-use Exception;
-use Kirby\Toolkit\F;
+use Kirby\Exception\Exception;
+use Kirby\Filesystem\F;
 
 /**
  * The `Data` class provides readers and
  * writers for data. The class comes with
- * three handlers for `json`, `yaml` and
- * `txt` encoded data, but can be extended
- * and customized.
+ * handlers for `json`, `php`, `txt`, `xml`
+ * and `yaml` encoded data, but can be
+ * extended and customized.
  *
  * The read and write methods automatically
- * detect, which data handler to use in order
+ * detect which data handler to use in order
  * to correctly encode and decode passed data.
  *
  * @package   Kirby
  * @author    Bastian Allgeier <bastian@getkirby.com>
- * @link      http://getkirby.com
+ * @link      https://getkirby.com
  * @copyright Bastian Allgeier
+ * @license   https://opensource.org/licenses/MIT
  */
 class Data
 {
+	/**
+	 * Handler Type Aliases
+	 */
+	public static array $aliases = [
+		'md'    => 'txt',
+		'mdown' => 'txt',
+		'rss'   => 'xml',
+		'yml'   => 'yaml',
+	];
 
-    /**
-     * Handler Type Aliases
-     *
-     * @var array
-     */
-    public static $aliases = [
-        'yml'   => 'yaml',
-        'md'    => 'txt',
-        'mdown' => 'txt'
-    ];
+	/**
+	 * All registered handlers
+	 */
+	public static array $handlers = [
+		'json' => Json::class,
+		'php'  => PHP::class,
+		'txt'  => Txt::class,
+		'xml'  => Xml::class,
+		'yaml' => Yaml::class
+	];
 
-    /**
-     * All registered handlers
-     *
-     * @var array
-     */
-    public static $handlers = [
-        'json' => 'Kirby\Data\Json',
-        'yaml' => 'Kirby\Data\Yaml',
-        'txt'  => 'Kirby\Data\Txt'
-    ];
+	/**
+	 * Handler getter
+	 */
+	public static function handler(string $type): Handler
+	{
+		// normalize the type
+		$type = strtolower($type);
 
-    /**
-     * Handler getter
-     *
-     * @param  string          $type
-     * @return Handler|null
-     */
-    public static function handler(string $type)
-    {
-        // normalize the type
-        $type    = strtolower($type);
-        $handler = static::$handlers[$type] ?? null;
+		// find a handler or alias
+		$handler = static::$handlers[$type] ?? null;
 
-        if ($handler === null && isset(static::$aliases[$type]) === true) {
-            $handler = static::$handlers[static::$aliases[$type]] ?? null;
-        }
+		if ($alias = static::$aliases[$type] ?? null) {
+			$handler ??= static::$handlers[$alias] ?? null;
+		}
 
-        if ($handler === null) {
-            throw new Exception('Missing Handler for type: "' . $type . '"');
-        }
+		if ($handler === null || class_exists($handler) === false) {
+			throw new Exception('Missing handler for type: "' . $type . '"');
+		}
 
-        return new $handler;
-    }
+		$handler = new $handler();
 
-    /**
-     * Decode data with the specified handler
-     *
-     * @param string $data
-     * @param string $type
-     * @return array
-     */
-    public static function decode(string $data = null, string $type): array
-    {
-        return static::handler($type)->decode($data);
-    }
+		if ($handler instanceof Handler === false) {
+			throw new Exception('Handler for type: "' . $type . '" needs to extend Kirby\\Data\\Handler');
+		}
 
-    /**
-     * Encode data with the specified handler
-     *
-     * @param array $data
-     * @param string $type
-     * @return string
-     */
-    public static function encode(array $data = null, string $type): string
-    {
-        return static::handler($type)->encode($data);
-    }
+		return $handler;
+	}
 
-    /**
-     * Reads data from a file
-     * The data handler is automatically chosen by
-     * the extension if not specified.
-     *
-     * @param  string $file
-     * @param  string $type
-     * @return array
-     */
-    public static function read(string $file, string $type = null): array
-    {
-        return static::handler($type ?? F::extension($file))->read($file);
-    }
+	/**
+	 * Decodes data with the specified handler
+	 */
+	public static function decode($string, string $type): array
+	{
+		return static::handler($type)->decode($string);
+	}
 
-    /**
-     * Writes data to a file.
-     * The data handler is automatically chosen by
-     * the extension if not specified.
-     *
-     * @param  string    $file
-     * @param  array     $data
-     * @param  string    $type
-     * @return boolean
-     */
-    public static function write(string $file = null, array $data = [], string $type = null): bool
-    {
-        return static::handler($type ?? F::extension($file))->write($file, $data);
-    }
+	/**
+	 * Encodes data with the specified handler
+	 */
+	public static function encode($data, string $type): string
+	{
+		return static::handler($type)->encode($data);
+	}
+
+	/**
+	 * Reads data from a file;
+	 * the data handler is automatically chosen by
+	 * the extension if not specified
+	 */
+	public static function read(string $file, string|null $type = null): array
+	{
+		$type  ??= F::extension($file);
+		$handler = static::handler($type);
+		return $handler->read($file);
+	}
+
+	/**
+	 * Writes data to a file;
+	 * the data handler is automatically chosen by
+	 * the extension if not specified
+	 */
+	public static function write(
+		string $file,
+		$data = [],
+		string|null $type = null
+	): bool {
+		$type  ??= F::extension($file);
+		$handler = static::handler($type);
+		return $handler->write($file, $data);
+	}
 }

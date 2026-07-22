@@ -1,0 +1,10 @@
+title: About Department
+label: 
+icon: document
+fields:
+  text:
+    label: Text
+    type: textarea
+    buttons:
+      - link
+      

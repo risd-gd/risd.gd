@@ -11,41 +11,61 @@ use Kirby\Toolkit\Properties;
  * @package   Kirby Email
  * @author    Bastian Allgeier <bastian@getkirby.com>,
  *            Nico Hoffmann <nico@getkirby.com>
- * @link      http://getkirby.com
+ * @link      https://getkirby.com
  * @copyright Bastian Allgeier
- * @license   MIT
-*/
+ * @license   https://opensource.org/licenses/MIT
+ */
 class Body
 {
-    use Properties;
+	protected string|null $html;
+	protected string|null $text;
 
-    protected $html;
-    protected $text;
+	/**
+	 * Email body constructor
+	 */
+	public function __construct(array $props = [])
+	{
+		$this->html = $props['html'] ?? null;
+		$this->text = $props['text'] ?? null;
+	}
 
-    public function __construct(array $props = [])
-    {
-        $this->setProperties($props);
-    }
+	/**
+	 * Creates a new instance while
+	 * merging initial and new properties
+	 * @deprecated 4.0.0
+	 */
+	public function clone(array $props = []): static
+	{
+		return new static(array_merge_recursive([
+			'html' => $this->html,
+			'text' => $this->text
+		], $props));
+	}
 
-    public function html()
-    {
-        return $this->html;
-    }
+	/**
+	 * Returns the HTML content of the email body
+	 */
+	public function html(): string
+	{
+		return $this->html ?? '';
+	}
 
-    public function text(): string
-    {
-        return $this->text;
-    }
+	/**
+	 * Returns the plain text content of the email body
+	 */
+	public function text(): string
+	{
+		return $this->text ?? '';
+	}
 
-    protected function setHtml(string $html = null)
-    {
-        $this->html = $html;
-        return $this;
-    }
-
-    protected function setText(string $text)
-    {
-        $this->text = $text;
-        return $this;
-    }
+	/**
+	 * @since 4.0.0
+	 */
+	public function toArray(): array
+	{
+		return [
+			'html' => $this->html(),
+			'text' => $this->text()
+		];
+	}
 }

@@ -1,9 +1,7 @@
 <?php snippet('header') ?>
-
 <main id="about">
   <div id="content" class="anim--fadein">
-      <?php snippet('builder') ?>
+    <?= $page->blocks()->toBlocks() ?>
   </div>
 </main>
-
 <?php snippet('footer') ?>

@@ -17,7 +17,7 @@ class Parsedown
 {
     # ~
 
-    const version = '1.8.0-beta-5';
+    public const version = '1.8.0-beta-8';
 
     # ~
 
@@ -207,11 +207,9 @@ class Parsedown
                     $CurrentBlock = $Block;
 
                     continue;
-                } else {
-                    if ($this->isBlockCompletable($CurrentBlock['type'])) {
-                        $methodName = 'block' . $CurrentBlock['type'] . 'Complete';
-                        $CurrentBlock = $this->$methodName($CurrentBlock);
-                    }
+                } elseif ($this->isBlockCompletable($CurrentBlock['type'])) {
+                    $methodName = 'block' . $CurrentBlock['type'] . 'Complete';
+                    $CurrentBlock = $this->$methodName($CurrentBlock);
                 }
             }
 
@@ -431,7 +429,21 @@ class Parsedown
         );
 
         if ($infostring !== '') {
-            $Element['attributes'] = array('class' => "language-$infostring");
+            /**
+             * https://www.w3.org/TR/2011/WD-html5-20110525/elements.html#classes
+             * Every HTML element may have a class attribute specified.
+             * The attribute, if specified, must have a value that is a set
+             * of space-separated tokens representing the various classes
+             * that the element belongs to.
+             * [...]
+             * The space characters, for the purposes of this specification,
+             * are U+0020 SPACE, U+0009 CHARACTER TABULATION (tab),
+             * U+000A LINE FEED (LF), U+000C FORM FEED (FF), and
+             * U+000D CARRIAGE RETURN (CR).
+             */
+            $language = substr($infostring, 0, strcspn($infostring, " \t\n\f\r"));
+
+            $Element['attributes'] = array('class' => "language-$language");
         }
 
         $Block = array(
@@ -514,7 +526,7 @@ class Parsedown
     #
     # List
 
-    protected function blockList($Line, array $CurrentBlock = null)
+    protected function blockList($Line, array|null $CurrentBlock = null)
     {
         list($name, $pattern) = $Line['text'][0] <= '-' ? array('ul', '[*+-]') : array('ol', '[0-9]{1,9}+[.\)]');
 
@@ -729,7 +741,7 @@ class Parsedown
     #
     # Setext
 
-    protected function blockSetextHeader($Line, array $Block = null)
+    protected function blockSetextHeader($Line, array|null $Block = null)
     {
         if (! isset($Block) or $Block['type'] !== 'Paragraph' or isset($Block['interrupted'])) {
             return;
@@ -809,7 +821,7 @@ class Parsedown
     #
     # Table
 
-    protected function blockTable($Line, array $Block = null)
+    protected function blockTable($Line, array|null $Block = null)
     {
         if (! isset($Block) or $Block['type'] !== 'Paragraph' or isset($Block['interrupted'])) {
             return;
@@ -1583,12 +1595,10 @@ class Parsedown
                 $markup .= $this->elements($Element['elements']);
             } elseif (isset($Element['element'])) {
                 $markup .= $this->element($Element['element']);
+            } elseif (!$permitRawHtml) {
+                $markup .= self::escape($text, true);
             } else {
-                if (!$permitRawHtml) {
-                    $markup .= self::escape($text, true);
-                } else {
-                    $markup .= $text;
-                }
+                $markup .= $text;
             }
 
             $markup .= $hasName ? '</' . $Element['name'] . '>' : '';

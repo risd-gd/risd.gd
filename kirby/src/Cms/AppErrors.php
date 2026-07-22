@@ -4,109 +4,224 @@ namespace Kirby\Cms;
 
 use Closure;
 use Kirby\Exception\Exception;
+use Kirby\Filesystem\F;
 use Kirby\Http\Response;
-use Whoops\Run as Whoops;
-use Whoops\Handler\Handler;
-use Whoops\Handler\PrettyPageHandler;
-use Whoops\Handler\PlainTextHandler;
+use Kirby\Toolkit\I18n;
+use Throwable;
 use Whoops\Handler\CallbackHandler;
+use Whoops\Handler\Handler;
+use Whoops\Handler\HandlerInterface;
+use Whoops\Handler\PlainTextHandler;
+use Whoops\Handler\PrettyPageHandler;
+use Whoops\Run as Whoops;
 
+/**
+ * PHP error handling using the Whoops library
+ *
+ * @package   Kirby Cms
+ * @author    Bastian Allgeier <bastian@getkirby.com>
+ * @link      https://getkirby.com
+ * @copyright Bastian Allgeier
+ * @license   https://getkirby.com/license
+ */
 trait AppErrors
 {
-    protected function handleCliErrors()
-    {
-        $whoops = new Whoops;
-        $whoops->pushHandler(new PlainTextHandler);
-        $whoops->register();
-    }
+	/**
+	 * Allows to disable Whoops globally in CI;
+	 * can be overridden by explicitly setting
+	 * the `whoops` option to `true` or `false`
+	 *
+	 * @internal
+	 */
+	public static bool $enableWhoops = true;
 
-    protected function handleErrors()
-    {
-        $request = $this->request();
+	/**
+	 * Whoops instance cache
+	 */
+	protected Whoops $whoops;
 
-        // TODO: implement acceptance
-        if ($request->ajax()) {
-            return $this->handleJsonErrors();
-        }
+	/**
+	 * Registers the PHP error handler for CLI usage
+	 */
+	protected function handleCliErrors(): void
+	{
+		$this->setWhoopsHandler(new PlainTextHandler());
+	}
 
-        if ($request->cli()) {
-            return $this->handleCliErrors();
-        }
+	/**
+	 * Registers the PHP error handler
+	 * based on the environment
+	 */
+	protected function handleErrors(): void
+	{
+		// no matter the environment, exit early if
+		// Whoops was disabled globally
+		// (but continue if the option was explicitly
+		// set to `true` in the config)
+		if (
+			static::$enableWhoops === false &&
+			$this->option('whoops') !== true
+		) {
+			return;
+		}
 
-        return $this->handleHtmlErrors();
-    }
+		if ($this->environment()->cli() === true) {
+			$this->handleCliErrors();
+			return;
+		}
 
-    protected function handleHtmlErrors()
-    {
-        $whoops = new Whoops;
+		if ($this->visitor()->prefersJson() === true) {
+			$this->handleJsonErrors();
+			return;
+		}
 
-        if ($this->option('debug') === true) {
-            if ($this->option('whoops', true) === true) {
-                $handler = new PrettyPageHandler;
-                $handler->setPageTitle('Kirby CMS Debugger');
+		$this->handleHtmlErrors();
+	}
 
-                if ($editor = $this->option('editor')) {
-                    $handler->setEditor($editor);
-                }
+	/**
+	 * Registers the PHP error handler for HTML output
+	 */
+	protected function handleHtmlErrors(): void
+	{
+		$handler = null;
 
-                $whoops->pushHandler($handler);
-                $whoops->register();
-            }
-        } else {
-            $handler = new CallbackHandler(function ($exception, $inspector, $run) {
-                $fatal = $this->option('fatal');
+		if ($this->option('debug') === true) {
+			if ($this->option('whoops', true) !== false) {
+				$handler = new PrettyPageHandler();
+				$handler->setPageTitle('Kirby CMS Debugger');
+				$handler->addResourcePath(dirname(__DIR__, 2) . '/assets');
+				$handler->addCustomCss('whoops.css');
 
-                if (is_a($fatal, 'Closure') === true) {
-                    echo $fatal($this);
-                } else {
-                    include static::$root . '/views/fatal.php';
-                }
+				if ($editor = $this->option('editor')) {
+					$handler->setEditor($editor);
+				}
 
-                return Handler::QUIT;
-            });
+				if ($blocklist = $this->option('whoops.blocklist')) {
+					foreach ($blocklist as $superglobal => $vars) {
+						foreach ($vars as $var) {
+							$handler->blacklist($superglobal, $var);
+						}
+					}
+				}
+			}
+		} else {
+			$handler = new CallbackHandler(function ($exception, $inspector, $run) {
+				$fatal = $this->option('fatal');
 
-            $whoops->pushHandler($handler);
-            $whoops->register();
-        }
-    }
+				if ($fatal instanceof Closure) {
+					echo $fatal($this, $exception);
+				} else {
+					include $this->root('kirby') . '/views/fatal.php';
+				}
 
-    protected function handleJsonErrors()
-    {
-        $whoops  = new Whoops;
-        $handler = new CallbackHandler(function ($exception, $inspector, $run) {
-            if (is_a($exception, 'Kirby\Exception\Exception') === true) {
-                $httpCode = $exception->getHttpCode();
-                $code     = $exception->getCode();
-                $details  = $exception->getDetails();
-            } else {
-                $httpCode = 500;
-                $code     = $exception->getCode();
-                $details  = null;
-            }
+				return Handler::QUIT;
+			});
+		}
 
-            if ($this->option('debug') === true) {
-                echo Response::json([
-                    'status'    => 'error',
-                    'exception' => get_class($exception),
-                    'code'      => $code,
-                    'message'   => $exception->getMessage(),
-                    'details'   => $details,
-                    'file'      => ltrim($exception->getFile(), $_SERVER['DOCUMENT_ROOT'] ?? null),
-                    'line'      => $exception->getLine(),
-                ], $httpCode);
-            } else {
-                echo Response::json([
-                    'status'  => 'error',
-                    'code'    => $code,
-                    'details' => $details,
-                    'message' => 'An unexpected error occurred! Enable debug mode for more info: https://getkirby.com/docs/reference/system/options/debug',
-                ], $httpCode);
-            }
+		if ($handler !== null) {
+			$this->setWhoopsHandler($handler);
+		} else {
+			$this->unsetWhoopsHandler();
+		}
+	}
 
-            return Handler::QUIT;
-        });
+	/**
+	 * Registers the PHP error handler for JSON output
+	 */
+	protected function handleJsonErrors(): void
+	{
+		$handler = new CallbackHandler(function ($exception, $inspector, $run) {
+			if ($exception instanceof Exception) {
+				$httpCode = $exception->getHttpCode();
+				$code     = $exception->getCode();
+				$details  = $exception->getDetails();
+			} elseif ($exception instanceof Throwable) {
+				$httpCode = 500;
+				$code     = $exception->getCode();
+				$details  = null;
+			} else {
+				$httpCode = 500;
+				$code     = 500;
+				$details  = null;
+			}
 
-        $whoops->pushHandler($handler);
-        $whoops->register();
-    }
+			if ($this->option('debug') === true) {
+				echo Response::json([
+					'status'    => 'error',
+					'exception' => get_class($exception),
+					'code'      => $code,
+					'message'   => $exception->getMessage(),
+					'details'   => $details,
+					'file'      => F::relativepath($exception->getFile(), $this->environment()->get('DOCUMENT_ROOT', '')),
+					'line'      => $exception->getLine(),
+				], $httpCode);
+			} else {
+				echo Response::json([
+					'status'  => 'error',
+					'code'    => $code,
+					'details' => $details,
+					'message' => I18n::translate('error.unexpected'),
+				], $httpCode);
+			}
+
+			return Handler::QUIT;
+		});
+
+		$this->setWhoopsHandler($handler);
+		$this->whoops()->sendHttpCode(false);
+	}
+
+	/**
+	 * Enables Whoops with the specified handler
+	 */
+	protected function setWhoopsHandler(callable|HandlerInterface $handler): void
+	{
+		$whoops = $this->whoops();
+		$whoops->clearHandlers();
+		$whoops->pushHandler($handler);
+		$whoops->pushHandler($this->getAdditionalWhoopsHandler());
+		$whoops->register(); // will only do something if not already registered
+	}
+
+	/**
+	 * Whoops callback handler for additional error handling
+	 * (`system.exception` hook and output to error log)
+	 */
+	protected function getAdditionalWhoopsHandler(): CallbackHandler
+	{
+		return new CallbackHandler(function ($exception, $inspector, $run) {
+			$isLogged = true;
+
+			// allow hook to modify whether the exception should be logged
+			$isLogged = $this->apply(
+				'system.exception',
+				compact('exception', 'isLogged'),
+				'isLogged'
+			);
+
+			if ($isLogged !== false) {
+				error_log($exception);
+			}
+
+			return Handler::DONE;
+		});
+	}
+
+	/**
+	 * Clears the Whoops handlers and disables Whoops
+	 */
+	protected function unsetWhoopsHandler(): void
+	{
+		$whoops = $this->whoops();
+		$whoops->clearHandlers();
+		$whoops->unregister(); // will only do something if currently registered
+	}
+
+	/**
+	 * Returns the Whoops error handler instance
+	 */
+	protected function whoops(): Whoops
+	{
+		return $this->whoops ??= new Whoops();
+	}
 }

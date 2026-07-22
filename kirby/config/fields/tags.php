@@ -1,91 +1,106 @@
 <?php
 
+use Kirby\Toolkit\A;
+use Kirby\Toolkit\Str;
+use Kirby\Toolkit\V;
+
 return [
-    'mixins' => ['options'],
-    'props' => [
+	'mixins' => ['min', 'options'],
+	'props' => [
 
-        /**
-         * Unset inherited props
-         */
-        'after'       => null,
-        'before'      => null,
-        'placeholder' => null,
+		/**
+		 * Unset inherited props
+		 */
+		'after'       => null,
+		'before'      => null,
+		'placeholder' => null,
 
-        /**
-         * If set to <code>all</code>, any type of input is accepted. If set to <code>options</code> only the predefined options are accepted as input.
-         */
-        'accept' => function ($value = 'all') {
-            return V::in($value, ['all', 'options']) ? $value : 'all';
-        },
-        /**
-         * Changes the tag icon
-         */
-        'icon' => function ($icon = 'tag') {
-            return $icon;
-        },
-        /**
-         * Minimum number of required entries/tags
-         */
-        'min' => function (int $min = null) {
-            return $min;
-        },
-        /**
-         * Maximum number of allowed entries/tags
-         */
-        'max' => function (int $max = null) {
-            return $max;
-        },
-        /**
-         * Custom tags separator, which will be used to store tags in the content file
-         */
-        'separator' => function (string $separator = ',') {
-            return $separator;
-        },
-    ],
-    'computed' => [
-        'options' => function () {
-            return $this->getOptions();
-        },
-        'default' => function (): array {
-            return $this->toTags($this->default);
-        },
-        'value' => function (): array {
-            return $this->toTags($this->value);
-        }
-    ],
-    'methods' => [
-        'toTags' => function ($value) {
-            $options = $this->options();
+		/**
+		 * If set to `all`, any type of input is accepted. If set to `options` only the predefined options are accepted as input.
+		 */
+		'accept' => function ($value = 'all') {
+			return V::in($value, ['all', 'options']) ? $value : 'all';
+		},
+		/**
+		 * Changes the tag icon
+		 */
+		'icon' => function ($icon = 'tag') {
+			return $icon;
+		},
+		/**
+		 * Set to `list` to display each tag with 100% width,
+		 * otherwise the tags are displayed inline
+		 */
+		'layout' => function (string|null $layout = null) {
+			return $layout;
+		},
+		/**
+		 * Minimum number of required entries/tags
+		 */
+		'min' => function (int|null $min = null) {
+			return $min;
+		},
+		/**
+		 * Maximum number of allowed entries/tags
+		 */
+		'max' => function (int|null $max = null) {
+			return $max;
+		},
+		/**
+		 * Enable/disable the search in the dropdown
+		 * Also limit displayed items (display: 20)
+		 * and set minimum number of characters to search (min: 3)
+		 */
+		'search' => function (bool|array $search = true) {
+			return $search;
+		},
+		/**
+		 * Custom tags separator, which will be used to store tags in the content file
+		 */
+		'separator' => function (string $separator = ',') {
+			return $separator;
+		},
+		/**
+		 * If `true`, selected entries will be sorted
+		 * according to their position in the dropdown
+		 */
+		'sort' => function (bool $sort = false) {
+			return $sort;
+		},
+	],
+	'computed' => [
+		'default' => function (): array {
+			return $this->toValues($this->default);
+		},
+		'value' => function (): array {
+			return $this->toValues($this->value);
+		}
+	],
+	'methods' => [
+		'toValues' => function ($value) {
+			if (is_null($value) === true) {
+				return [];
+			}
 
-            // transform into value-text objects
-            return array_map(function ($option) use ($options) {
+			if (is_array($value) === false) {
+				$value = Str::split($value, $this->separator());
+			}
 
-                // already a valid object
-                if (is_array($option) === true && isset($option['value'], $option['text']) === true) {
-                    return $option;
-                }
+			if ($this->accept === 'options') {
+				$value = $this->sanitizeOptions($value);
+			}
 
-                $index = array_search($option, array_column($options, 'value'));
-
-                if ($index !== false) {
-                    return $options[$index];
-                }
-
-                return [
-                    'value' => $option,
-                    'text'  => $option,
-                ];
-            }, Str::split($value));
-        }
-    ],
-    'save' => function (array $value = null): string {
-        return A::join(
-            A::pluck($value, 'value'),
-            $this->separator() . ' '
-        );
-    },
-    'validations' => [
-        'min',
-        'max'
-    ]
+			return $value;
+		}
+	],
+	'save' => function (array|null $value = null): string {
+		return A::join(
+			$value,
+			$this->separator() . ' '
+		);
+	},
+	'validations' => [
+		'min',
+		'max'
+	]
 ];

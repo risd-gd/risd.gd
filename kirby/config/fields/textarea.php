@@ -1,169 +1,123 @@
 <?php
 
 return [
-    'props' => [
-        /**
-         * Unset inherited props
-         */
-        'after'  => null,
-        'before' => null,
+	'mixins' => ['filepicker', 'upload'],
+	'props' => [
+		/**
+		 * Unset inherited props
+		 */
+		'after'  => null,
+		'before' => null,
 
-        /**
-         * Enables/disables the format buttons. Can either be true/false or a list of allowed buttons. Available buttons: headlines, italic, bold, link, email, list, code, ul, ol
-         */
-        'buttons' => function ($buttons = true) {
-            return $buttons;
-        },
+		/**
+		 * Enables/disables the format buttons. Can either be `true`/`false` or a list of allowed buttons. Available buttons: `headlines`, `italic`, `bold`, `link`, `email`, `file`, `code`, `ul`, `ol` (as well as `|` for a divider)
+		 */
+		'buttons' => function ($buttons = true) {
+			return $buttons;
+		},
 
-        /**
-         * Enables/disables the character counter in the top right corner
-         */
-        'counter' => function (bool $counter = true) {
-            return $counter;
-        },
+		/**
+		 * Enables/disables the character counter in the top right corner
+		 */
+		'counter' => function (bool $counter = true) {
+			return $counter;
+		},
 
-        /**
-         * Sets the default text when a new Page/File/User is created
-         */
-        'default' => function (string $default = null) {
-            return trim($default);
-        },
+		/**
+		 * Sets the default text when a new page/file/user is created
+		 */
+		'default' => function (string|null $default = null) {
+			return trim($default ?? '');
+		},
 
-        /**
-         * Sets the options for the files picker
-         */
-        'files' => function ($files = []) {
-            if (is_string($files) === true) {
-                return ['query' => $files];
-            }
+		/**
+		 * Sets the options for the files picker
+		 */
+		'files' => function ($files = []) {
+			if (is_string($files) === true) {
+				return ['query' => $files];
+			}
 
-            if (is_array($files) === false) {
-                $files = [];
-            }
+			if (is_array($files) === false) {
+				$files = [];
+			}
 
-            return $files;
-        },
+			return $files;
+		},
 
-        /**
-         * Maximum number of allowed characters
-         */
-        'maxlength' => function (int $maxlength = null) {
-            return $maxlength;
-        },
+		/**
+		 * Sets the font family (sans or monospace)
+		 */
+		'font' => function (string|null $font = null) {
+			return $font === 'monospace' ? 'monospace' : 'sans-serif';
+		},
 
-        /**
-         * Minimum number of required characters
-         */
-        'minlength' => function (int $minlength = null) {
-            return $minlength;
-        },
+		/**
+		 * Maximum number of allowed characters
+		 */
+		'maxlength' => function (int|null $maxlength = null) {
+			return $maxlength;
+		},
 
-        /**
-         * Changes the size of the textarea. Available sizes: small, medium, large, huge
-         */
-        'size' => function (string $size = null) {
-            return $size;
-        },
+		/**
+		 * Minimum number of required characters
+		 */
+		'minlength' => function (int|null $minlength = null) {
+			return $minlength;
+		},
 
-        /**
-         * Sets the upload options for linked files
-         */
-        'uploads' => function ($uploads = []) {
-            if ($uploads === false) {
-                return false;
-            }
+		/**
+		 * Changes the size of the textarea. Available sizes: `small`, `medium`, `large`, `huge`
+		 */
+		'size' => function (string|null $size = null) {
+			return $size;
+		},
 
-            if (is_string($uploads) === true) {
-                return ['template' => $uploads];
-            }
+		/**
+		 * If `false`, spellcheck will be switched off
+		 */
+		'spellcheck' => function (bool $spellcheck = true) {
+			return $spellcheck;
+		},
 
-            if (is_array($uploads) === false) {
-                $uploads = [];
-            }
+		'value' => function (string|null $value = null) {
+			return trim($value ?? '');
+		}
+	],
+	'api' => function () {
+		return [
+			[
+				'pattern' => 'files',
+				'action' => function () {
+					$params = array_merge($this->field()->files(), [
+						'page'   => $this->requestQuery('page'),
+						'search' => $this->requestQuery('search')
+					]);
 
-            return $uploads;
-        },
+					return $this->field()->filepicker($params);
+				}
+			],
+			[
+				'pattern' => 'upload',
+				'method' => 'POST',
+				'action' => function () {
+					$field   = $this->field();
+					$uploads = $field->uploads();
 
-        'value' => function (string $value = null) {
-            return trim($value);
-        }
-    ],
-    'api' => function () {
-        return [
-            [
-                'pattern' => 'files',
-                'action' => function () {
-                    $field = $this->field();
-                    $model = $field->model();
+					return $this->field()->upload($this, $uploads, function ($file, $parent) use ($field) {
+						$absolute = $field->model()->is($parent) === false;
 
-                    if (empty($filed->files['query']) === false) {
-                        $query = $filed->files['query'];
-                    } elseif (is_a($model, 'Kirby\Cms\File') === true) {
-                        $query = 'file.siblings';
-                    } else {
-                        $query = $model::CLASS_ALIAS . '.files';
-                    }
-
-                    $files = $model->query($query, 'Kirby\Cms\Files');
-                    $data  = [];
-
-                    foreach ($files as $index => $file) {
-                        $image = $file->panelImage($field->files['image'] ?? []);
-                        $model = $field->model();
-
-                        $data[] = [
-                            'filename' => $file->filename(),
-                            'dragText' => $file->dragText(),
-                            'image'    => $image,
-                            'icon'     => $file->panelIcon($image)
-                        ];
-                    }
-
-                    return $data;
-                }
-            ],
-            [
-                'pattern' => 'upload',
-                'action' => function () {
-                    $field   = $this->field();
-                    $uploads = $field->uploads();
-
-                    if ($uploads === false) {
-                        throw new Exception('Uploads are disabled for this field');
-                    }
-
-                    if ($parentQuery = ($uploads['parent'] ?? null)) {
-                        $parent = $field->model()->query($parentQuery);
-                    } else {
-                        $parent = $field->model();
-                    }
-
-                    if (is_a($parent, 'Kirby\Cms\File') === true) {
-                        $parent = $parent->parent();
-                    }
-
-                    return $this->upload(function ($source, $filename) use ($field, $parent, $uploads) {
-                        $file = $parent->createFile([
-                            'source'   => $source,
-                            'template' => $uploads['template'] ?? null,
-                            'filename' => $filename,
-                        ]);
-
-                        if (is_a($file, 'Kirby\Cms\File') === false) {
-                            throw new Exception('The file could not be uploaded');
-                        }
-
-                        return [
-                            'filename' => $file->filename(),
-                            'dragText' => $file->dragText(),
-                        ];
-                    });
-                }
-            ]
-        ];
-    },
-    'validations' => [
-        'minlength',
-        'maxlength'
-    ]
+						return [
+							'filename' => $file->filename(),
+							'dragText' => $file->panel()->dragText('auto', $absolute),
+						];
+					});
+				}
+			]
+		];
+	},
+	'validations' => [
+		'minlength',
+		'maxlength'
+	]
 ];

@@ -1,188 +1,111 @@
 <?php
 
+use Kirby\Cms\App;
+use Kirby\Data\Data;
 use Kirby\Toolkit\A;
-use Kirby\Toolkit\I18n;
 
 return [
-    'props' => [
-        /**
-         * Unset inherited props
-         */
-        'after'       => null,
-        'autofocus'   => null,
-        'before'      => null,
-        'icon'        => null,
-        'placeholder' => null,
+	'mixins' => [
+		'layout',
+		'min',
+		'pagepicker',
+		'picker',
+	],
+	'props' => [
+		/**
+		 * Unset inherited props
+		 */
+		'after'       => null,
+		'autofocus'   => null,
+		'before'      => null,
+		'icon'        => null,
+		'placeholder' => null,
 
-        /**
-         * Default selected page(s) when a new Page/File/User is created
-         */
-        'default' => function ($default = null) {
-            return $this->toPages($default);
-        },
+		/**
+		 * Default selected page(s) when a new page/file/user is created
+		 */
+		'default' => function ($default = null) {
+			return $this->toPages($default);
+		},
 
-        /**
-         * The placeholder text if no pages have been selected yet
-         */
-        'empty' => function ($empty = null) {
-            return I18n::translate($empty, $empty);
-        },
+		/**
+		 * Optional query to select a specific set of pages
+		 */
+		'query' => function (string|null $query = null) {
+			return $query;
+		},
 
-        /**
-         * Image settings for each item
-         */
-        'image' => function (array $image = null) {
-            return $image ?? [];
-        },
+		/**
+		 * Optionally include subpages of pages
+		 */
+		'subpages' => function (bool $subpages = true) {
+			return $subpages;
+		},
 
-        /**
-         * Info text
-         */
-        'info' => function (string $info = null) {
-            return $info;
-        },
+		'value' => function ($value = null) {
+			return $this->toPages($value);
+		},
+	],
+	'computed' => [
+		/**
+		 * Unset inherited computed
+		 */
+		'default' => null
+	],
+	'methods' => [
+		'pageResponse' => function ($page) {
+			return $page->panel()->pickerData([
+				'image'  => $this->image,
+				'info'   => $this->info,
+				'layout' => $this->layout,
+				'text'   => $this->text,
+			]);
+		},
+		'toPages' => function ($value = null) {
+			$pages = [];
+			$kirby = App::instance();
 
-        /**
-         * Changes the layout of the selected files. Available layouts: list, cards
-         */
-        'layout' => function (string $layout = 'list') {
-            return $layout;
-        },
+			foreach (Data::decode($value, 'yaml') as $id) {
+				if (is_array($id) === true) {
+					$id =  $id['uuid'] ?? $id['id'] ?? null;
+				}
 
-        /**
-         * The minimum number of required selected pages
-         */
-        'min' => function (int $min = null) {
-            return $min;
-        },
+				if ($id !== null && ($page = $kirby->page($id))) {
+					$pages[] = $this->pageResponse($page);
+				}
+			}
 
-        /**
-         * The maximum number of allowed selected pages
-         */
-        'max' => function (int $max = null) {
-            return $max;
-        },
+			return $pages;
+		}
+	],
+	'api' => function () {
+		return [
+			[
+				'pattern' => '/',
+				'action' => function () {
+					$field = $this->field();
 
-        /**
-         * If false, only a single page can be selected
-         */
-        'multiple' => function (bool $multiple = true) {
-            return $multiple;
-        },
-
-        /**
-         * Optional query to select a specific set of pages
-         */
-        'query' => function (string $query = null) {
-            return $query;
-        },
-
-        /**
-         * Layout size for cards
-         */
-        'size' => function (string $size = null) {
-            return $size;
-        },
-
-        /**
-         * Main text
-         */
-        'text' => function (string $text = null) {
-            return $text;
-        },
-
-        'value' => function ($value = null) {
-            return $this->toPages($value);
-        },
-    ],
-    'methods' => [
-        'pageResponse' => function ($page) {
-            if ($this->layout === 'list') {
-                $thumb = [
-                    'width'  => 100,
-                    'height' => 100
-                ];
-            } else {
-                $thumb = [
-                    'width'  => 400,
-                    'height' => 400
-                ];
-            }
-
-            $image = $page->panelImage($this->image, $thumb);
-            $model = $this->model();
-
-            return [
-                'text'        => $page->toString($this->text ?? '{{ page.title }}'),
-                'link'        => $page->panelUrl(true),
-                'id'          => $page->id(),
-                'info'        => $page->toString($this->info ?? false),
-                'image'       => $image,
-                'icon'        => $page->panelIcon($image),
-                'hasChildren' => $page->hasChildren(),
-            ];
-        },
-        'toPages' => function ($value = null) {
-            $pages = [];
-            $kirby = kirby();
-
-            foreach (Yaml::decode($value) as $id) {
-                if (is_array($id) === true) {
-                    $id = $id['id'] ?? null;
-                }
-
-                if ($id !== null && ($page = $kirby->page($id))) {
-                    $pages[] = $this->pageResponse($page);
-                }
-            }
-
-            return $pages;
-        }
-    ],
-    'api' => function () {
-        return [
-            [
-                'pattern' => '/',
-                'action' => function () {
-                    $field = $this->field();
-                    $query = $field->query();
-
-                    if ($query) {
-                        $pages = $field->model()->query($query, 'Kirby\Cms\Pages');
-                        $model = null;
-                    } else {
-                        if (!$parent = $this->site()->find($this->requestQuery('parent'))) {
-                            $parent = $this->site();
-                        }
-
-                        $pages = $parent->children();
-                        $model = [
-                            'id'    => $parent->id() == '' ? null : $parent->id(),
-                            'title' => $parent->title()->value()
-                        ];
-                    }
-
-                    $children = [];
-
-                    foreach ($pages as $index => $page) {
-                        if ($page->isReadable() === true) {
-                            $children[] = $field->pageResponse($page);
-                        }
-                    }
-
-                    return [
-                        'model' => $model,
-                        'pages' => $children
-                    ];
-                }
-            ]
-        ];
-    },
-    'save' => function ($value = null) {
-        return A::pluck($value, 'id');
-    },
-    'validations' => [
-        'max',
-        'min'
-    ]
+					return $field->pagepicker([
+						'image'    => $field->image(),
+						'info'     => $field->info(),
+						'layout'   => $field->layout(),
+						'limit'    => $field->limit(),
+						'page'     => $this->requestQuery('page'),
+						'parent'   => $this->requestQuery('parent'),
+						'query'    => $field->query(),
+						'search'   => $this->requestQuery('search'),
+						'subpages' => $field->subpages(),
+						'text'     => $field->text()
+					]);
+				}
+			]
+		];
+	},
+	'save' => function ($value = null) {
+		return A::pluck($value, $this->store);
+	},
+	'validations' => [
+		'max',
+		'min'
+	]
 ];

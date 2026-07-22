@@ -3,135 +3,114 @@
 namespace Kirby\Image;
 
 /**
-* Returns the latitude and longitude values
-* for exif location data if available
-*
-* @package   Kirby Toolkit
-* @author    Bastian Allgeier <bastian@getkirby.com>
-* @link      http://getkirby.com
-* @copyright Bastian Allgeier
-* @license   MIT
-*/
+ * Returns the latitude and longitude values
+ * for exif location data if available
+ *
+ * @package   Kirby Image
+ * @author    Bastian Allgeier <bastian@getkirby.com>
+ * @link      https://getkirby.com
+ * @copyright Bastian Allgeier
+ * @license   https://opensource.org/licenses/MIT
+ */
 class Location
 {
+	protected float|null $lat = null;
+	protected float|null $lng = null;
 
-    /**
-     * latitude
-     *
-     * @var float|null
-     */
-    protected $lat;
+	/**
+	 * Constructor
+	 *
+	 * @param array $exif The entire exif array
+	 */
+	public function __construct(array $exif)
+	{
+		if (
+			isset($exif['GPSLatitude']) === true &&
+			isset($exif['GPSLatitudeRef']) === true &&
+			isset($exif['GPSLongitude']) === true &&
+			isset($exif['GPSLongitudeRef']) === true
+		) {
+			$this->lat = $this->gps(
+				$exif['GPSLatitude'],
+				$exif['GPSLatitudeRef']
+			);
+			$this->lng = $this->gps(
+				$exif['GPSLongitude'],
+				$exif['GPSLongitudeRef']
+			);
+		}
+	}
 
-    /**
-     * longitude
-     *
-     * @var float|null
-     */
-    protected $lng;
+	/**
+	 * Returns the latitude
+	 */
+	public function lat(): float|null
+	{
+		return $this->lat;
+	}
 
-    /**
-     * Constructor
-     *
-     * @param array $exif The entire exif array
-     */
-    public function __construct(array $exif)
-    {
-        if (isset($exif['GPSLatitude']) === true &&
-            isset($exif['GPSLatitudeRef']) === true &&
-            isset($exif['GPSLongitude']) === true &&
-            isset($exif['GPSLongitudeRef']) === true
-        ) {
-            $this->lat = $this->gps($exif['GPSLatitude'], $exif['GPSLatitudeRef']);
-            $this->lng = $this->gps($exif['GPSLongitude'], $exif['GPSLongitudeRef']);
-        }
-    }
+	/**
+	 * Returns the longitude
+	 */
+	public function lng(): float|null
+	{
+		return $this->lng;
+	}
 
-    /**
-     * Returns the latitude
-     *
-     * @return float|null
-     */
-    public function lat()
-    {
-        return $this->lat;
-    }
+	/**
+	 * Converts the gps coordinates
+	 */
+	protected function gps(array $coord, string $hemi): float
+	{
+		$degrees = count($coord) > 0 ? $this->num($coord[0]) : 0;
+		$minutes = count($coord) > 1 ? $this->num($coord[1]) : 0;
+		$seconds = count($coord) > 2 ? $this->num($coord[2]) : 0;
 
-    /**
-     * Returns the longitude
-     *
-     * @return float|null
-     */
-    public function lng()
-    {
-        return $this->lng;
-    }
+		$hemi = strtoupper($hemi);
+		$flip = ($hemi === 'W' || $hemi === 'S') ? -1 : 1;
 
-    /**
-     * Converts the gps coordinates
-     *
-     * @param  string|array $coord
-     * @param  string       $hemi
-     * @return float
-     */
-    protected function gps($coord, string $hemi): float
-    {
-        $degrees = count($coord) > 0 ? $this->num($coord[0]) : 0;
-        $minutes = count($coord) > 1 ? $this->num($coord[1]) : 0;
-        $seconds = count($coord) > 2 ? $this->num($coord[2]) : 0;
+		return $flip * ($degrees + $minutes / 60 + $seconds / 3600);
+	}
 
-        $hemi = strtoupper($hemi);
-        $flip = ($hemi == 'W' || $hemi == 'S') ? -1 : 1;
+	/**
+	 * Converts coordinates to floats
+	 */
+	protected function num(string $part): float
+	{
+		$parts = explode('/', $part);
 
-        return $flip * ($degrees + $minutes / 60 + $seconds / 3600);
-    }
+		if (count($parts) === 1) {
+			return (float)$parts[0];
+		}
 
-    /**
-     * Converts coordinates to floats
-     *
-     * @param  string $part
-     * @return float
-     */
-    protected function num(string $part): float
-    {
-        $parts = explode('/', $part);
+		return (float)($parts[0]) / (float)($parts[1]);
+	}
 
-        if (count($parts) == 1) {
-            return $parts[0];
-        }
+	/**
+	 * Converts the object into a nicely readable array
+	 */
+	public function toArray(): array
+	{
+		return [
+			'lat' => $this->lat(),
+			'lng' => $this->lng()
+		];
+	}
 
-        return floatval($parts[0]) / floatval($parts[1]);
-    }
+	/**
+	 * Echos the entire location as lat, lng
+	 */
+	public function __toString(): string
+	{
+		return trim($this->lat() . ', ' . $this->lng(), ',');
+	}
 
-    /**
-     * Converts the object into a nicely readable array
-     *
-     * @return array
-     */
-    public function toArray(): array
-    {
-        return [
-            'lat' => $this->lat(),
-            'lng' => $this->lng()
-        ];
-    }
-
-    /**
-     * Echos the entire location as lat, lng
-     *
-     * @return string
-     */
-    public function __toString(): string
-    {
-        return trim(trim($this->lat() . ', ' . $this->lng(), ','));
-    }
-
-    /**
-     * Improved var_dump() output
-     *
-     * @return array
-     */
-    public function __debuginfo(): array
-    {
-        return $this->toArray();
-    }
+	/**
+	 * Improved `var_dump` output
+	 * @codeCoverageIgnore
+	 */
+	public function __debugInfo(): array
+	{
+		return $this->toArray();
+	}
 }

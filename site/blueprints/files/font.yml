@@ -1,0 +1,3 @@
+title: Upload Fonts
+accept:
+  extension: [otf, ttf, woff2, woff, eot]

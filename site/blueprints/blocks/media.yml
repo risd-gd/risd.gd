@@ -1,0 +1,74 @@
+title: Media
+label: "[{{mediatype}}] {{ title }} "
+fields:
+  title:
+    label: Title
+    type: text
+    help: Title is only used to label items in the Panel.
+  mediatype:
+    type: toggles
+    label: Media Type
+    help: Videos (mp4) and Images (webp, jpg, png, gif) supported.
+    options:
+      - value: video
+        text: Video
+        icon: file-video
+      - value: image
+        text: Image(s) 
+        icon: file-image
+    default: image
+  videofile:
+    width: 1/2
+    label: Select Video
+    type: files
+    icon: file-video
+    when:
+      mediatype: video
+    query: page.videos
+    multiple: false
+    accept:
+      extension: mov, mp4
+  galleryfile:
+    label: Select Image(s)
+    type: files
+    width: 1/2
+    max: 4
+    accept: image/jpeg
+    when:
+      mediatype: image
+  width_video: 
+    width: 1/2
+    label: Video Width
+    type: select
+    query: page.videos
+    default: full-width
+    options:
+        full-width: Full-width
+        half-width: Half-width
+    when:
+      mediatype: video
+  width_gallery: 
+    label: Image Width
+    type: select
+    width: 1/2
+    default: right
+    options:
+        right: Right aligned
+        left: Left aligned
+        full: Full width
+    when:
+      mediatype: image
+  embed:
+    placeholder: Defaults to this if *Select Video* is blank — use to embed videos or websites.
+    label: Embeded HTML
+    type: text
+    when:
+      mediatype: video
+  caption:
+    label: Description
+    type: textarea
+    buttons:
+      - italic
+      - link
+      - email
+

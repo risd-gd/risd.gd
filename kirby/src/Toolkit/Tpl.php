@@ -2,7 +2,7 @@
 
 namespace Kirby\Toolkit;
 
-use Exception;
+use Kirby\Filesystem\F;
 use Throwable;
 
 /**
@@ -10,44 +10,41 @@ use Throwable;
  *
  * @package   Kirby Toolkit
  * @author    Bastian Allgeier <bastian@getkirby.com>
- * @link      http://getkirby.com
+ * @link      https://getkirby.com
  * @copyright Bastian Allgeier
- * @license   MIT
+ * @license   https://opensource.org/licenses/MIT
  */
 class Tpl
 {
+	/**
+	 * Renders the template
+	 *
+	 * @throws Throwable
+	 */
+	public static function load(
+		string|null $file = null,
+		array $data = []
+	): string {
+		if ($file === null || is_file($file) === false) {
+			return '';
+		}
 
-    /**
-     * Renders the template
-     *
-     * @param string $__file
-     * @param array $__data
-     * @return string
-     */
-    public static function load(string $__file = null, array $__data = []): string
-    {
-        if (file_exists($__file) === false) {
-            return '';
-        }
+		ob_start();
 
-        $exception = null;
+		$exception = null;
+		try {
+			F::load($file, null, $data);
+		} catch (Throwable $e) {
+			$exception = $e;
+		}
 
-        ob_start();
-        extract($__data);
+		$content = ob_get_contents();
+		ob_end_clean();
 
-        try {
-            require $__file;
-        } catch (Throwable $e) {
-            $exception = $e;
-        }
+		if ($exception !== null) {
+			throw $exception;
+		}
 
-        $content = ob_get_contents();
-        ob_end_clean();
-
-        if ($exception === null) {
-            return $content;
-        }
-
-        throw $exception;
-    }
+		return $content;
+	}
 }

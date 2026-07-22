@@ -2,105 +2,116 @@
 
 namespace Kirby\Cms;
 
-use stdClass;
-use ReflectionMethod;
 use Kirby\Toolkit\Properties;
-use Kirby\Toolkit\Str;
 
 /**
- * Foundation for Page, Site, File and User models.
+ * @deprecated 4.0.0 will be removed in Kirby 5.0
+ *
+ * @package   Kirby Cms
+ * @author    Bastian Allgeier <bastian@getkirby.com>
+ * @link      https://getkirby.com
+ * @copyright Bastian Allgeier
+ * @license   https://getkirby.com/license
  */
 abstract class Model
 {
-    use Properties;
+	use Properties;
 
-    /**
-     * The parent Kirby instance
-     *
-     * @var App
-     */
-    public static $kirby;
+	/**
+	 * Each model must define a CLASS_ALIAS
+	 * which will be used in template queries.
+	 * The CLASS_ALIAS is a short human-readable
+	 * version of the class name. I.e. page.
+	 */
+	public const CLASS_ALIAS = null;
 
-    /**
-     * The parent Site instance
-     *
-     * @var Site
-     */
-    protected $site;
+	/**
+	 * The parent Kirby instance
+	 *
+	 * @var \Kirby\Cms\App
+	 */
+	public static $kirby;
 
-    /**
-     * Makes it possible to convert the entire model
-     * to a string. Mostly useful for debugging
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->id();
-    }
+	/**
+	 * The parent site instance
+	 *
+	 * @var \Kirby\Cms\Site
+	 */
+	protected $site;
 
-    /**
-     * Each model must return a unique id
-     *
-     * @return string|int
-     */
-    public function id()
-    {
-        return null;
-    }
+	/**
+	 * Makes it possible to convert the entire model
+	 * to a string. Mostly useful for debugging
+	 *
+	 * @return string
+	 */
+	public function __toString(): string
+	{
+		return $this->id();
+	}
 
-    /**
-     * Returns the parent Kirby instance
-     *
-     * @return App|null
-     */
-    public function kirby(): App
-    {
-        return static::$kirby = static::$kirby ?? App::instance();
-    }
+	/**
+	 * Each model must return a unique id
+	 *
+	 * @return string|null
+	 */
+	public function id()
+	{
+		return null;
+	}
 
-    /**
-     * Returns the parent Site instance
-     *
-     * @return Site|null
-     */
-    public function site()
-    {
-        return $this->site = $this->site ?? $this->kirby()->site();
-    }
+	/**
+	 * Returns the parent Kirby instance
+	 *
+	 * @return \Kirby\Cms\App
+	 */
+	public function kirby()
+	{
+		return static::$kirby ??= App::instance();
+	}
 
-    /**
-     * Setter for the parent Kirby object
-     *
-     * @param Kirby|null $kirby
-     * @return self
-     */
-    protected function setKirby(App $kirby = null)
-    {
-        static::$kirby = $kirby;
-        return $this;
-    }
+	/**
+	 * Returns the parent Site instance
+	 *
+	 * @return \Kirby\Cms\Site
+	 */
+	public function site()
+	{
+		return $this->site ??= $this->kirby()->site();
+	}
 
-    /**
-     * Setter for the parent Site object
-     *
-     * @internal
-     * @param Site|null $site
-     * @return self
-     */
-    public function setSite(Site $site = null)
-    {
-        $this->site = $site;
-        return $this;
-    }
+	/**
+	 * Setter for the parent Kirby object
+	 *
+	 * @param \Kirby\Cms\App|null $kirby
+	 * @return $this
+	 */
+	protected function setKirby(App|null $kirby = null)
+	{
+		static::$kirby = $kirby;
+		return $this;
+	}
 
-    /**
-     * Convert the model to a simple array
-     *
-     * @return array
-     */
-    public function toArray(): array
-    {
-        return $this->propertiesToArray();
-    }
+	/**
+	 * Setter for the parent site object
+	 *
+	 * @internal
+	 * @param \Kirby\Cms\Site|null $site
+	 * @return $this
+	 */
+	public function setSite(Site|null $site = null)
+	{
+		$this->site = $site;
+		return $this;
+	}
+
+	/**
+	 * Convert the model to a simple array
+	 *
+	 * @return array
+	 */
+	public function toArray(): array
+	{
+		return $this->propertiesToArray();
+	}
 }

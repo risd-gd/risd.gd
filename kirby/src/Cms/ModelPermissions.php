@@ -2,67 +2,131 @@
 
 namespace Kirby\Cms;
 
+use Kirby\Toolkit\A;
+
+/**
+ * ModelPermissions
+ *
+ * @package   Kirby Cms
+ * @author    Bastian Allgeier <bastian@getkirby.com>
+ * @link      https://getkirby.com
+ * @copyright Bastian Allgeier
+ * @license   https://getkirby.com/license
+ */
 abstract class ModelPermissions
 {
-    protected $category;
-    protected $model;
-    protected $options;
-    protected $permissions;
-    protected $user;
+	protected string $category;
+	protected ModelWithContent $model;
+	protected array $options;
+	protected Permissions $permissions;
+	protected User $user;
 
-    public function __call(string $method, array $arguments = [])
-    {
-        return $this->can($method);
-    }
+	public function __construct(ModelWithContent $model)
+	{
+		$this->model       = $model;
+		$this->options     = $model->blueprint()->options();
+		$this->user        = $model->kirby()->user() ?? User::nobody();
+		$this->permissions = $this->user->role()->permissions();
+	}
 
-    public function __construct(Model $model)
-    {
-        $this->model       = $model;
-        $this->options     = $model->blueprint()->options();
-        $this->user        = $model->kirby()->user() ?? User::nobody();
-        $this->permissions = $this->user->role()->permissions();
-    }
+	public function __call(string $method, array $arguments = []): bool
+	{
+		return $this->can($method);
+	}
 
-    /**
-     * Improved var_dump output
-     *
-     * @return array
-     */
-    public function __debuginfo(): array
-    {
-        return $this->toArray();
-    }
+	/**
+	 * Improved `var_dump` output
+	 * @codeCoverageIgnore
+	 */
+	public function __debugInfo(): array
+	{
+		return $this->toArray();
+	}
 
-    public function can(string $action): bool
-    {
-        if ($this->user->role()->id() === 'nobody') {
-            return false;
-        }
+	/**
+	 * Returns whether the current user is allowed to do
+	 * a certain action on the model
+	 *
+	 * @param bool $default Will be returned if $action does not exist
+	 */
+	public function can(
+		string $action,
+		bool $default = false
+	): bool {
+		$user = $this->user->id();
+		$role = $this->user->role()->id();
 
-        if (method_exists($this, 'can' . $action) === true && $this->{'can' . $action}() === false) {
-            return false;
-        }
+		// users with the `nobody` role can do nothing
+		// that needs a permission check
+		if ($role === 'nobody') {
+			return false;
+		}
 
-        if (isset($this->options[$action]) === true && $this->options[$action] === false) {
-            return false;
-        }
+		// check for a custom `can` method
+		// which would take priority over any other
+		// role-based permission rules
+		if (
+			method_exists($this, 'can' . $action) === true &&
+			$this->{'can' . $action}() === false
+		) {
+			return false;
+		}
 
-        return $this->permissions->for($this->category, $action);
-    }
+		// the almighty `kirby` user can do anything
+		if ($user === 'kirby' && $role === 'admin') {
+			return true;
+		}
 
-    public function cannot(string $action): bool
-    {
-        return $this->can($action) === false;
-    }
+		// evaluate the blueprint options block
+		if (isset($this->options[$action]) === true) {
+			$options = $this->options[$action];
 
-    public function toArray(): array
-    {
-        $array = [];
+			if ($options === false) {
+				return false;
+			}
 
-        foreach ($this->options as $key => $value) {
-            $array[$key] = $this->can($key);
-        }
+			if ($options === true) {
+				return true;
+			}
 
-        return $array;
-    }
+			if (
+				is_array($options) === true &&
+				A::isAssociative($options) === true
+			) {
+				if (isset($options[$role]) === true) {
+					return $options[$role];
+				}
+
+				if (isset($options['*']) === true) {
+					return $options['*'];
+				}
+			}
+		}
+
+		return $this->permissions->for($this->category, $action, $default);
+	}
+
+	/**
+	 * Returns whether the current user is not allowed to do
+	 * a certain action on the model
+	 *
+	 * @param bool $default Will be returned if $action does not exist
+	 */
+	public function cannot(
+		string $action,
+		bool $default = true
+	): bool {
+		return $this->can($action, !$default) === false;
+	}
+
+	public function toArray(): array
+	{
+		$array = [];
+
+		foreach ($this->options as $key => $value) {
+			$array[$key] = $this->can($key);
+		}
+
+		return $array;
+	}
 }

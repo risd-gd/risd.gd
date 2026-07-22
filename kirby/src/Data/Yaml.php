@@ -2,66 +2,61 @@
 
 namespace Kirby\Data;
 
-use Exception;
-use Spyc;
+use Kirby\Cms\App;
+use Kirby\Exception\InvalidArgumentException;
 
 /**
- * Simple Wrapper around Symfony's Yaml Component
+ * Simple Wrapper around the Symfony or Spyc YAML class
  *
  * @package   Kirby Data
  * @author    Bastian Allgeier <bastian@getkirby.com>
- * @link      http://getkirby.com
+ * @link      https://getkirby.com
  * @copyright Bastian Allgeier
- * @license   MIT
+ * @license   https://opensource.org/licenses/MIT
  */
 class Yaml extends Handler
 {
+	/**
+	 * Converts an array to an encoded YAML string
+	 */
+	public static function encode($data): string
+	{
+		return match (static::handler()) {
+			'symfony' => YamlSymfony::encode($data),
+			default   => YamlSpyc::encode($data),
+		};
+	}
 
-    /**
-     * Converts an array to an encoded YAML string
-     *
-     * @param  array  $data
-     * @return string
-     */
-    public static function encode(array $data): string
-    {
-        // fetch the current locale setting for numbers
-        $locale = setlocale(LC_NUMERIC, 0);
+	/**
+	 * Parses an encoded YAML string and returns a multi-dimensional array
+	 */
+	public static function decode($string): array
+	{
+		if ($string === null || $string === '') {
+			return [];
+		}
 
-        // change to english numerics to avoid issues with floats
-        setlocale(LC_NUMERIC, 'C');
+		if (is_array($string) === true) {
+			return $string;
+		}
 
-        // $data, $indent, $wordwrap, $no_opening_dashes
-        $yaml = Spyc::YAMLDump($data, false, false, true);
+		if (is_string($string) === false) {
+			throw new InvalidArgumentException('Invalid YAML data; please pass a string');
+		}
 
-        // restore the previous locale settings
-        setlocale(LC_NUMERIC, $locale);
+		return match (static::handler()) {
+			'symfony' => YamlSymfony::decode($string),
+			default   => YamlSpyc::decode($string)
+		};
+	}
 
-        return $yaml;
-    }
-
-    /**
-     * Parses an encoded YAML string and returns a multi-dimensional array
-     *
-     * @param  string $string
-     * @return array
-     */
-    public static function decode($yaml): array
-    {
-        if ($yaml === null) {
-            return [];
-        }
-
-        if (is_array($yaml) === true) {
-            return $yaml;
-        }
-
-        $result = Spyc::YAMLLoadString($yaml);
-
-        if (is_array($result)) {
-            return $result;
-        } else {
-            throw new Exception('YAML string is invalid');
-        }
-    }
+	/**
+	 * Returns which YAML parser (`spyc` or `symfony`)
+	 * is configured to be used
+	 * @internal
+	 */
+	public static function handler(): string
+	{
+		return App::instance(null, true)?->option('yaml.handler') ?? 'spyc';
+	}
 }

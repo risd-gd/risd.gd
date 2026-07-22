@@ -10,14 +10,14 @@ tabs:
           pages: 
             type: pages
             layout: cards
-          
-          subpages:
-            extends: sections/subpages
+          # subpages:
+          #   extends: sections/subpages
 
       - width: 1/2
         sections:
           notices:
             extends: sections/notices
+            search: true
   fonts:
     label: Typeface
     icon: headline
@@ -35,14 +35,28 @@ tabs:
             type: files
             label: Regular font
             multiple: false
+            uploads:
+              template: font
+            accept:
+              extension: [woff2, woff, otf, ttf, eot]
+
           italicfont:
             type: files
             label: Italic font
             multiple: false
+            uploads:
+              template: font
+            accept:
+              extension: [woff2, woff, otf, ttf, eot]
+
       - width: 1/2
         sections: 
-          fonts:
+          fontFiles:
+            type: files
             label: Upload font files
             layout: list
-            extends: sections/files
+            # extends: sections/files
+            template: font
+            accept:
+              extension: [otf, ttf, woff2, woff]
 

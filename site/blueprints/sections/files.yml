@@ -1,7 +1,6 @@
 type: files
 headline: Files
 layout: cards
-template: image
 info: "{{ file.dimensions }}"
 image:
   ratio: 5/4

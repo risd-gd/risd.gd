@@ -3,120 +3,205 @@
 namespace Kirby\Exception;
 
 use Kirby\Cms\App;
+use Kirby\Http\Environment;
 use Kirby\Toolkit\I18n;
 use Kirby\Toolkit\Str;
 
+/**
+ * Exception
+ * Thrown for general exceptions and extended by
+ * other exception classes
+ *
+ * @package   Kirby Exception
+ * @author    Nico Hoffmann <nico@getkirby.com>
+ * @link      https://getkirby.com
+ * @copyright Bastian Allgeier
+ * @license   https://opensource.org/licenses/MIT
+ */
 class Exception extends \Exception
 {
-    protected $data;
-    protected $httpCode;
-    protected $details;
-    protected $isTranslated = true;
+	/**
+	 * Data variables that can be used inside the exception message
+	 */
+	protected array $data;
 
-    protected static $defaultKey = 'general';
-    protected static $defaultFallback = 'An error occurred';
-    protected static $defaultData = [];
-    protected static $defaultHttpCode = 500;
-    protected static $defaultDetails = [];
+	/**
+	 * HTTP code that corresponds with the exception
+	 */
+	protected int $httpCode;
 
-    private static $prefix = 'error';
+	/**
+	 * Additional details that are not included in the exception message
+	 */
+	protected array $details;
 
-    public function __construct($args = [])
-    {
-        // Set data and httpCode from provided arguments or defaults
-        $this->data     = $args['data']     ?? static::$defaultData;
-        $this->httpCode = $args['httpCode'] ?? static::$defaultHttpCode;
-        $this->details  = $args['details']  ?? static::$defaultDetails;
+	/**
+	 * Whether the exception message could be translated
+	 * into the user's language
+	 */
+	protected bool $isTranslated = true;
 
-        if (is_string($args) === true) {
-            $this->isTranslated = false;
-            parent::__construct($args);
-        } else {
-            // Define whether message can/should be translated
-            $translate = ($args['translate'] ?? true) === true && class_exists('Kirby\Cms\App') === true;
+	/**
+	 * Defaults that can be overridden by specific
+	 * exception classes
+	 */
+	protected static string $defaultKey = 'general';
+	protected static string $defaultFallback = 'An error occurred';
+	protected static array $defaultData = [];
+	protected static int $defaultHttpCode = 500;
+	protected static array $defaultDetails = [];
 
-            // Define the Exception key
-            $key = self::$prefix . '.' . ($args['key'] ?? static::$defaultKey);
+	/**
+	 * Prefix for the exception key (e.g. 'error.general')
+	 */
+	private static string $prefix = 'error';
 
-            // Fallback waterfall for message string
-            $message = null;
+	/**
+	 * Class constructor
+	 *
+	 * @param array|string $args Full option array ('key', 'translate', 'fallback',
+	 *                           'data', 'httpCode', 'details' and 'previous') or
+	 *                           just the message string
+	 */
+	public function __construct(array|string $args = [])
+	{
+		// set data and httpCode from provided arguments or defaults
+		$this->data     = $args['data']     ?? static::$defaultData;
+		$this->httpCode = $args['httpCode'] ?? static::$defaultHttpCode;
+		$this->details  = $args['details']  ?? static::$defaultDetails;
 
-            if ($translate) {
-                // 1. Translation for provided key in current language
-                // 2. Translation for provided key in default language
-                if (isset($args['key']) === true) {
-                    $message = I18n::translate(self::$prefix . '.' . $args['key']);
-                    $this->isTranslated = true;
-                }
-            }
+		// define the Exception key
+		$key = $args['key'] ?? static::$defaultKey;
 
-            // 3. Provided fallback message
-            if ($message === null) {
-                $message = $args['fallback'] ?? null;
-                $this->isTranslated = false;
-            }
+		if (Str::startsWith($key, self::$prefix . '.') === false) {
+			$key = self::$prefix . '.' . $key;
+		}
 
-            if ($translate) {
-                // 4. Translation for default key in current language
-                // 5. Translation for default key in default language
-                if ($message === null) {
-                    $message = I18n::translate(self::$prefix . '.' . static::$defaultKey);
-                    $this->isTranslated = true;
-                }
-            }
+		if (is_string($args) === true) {
+			$this->isTranslated = false;
+			parent::__construct($args);
+		} else {
+			// define whether message can/should be translated
+			$translate =
+				($args['translate'] ?? true) === true &&
+				class_exists(App::class) === true;
 
-            // 6. Default fallback message
-            if ($message === null) {
-                $message = static::$defaultFallback;
-                $this->isTranslated = false;
-            }
+			// fallback waterfall for message string
+			$message = null;
 
-            // Format message with passed data
-            $message = Str::template($message, $this->data, '-', '{', '}');
+			if ($translate === true) {
+				// 1. translation for provided key in current language
+				// 2. translation for provided key in default language
+				if (isset($args['key']) === true) {
+					$message = I18n::translate(self::$prefix . '.' . $args['key']);
+					$this->isTranslated = true;
+				}
+			}
 
-            // Handover to Exception parent class constructor
-            parent::__construct($message, null, $args['previous'] ?? null);
+			// 3. provided fallback message
+			if ($message === null) {
+				$message = $args['fallback'] ?? null;
+				$this->isTranslated = false;
+			}
 
-            // Set the Exception code to the key
-            $this->code = $key;
-        }
-    }
+			if ($translate === true) {
+				// 4. translation for default key in current language
+				// 5. translation for default key in default language
+				if ($message === null) {
+					$message = I18n::translate(self::$prefix . '.' . static::$defaultKey);
+					$this->isTranslated = true;
+				}
+			}
 
-    final public function getData(): array
-    {
-        return $this->data;
-    }
+			// 6. default fallback message
+			if ($message === null) {
+				$message = static::$defaultFallback;
+				$this->isTranslated = false;
+			}
 
-    final public function getDetails(): array
-    {
-        return $this->details;
-    }
+			// format message with passed data
+			$message = Str::template($message, $this->data, ['fallback' => '-']);
 
-    final public function getKey(): string
-    {
-        return $this->getCode();
-    }
+			// handover to Exception parent class constructor
+			parent::__construct($message, 0, $args['previous'] ?? null);
+		}
 
-    final public function getHttpCode(): int
-    {
-        return $this->httpCode;
-    }
+		// set the Exception code to the key
+		$this->code = $key;
+	}
 
-    final public function isTranslated(): bool
-    {
-        return $this->isTranslated;
-    }
+	/**
+	 * Returns the file in which the Exception was created
+	 * relative to the document root
+	 */
+	final public function getFileRelative(): string
+	{
+		$file    = $this->getFile();
+		$docRoot = Environment::getGlobally('DOCUMENT_ROOT');
 
-    public function toArray(): array
-    {
-        return [
-            'exception' => static::class,
-            'message'   => $this->getMessage(),
-            'key'       => $this->getKey(),
-            'file'      => ltrim($this->getFile(), $_SERVER['DOCUMENT_ROOT'] ?? null),
-            'line'      => $this->getLine(),
-            'details'   => $this->getDetails(),
-            'code'      => $this->getHttpCode()
-        ];
-    }
+		if (empty($docRoot) === false) {
+			$file = ltrim(Str::after($file, $docRoot), '/');
+		}
+
+		return $file;
+	}
+
+	/**
+	 * Returns the data variables from the message
+	 */
+	final public function getData(): array
+	{
+		return $this->data;
+	}
+
+	/**
+	 * Returns the additional details that are
+	 * not included in the message
+	 */
+	final public function getDetails(): array
+	{
+		return $this->details;
+	}
+
+	/**
+	 * Returns the exception key (error type)
+	 */
+	final public function getKey(): string
+	{
+		return $this->getCode();
+	}
+
+	/**
+	 * Returns the HTTP code that corresponds
+	 * with the exception
+	 */
+	final public function getHttpCode(): int
+	{
+		return $this->httpCode;
+	}
+
+	/**
+	 * Returns whether the exception message could
+	 * be translated into the user's language
+	 */
+	final public function isTranslated(): bool
+	{
+		return $this->isTranslated;
+	}
+
+	/**
+	 * Converts the object to an array
+	 */
+	public function toArray(): array
+	{
+		return [
+			'exception' => static::class,
+			'message'   => $this->getMessage(),
+			'key'       => $this->getKey(),
+			'file'      => $this->getFileRelative(),
+			'line'      => $this->getLine(),
+			'details'   => $this->getDetails(),
+			'code'      => $this->getHttpCode()
+		];
+	}
 }

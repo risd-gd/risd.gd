@@ -3,21 +3,41 @@
 use Kirby\Toolkit\I18n;
 
 return [
-    'props' => [
-        'text' => function ($value = null) {
-            return I18n::translate($value, $value);
-        },
-    ],
-    'computed' => [
-        'text' => function () {
-            $text = $this->text;
+	'props' => [
+		/**
+		 * Unset inherited props
+		 */
+		'after'       => null,
+		'autofocus'   => null,
+		'before'      => null,
+		'default'     => null,
+		'disabled'    => null,
+		'placeholder' => null,
+		'required'    => null,
+		'translate'   => null,
 
-            if ($model = $this->model()) {
-                $text = $this->model()->toString($text);
-            }
+		/**
+		 * Text to be displayed
+		 */
+		'text' => function ($value = null) {
+			return I18n::translate($value, $value);
+		},
 
-            return kirbytext($text);
-        }
-    ],
-    'save' => false,
+		/**
+		 * Change the design of the info box
+		 */
+		'theme' => function (string|null $theme = null) {
+			return $theme;
+		}
+	],
+	'computed' => [
+		'text' => function () {
+			if ($text = $this->text) {
+				$text = $this->model()->toSafeString($text);
+				$text = $this->kirby()->kirbytext($text);
+				return $text;
+			}
+		}
+	],
+	'save' => false,
 ];

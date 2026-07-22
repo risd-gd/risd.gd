@@ -8,14 +8,11 @@ namespace Kirby\Toolkit;
  *
  * @package   Kirby Toolkit
  * @author    Bastian Allgeier <bastian@getkirby.com>
- * @link      http://getkirby.com
+ * @link      https://getkirby.com
  * @copyright Bastian Allgeier
- * @license   http://www.opensource.org/licenses/mit-license.php MIT License
+ * @license   https://opensource.org/licenses/MIT
  */
 class Config extends Silo
 {
-    /**
-     * @var array
-     */
-    public static $data = [];
+	public static array $data = [];
 }

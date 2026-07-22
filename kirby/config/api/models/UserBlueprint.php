@@ -6,21 +6,12 @@ use Kirby\Cms\UserBlueprint;
  * UserBlueprint
  */
 return [
-    'fields' => [
-        'name' => function (UserBlueprint $blueprint) {
-            return $blueprint->name();
-        },
-        'options' => function (UserBlueprint $blueprint) {
-            return $blueprint->options();
-        },
-        'tabs' => function (UserBlueprint $blueprint) {
-            return $blueprint->tabs();
-        },
-        'title' => function (UserBlueprint $blueprint) {
-            return $blueprint->title();
-        },
-    ],
-    'type' => UserBlueprint::class,
-    'views' => [
-    ],
+	'fields' => [
+		'name'    => fn (UserBlueprint $blueprint) => $blueprint->name(),
+		'options' => fn (UserBlueprint $blueprint) => $blueprint->options(),
+		'tabs'    => fn (UserBlueprint $blueprint) => $blueprint->tabs(),
+		'title'   => fn (UserBlueprint $blueprint) => $blueprint->title(),
+	],
+	'type'  => UserBlueprint::class,
+	'views' => [],
 ];

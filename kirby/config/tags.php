@@ -1,230 +1,351 @@
 <?php
 
-use Kirby\Cms\App;
 use Kirby\Cms\Html;
 use Kirby\Cms\Url;
+use Kirby\Exception\NotFoundException;
+use Kirby\Text\KirbyTag;
+use Kirby\Toolkit\A;
+use Kirby\Toolkit\Str;
+use Kirby\Uuid\Uuid;
 
 /**
  * Default KirbyTags definition
  */
 return [
 
-    /* Date */
-    'date' => [
-        'attr' => [],
-        'html' => function ($tag) {
-            return strtolower($tag->date) === 'year' ? date('Y') : date($tag->date);
-        }
-    ],
+	/**
+	 * Date
+	 */
+	'date' => [
+		'attr' => [],
+		'html' => function (KirbyTag $tag): string {
+			if (strtolower($tag->date) === 'year') {
+				return date('Y');
+			}
 
-    /* Email */
-    'email' => [
-        'attr' => [
-            'class',
-            'rel',
-            'target',
-            'text',
-            'title'
-        ],
-        'html' => function ($tag) {
-            return Html::email($tag->value, $tag->text, [
-                'class'  => $tag->class,
-                'rel'    => $tag->rel,
-                'target' => $tag->target,
-                'title'  => $tag->title,
-            ]);
-        }
-    ],
+			return date($tag->date);
+		}
+	],
 
-    /* File */
-    'file' => [
-        'attr' => [
-            'class',
-            'rel',
-            'target',
-            'text',
-            'title'
-        ],
-        'html' => function ($tag) {
-            if (!$file = $tag->file($tag->value)) {
-                return $tag->text;
-            }
+	/**
+	 * Email
+	 */
+	'email' => [
+		'attr' => [
+			'class',
+			'rel',
+			'target',
+			'text',
+			'title'
+		],
+		'html' => function (KirbyTag $tag): string {
+			return Html::email($tag->value, $tag->text, [
+				'class'  => $tag->class,
+				'rel'    => $tag->rel,
+				'target' => $tag->target,
+				'title'  => $tag->title,
+			]);
+		}
+	],
 
-            // use filename if the text is empty and make sure to
-            // ignore markdown italic underscores in filenames
-            if (empty($tag->text) === true) {
-                $tag->text = str_replace('_', '\_', $file->filename());
-            }
+	/**
+	 * File
+	 */
+	'file' => [
+		'attr' => [
+			'class',
+			'download',
+			'rel',
+			'target',
+			'text',
+			'title'
+		],
+		'html' => function (KirbyTag $tag): string {
+			if (!$file = $tag->file($tag->value)) {
+				return $tag->text ?? $tag->value;
+			}
 
-            return Html::a($file->url(), $tag->text, [
-                'class'    => $tag->class,
-                'download' => true,
-                'rel'      => $tag->rel,
-                'target'   => $tag->target,
-                'title'    => $tag->title,
-            ]);
-        }
-    ],
+			// use filename if the text is empty and make sure to
+			// ignore markdown italic underscores in filenames
+			if (empty($tag->text) === true) {
+				$tag->text = str_replace('_', '\_', $file->filename());
+			}
 
-    /* Gist */
-    'gist' => [
-        'attr' => [
-            'file'
-        ],
-        'html' => function ($tag) {
-            return Html::gist($tag->value, $tag->file);
-        }
-    ],
+			return Html::a($file->url(), $tag->text, [
+				'class'    => $tag->class,
+				'download' => $tag->download !== 'false',
+				'rel'      => $tag->rel,
+				'target'   => $tag->target,
+				'title'    => $tag->title,
+			]);
+		}
+	],
 
-    /* Image */
-    'image' => [
-        'attr' => [
-            'alt',
-            'caption',
-            'class',
-            'height',
-            'imgclass',
-            'link',
-            'linkclass',
-            'rel',
-            'target',
-            'text',
-            'title',
-            'width'
-        ],
-        'html' => function ($tag) {
-            if ($tag->file = $tag->file($tag->value)) {
-                $tag->src     = $tag->file->url();
-                $tag->alt     = $tag->alt     ?? $tag->file->alt()->or(' ')->value();
-                $tag->title   = $tag->title   ?? $tag->file->title()->value();
-                $tag->caption = $tag->caption ?? $tag->file->caption()->value();
-            } else {
-                $tag->src = Url::to($tag->value);
-            }
+	/**
+	 * Gist
+	 */
+	'gist' => [
+		'attr' => [
+			'file'
+		],
+		'html' => function (KirbyTag $tag): string {
+			return Html::gist($tag->value, $tag->file);
+		}
+	],
 
-            $link = function ($img) use ($tag) {
-                if (empty($tag->link) === true) {
-                    return $img;
-                }
+	/**
+	 * Image
+	 */
+	'image' => [
+		'attr' => [
+			'alt',
+			'caption',
+			'class',
+			'height',
+			'imgclass',
+			'link',
+			'linkclass',
+			'rel',
+			'srcset',
+			'target',
+			'title',
+			'width'
+		],
+		'html' => function (KirbyTag $tag): string {
+			$kirby = $tag->kirby();
 
-                return Html::a($tag->link === 'self' ? $tag->src : $tag->link, [$img], [
-                    'rel'    => $tag->rel,
-                    'class'  => $tag->linkclass,
-                    'target' => $tag->target
-                ]);
-            };
+			$tag->width  ??= $kirby->option('kirbytext.image.width');
+			$tag->height ??= $kirby->option('kirbytext.image.height');
 
-            $image = Html::img($tag->src, [
-                'width'  => $tag->width,
-                'height' => $tag->height,
-                'class'  => $tag->imgclass,
-                'title'  => $tag->title,
-                'alt'    => $tag->alt ?? ' '
-            ]);
+			if ($tag->file = $tag->file($tag->value)) {
+				$tag->src       = $tag->file->url();
+				$tag->alt     ??= $tag->file->alt()->or('')->value();
+				$tag->title   ??= $tag->file->title()->value();
+				$tag->caption ??= $tag->file->caption()->value();
 
-            if ($tag->kirby()->option('kirbytext.image.figure', true) === false) {
-                return $link($image);
-            }
+				if ($srcset = $tag->srcset) {
+					$srcset = Str::split($srcset);
+					$srcset = match (count($srcset) > 1) {
+						// comma-separated list of sizes
+						true => A::map($srcset, fn ($size) => (int)trim($size)),
+						// srcset config name
+						default => $srcset[0]
+					};
 
-            return Html::figure([ $link($image) ], $tag->caption, [
-                'class' => $tag->class
-            ]);
-        }
-    ],
+					$tag->srcset = $tag->file->srcset($srcset);
+				}
 
-    /* Link */
-    'link' => [
-        'attr' => [
-            'class',
-            'lang',
-            'rel',
-            'role',
-            'target',
-            'title',
-            'text',
-        ],
-        'html' => function ($tag) {
-            if (empty($tag->lang) === false) {
-                $tag->value = Url::to($tag->value, $tag->lang);
-            }
+				if ($tag->width === 'auto') {
+					$tag->width = $tag->file->width();
+				}
+				if ($tag->height === 'auto') {
+					$tag->height = $tag->file->height();
+				}
+			} else {
+				$tag->src = Url::to($tag->value);
+			}
 
-            return Html::a($tag->value, $tag->text, [
-                'rel'    => $tag->rel,
-                'class'  => $tag->class,
-                'role'   => $tag->role,
-                'title'  => $tag->title,
-                'target' => $tag->target,
-            ]);
-        }
-    ],
+			$link = function ($img) use ($tag) {
+				if (empty($tag->link) === true) {
+					return $img;
+				}
 
-    /* Tel */
-    'tel' => [
-        'attr' => [
-            'class',
-            'rel',
-            'text',
-            'title'
-        ],
-        'html' => function ($tag) {
-            return Html::tel($tag->value, $tag->text, [
-                'class' => $tag->class,
-                'rel'   => $tag->rel,
-                'title' => $tag->title
-            ]);
-        }
-    ],
+				$link   = $tag->file($tag->link)?->url();
+				$link ??= $tag->link === 'self' ? $tag->src : $tag->link;
 
-    /* Twitter */
-    'twitter' => [
-        'attr' => [
-            'class',
-            'rel',
-            'target',
-            'text',
-            'title'
-        ],
-        'html' => function ($tag) {
+				return Html::a($link, [$img], [
+					'rel'    => $tag->rel,
+					'class'  => $tag->linkclass,
+					'target' => $tag->target
+				]);
+			};
 
-            // get and sanitize the username
-            $username = str_replace('@', '', $tag->value);
+			$image = Html::img($tag->src, [
+				'srcset' => $tag->srcset,
+				'width'  => $tag->width,
+				'height' => $tag->height,
+				'class'  => $tag->imgclass,
+				'title'  => $tag->title,
+				'alt'    => $tag->alt ?? ''
+			]);
 
-            // build the profile url
-            $url = 'https://twitter.com/' . $username;
+			if ($kirby->option('kirbytext.image.figure', true) === false) {
+				return $link($image);
+			}
 
-            // sanitize the link text
-            $text = $tag->text ?? '@' . $username;
+			// render KirbyText in caption
+			if ($tag->caption) {
+				$options = ['markdown' => ['inline' => true]];
+				$caption = $kirby->kirbytext($tag->caption, $options);
+				$tag->caption = [$caption];
+			}
 
-            // build the final link
-            return Html::a($url, $text, [
-                'class'  => $tag->class,
-                'rel'    => $tag->rel,
-                'target' => $tag->target,
-                'title'  => $tag->title,
-            ]);
-        }
-    ],
+			return Html::figure([$link($image)], $tag->caption, [
+				'class' => $tag->class
+			]);
+		}
+	],
 
-    /* Video */
-    'video' => [
-        'attr' => [
-            'class',
-            'caption',
-            'height',
-            'width'
-        ],
-        'html' => function ($tag) {
-            $video = Html::video(
-                $tag->value,
-                $tag->kirby()->option('kirbytext.video.options', [])
-            );
+	/**
+	 * Link
+	 */
+	'link' => [
+		'attr' => [
+			'class',
+			'lang',
+			'rel',
+			'role',
+			'target',
+			'title',
+			'text',
+		],
+		'html' => function (KirbyTag $tag): string {
+			if (empty($tag->lang) === false) {
+				$tag->value = Url::to($tag->value, $tag->lang);
+			}
 
-            return Html::figure([$video], $tag->caption, [
-                'class'  => $tag->class  ?? $tag->kirby()->option('kirbytext.video.class', 'video'),
-                'height' => $tag->height ?? $tag->kirby()->option('kirbytext.video.height'),
-                'width'  => $tag->width  ?? $tag->kirby()->option('kirbytext.video.width'),
-            ]);
-        }
-    ],
+			// if value is a UUID, resolve to page/file model
+			// and use the URL as value
+			if (
+				Uuid::is($tag->value, 'page') === true ||
+				Uuid::is($tag->value, 'file') === true
+			) {
+				$tag->value = Uuid::for($tag->value)->model()?->url();
+			}
+
+			// if url is empty, throw exception or link to the error page
+			if ($tag->value === null) {
+				if ($tag->kirby()->option('debug', false) === true) {
+					if (empty($tag->text) === false) {
+						throw new NotFoundException('The linked page cannot be found for the link text "' . $tag->text . '"');
+					} else {
+						throw new NotFoundException('The linked page cannot be found');
+					}
+				} else {
+					$tag->value = Url::to($tag->kirby()->site()->errorPageId());
+				}
+			}
+
+			return Html::a($tag->value, $tag->text, [
+				'rel'    => $tag->rel,
+				'class'  => $tag->class,
+				'role'   => $tag->role,
+				'title'  => $tag->title,
+				'target' => $tag->target,
+			]);
+		}
+	],
+
+	/**
+	 * Tel
+	 */
+	'tel' => [
+		'attr' => [
+			'class',
+			'rel',
+			'text',
+			'title'
+		],
+		'html' => function (KirbyTag $tag): string {
+			return Html::tel($tag->value, $tag->text, [
+				'class' => $tag->class,
+				'rel'   => $tag->rel,
+				'title' => $tag->title
+			]);
+		}
+	],
+
+	/**
+	 * Video
+	 */
+	'video' => [
+		'attr' => [
+			'autoplay',
+			'caption',
+			'controls',
+			'class',
+			'disablepictureinpicture',
+			'height',
+			'loop',
+			'muted',
+			'playsinline',
+			'poster',
+			'preload',
+			'style',
+			'width',
+		],
+		'html' => function (KirbyTag $tag): string {
+			// checks and gets if poster is local file
+			if (
+				empty($tag->poster) === false &&
+				Str::startsWith($tag->poster, 'http://') !== true &&
+				Str::startsWith($tag->poster, 'https://') !== true
+			) {
+				if ($poster = $tag->file($tag->poster)) {
+					$tag->poster = $poster->url();
+				}
+			}
+
+			// checks video is local or provider(remote)
+			$isLocalVideo = (
+				Str::startsWith($tag->value, 'http://') !== true &&
+				Str::startsWith($tag->value, 'https://') !== true
+			);
+			$isProviderVideo = (
+				$isLocalVideo === false &&
+				(
+					Str::contains($tag->value, 'youtu', true) === true ||
+					Str::contains($tag->value, 'vimeo', true) === true
+				)
+			);
+
+			// default attributes for local and remote videos
+			$attrs = [
+				'height' => $tag->height,
+				'width'  => $tag->width
+			];
+
+			// don't use attributes that iframe doesn't support
+			if ($isProviderVideo === false) {
+				// convert tag attributes to supported formats (bool, string)
+				// to output correct html attributes
+				//
+				// for ex:
+				// `autoplay` will not work if `false` is a string
+				// instead of a boolean
+				$attrs['autoplay']    = $autoplay = Str::toType($tag->autoplay, 'bool');
+				$attrs['controls']    = Str::toType($tag->controls ?? true, 'bool');
+				$attrs['disablepictureinpicture'] = Str::toType($tag->disablepictureinpicture ?? false, 'bool');
+				$attrs['loop']        = Str::toType($tag->loop, 'bool');
+				$attrs['muted']       = Str::toType($tag->muted ?? $autoplay, 'bool');
+				$attrs['playsinline'] = Str::toType($tag->playsinline ?? $autoplay, 'bool');
+				$attrs['poster']      = $tag->poster;
+				$attrs['preload']     = $tag->preload;
+			}
+
+			// handles local and remote video file
+			if ($isLocalVideo === true) {
+				// handles local video file
+				if ($tag->file = $tag->file($tag->value)) {
+					$source = Html::tag('source', '', [
+						'src'  => $tag->file->url(),
+						'type' => $tag->file->mime()
+					]);
+					$video = Html::tag('video', [$source], $attrs);
+				}
+			} else {
+				$video = Html::video(
+					$tag->value,
+					$tag->kirby()->option('kirbytext.video.options', []),
+					$attrs
+				);
+			}
+
+			return Html::figure([$video ?? ''], $tag->caption, [
+				'class' => $tag->class ?? 'video',
+				'style' => $tag->style
+			]);
+		}
+	],
 
 ];

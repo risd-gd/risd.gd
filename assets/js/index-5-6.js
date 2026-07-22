@@ -47,7 +47,7 @@
 
         // A lot of the following code is informed by the original notices.risd.gd site
         var notices = function() {
-            var $notices = $('.notice__interactive'),
+            var $notices = $('.notice'),
                 $printButton = $('.button--print'),
                 $iframe = $('#printf'),
                 iframeCss = $iframe.data('css');
@@ -110,7 +110,7 @@
             onStart: {
                 duration: 500,
                 render: function (url, $container) {
-                    // $site.animate({scrollTop: 0});
+                    $site.animate({scrollTop: 0});
                 }
             },
             onReady: {

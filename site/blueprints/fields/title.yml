@@ -1,0 +1,8 @@
+type: group
+fields:
+  title:
+    label: Title
+    type: text
+  newrow:
+    label: Start new row?
+    type: toggle

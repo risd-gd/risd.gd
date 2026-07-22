@@ -2,304 +2,229 @@
 
 namespace Kirby\Image;
 
-use Exception;
-use Kirby\Http\Response;
-use Kirby\Toolkit\File;
+use Kirby\Cms\FileVersion;
+use Kirby\Content\Content;
+use Kirby\Exception\LogicException;
+use Kirby\Filesystem\File;
 use Kirby\Toolkit\Html;
-use Kirby\Toolkit\Mime;
-use Kirby\Toolkit\Str;
-use Kirby\Toolkit\V;
 
 /**
- * A representation of an image/media file
+ * A representation of an image file
  * with dimensions, optional exif data and
  * a connection to our darkroom classes to resize/crop
  * images.
  *
+ * Extends the `Kirby\Filesystem\File` class with
+ * those image-specific methods.
+ *
  * @package   Kirby Image
- * @author    Bastian Allgeier <bastian@getkirby.com>
- * @link      http://getkirby.com
+ * @author    Nico Hoffmann <nico@getkirby.com>
+ * @link      https://getkirby.com
  * @copyright Bastian Allgeier
- * @license   MIT
-*/
+ * @license   https://opensource.org/licenses/MIT
+ */
 class Image extends File
 {
+	protected Exif|null $exif = null;
+	protected Dimensions|null $dimensions = null;
 
-    /**
-     * optional url where the file is reachable
-     * @var string
-     */
-    protected $url;
+	public static array $resizableTypes = [
+		'avif',
+		'jpg',
+		'jpeg',
+		'gif',
+		'png',
+		'webp'
+	];
 
-    /**
-     * @var Exif|null
-     */
-    protected $exif;
+	public static array $viewableTypes = [
+		'avif',
+		'jpg',
+		'jpeg',
+		'gif',
+		'png',
+		'svg',
+		'webp'
+	];
 
-    /**
-     * @var Dimensions|null
-     */
-    protected $dimensions;
+	/**
+	 * Validation rules to be used for `::match()`
+	 */
+	public static array $validations = [
+		'maxsize'     => ['size',   'max'],
+		'minsize'     => ['size',   'min'],
+		'maxwidth'    => ['width',  'max'],
+		'minwidth'    => ['width',  'min'],
+		'maxheight'   => ['height', 'max'],
+		'minheight'   => ['height', 'min'],
+		'orientation' => ['orientation', 'same']
+	];
 
-    /**
-     * Constructor
-     *
-     * @param string       $root
-     * @param string|null  $url
-     */
-    public function __construct(string $root = null, string $url = null)
-    {
-        parent::__construct($root);
-        $this->url = $url;
-    }
+	/**
+	 * Returns the `<img>` tag for the image object
+	 */
+	public function __toString(): string
+	{
+		return $this->html();
+	}
 
-    /**
-     * Improved var_dump() output
-     *
-     * @return array
-     */
-    public function __debuginfo(): array
-    {
-        return array_merge($this->toArray(), [
-            'dimensions' => $this->dimensions(),
-            'exif'       => $this->exif(),
-        ]);
-    }
+	/**
+	 * Returns the dimensions of the file if possible
+	 */
+	public function dimensions(): Dimensions
+	{
+		if ($this->dimensions !== null) {
+			return $this->dimensions;
+		}
 
-    /**
-     * Returns a full link to this file
-     * Perfect for debugging in connection with echo
-     *
-     * @return string
-     */
-    public function __toString(): string
-    {
-        return $this->root;
-    }
+		if (in_array($this->mime(), [
+			'image/avif',
+			'image/gif',
+			'image/jpeg',
+			'image/jp2',
+			'image/png',
+			'image/webp'
+		])) {
+			return $this->dimensions = Dimensions::forImage($this->root);
+		}
 
-    /**
-     * Returns the dimensions of the file if possible
-     *
-     * @return Dimensions
-     */
-    public function dimensions(): Dimensions
-    {
-        if ($this->dimensions !== null) {
-            return $this->dimensions;
-        }
+		if ($this->extension() === 'svg') {
+			return $this->dimensions = Dimensions::forSvg($this->root);
+		}
 
-        if (in_array($this->mime(), ['image/jpeg', 'image/png', 'image/gif'])) {
-            return $this->dimensions = Dimensions::forImage($this->root);
-        }
+		return $this->dimensions = new Dimensions(0, 0);
+	}
 
-        if ($this->extension() === 'svg') {
-            return $this->dimensions = Dimensions::forSvg($this->root);
-        }
+	/**
+	 * Returns the exif object for this file (if image)
+	 */
+	public function exif(): Exif
+	{
+		return $this->exif ??= new Exif($this);
+	}
 
-        return $this->dimensions = new Dimensions(0, 0);
-    }
+	/**
+	 * Returns the height of the asset
+	 */
+	public function height(): int
+	{
+		return $this->dimensions()->height();
+	}
 
-    /*
-     * Automatically sends all needed headers for the file to be downloaded
-     * and echos the file's content
-     *
-     * @param  string|null $filename  Optional filename for the download
-     * @return string
-     */
-    public function download($filename = null): string
-    {
-        return Response::download($this->root, $filename ?? $this->filename());
-    }
+	/**
+	 * Converts the file to html
+	 */
+	public function html(array $attr = []): string
+	{
+		$model = match (true) {
+			$this->model instanceof FileVersion => $this->model->original(),
+			default                             => $this->model
+		};
 
-    /**
-     * Returns the exif object for this file (if image)
-     *
-     * @return Exif
-     */
-    public function exif(): Exif
-    {
-        if ($this->exif !== null) {
-            return $this->exif;
-        }
-        $this->exif = new Exif($this);
-        return $this->exif;
-    }
+		// if no alt text explicitly provided,
+		// try to infer from model content file
+		if (
+			$model !== null &&
+			method_exists($model, 'content') === true &&
+			$model->content() instanceof Content &&
+			$model->content()->get('alt')->isNotEmpty() === true
+		) {
+			$attr['alt'] ??= $model->content()->get('alt')->value();
+		}
 
-    /**
-     * Sends an appropriate header for the asset
-     *
-     * @param  boolean          $send
-     * @return Response|string
-     */
-    public function header(bool $send = true)
-    {
-        $response = new Response();
-        $response->type($this->mime());
-        return $send === true ? $response->send() : $response;
-    }
+		if ($url = $this->url()) {
+			return Html::img($url, $attr);
+		}
 
-    /**
-     * Returns the height of the asset
-     *
-     * @return int
-     */
-    public function height(): int
-    {
-        return $this->dimensions()->height();
-    }
+		throw new LogicException('Calling Image::html() requires that the URL property is not null');
+	}
 
-    /**
-     * @param  array  $attr
-     * @return string
-     */
-    public function html(array $attr = []): string
-    {
-        return Html::img($this->url(), $attr);
-    }
+	/**
+	 * Returns the PHP imagesize array
+	 */
+	public function imagesize(): array
+	{
+		return getimagesize($this->root);
+	}
 
-    /**
-     * Returns the PHP imagesize array
-     *
-     * @return array
-     */
-    public function imagesize(): array
-    {
-        return getimagesize($this->root);
-    }
+	/**
+	 * Checks if the dimensions of the asset are portrait
+	 */
+	public function isPortrait(): bool
+	{
+		return $this->dimensions()->portrait();
+	}
 
-    /**
-     * Checks if the dimensions of the asset are portrait
-     *
-     * @return boolean
-     */
-    public function isPortrait(): bool
-    {
-        return $this->dimensions()->portrait();
-    }
+	/**
+	 * Checks if the dimensions of the asset are landscape
+	 */
+	public function isLandscape(): bool
+	{
+		return $this->dimensions()->landscape();
+	}
 
-    /**
-     * Checks if the dimensions of the asset are landscape
-     *
-     * @return boolean
-     */
-    public function isLandscape(): bool
-    {
-        return $this->dimensions()->landscape();
-    }
+	/**
+	 * Checks if the dimensions of the asset are square
+	 */
+	public function isSquare(): bool
+	{
+		return $this->dimensions()->square();
+	}
 
-    /**
-     * Checks if the dimensions of the asset are square
-     *
-     * @return boolean
-     */
-    public function isSquare(): bool
-    {
-        return $this->dimensions()->square();
-    }
+	/**
+	 * Checks if the file is a resizable image
+	 */
+	public function isResizable(): bool
+	{
+		return in_array($this->extension(), static::$resizableTypes) === true;
+	}
 
-    /**
-     * Runs a set of validations on the image object
-     *
-     * @return bool
-     */
-    public function match(array $rules): bool
-    {
-        if (($rules['mime'] ?? null) !== null) {
-            if (Mime::isAccepted($this->mime(), $rules['mime']) !== true) {
-                throw new Exception(sprintf('Invalid mime type: %s', $this->mime()));
-            }
-        }
+	/**
+	 * Checks if a preview can be displayed for the file
+	 * in the Panel or in the frontend
+	 */
+	public function isViewable(): bool
+	{
+		return in_array($this->extension(), static::$viewableTypes) === true;
+	}
 
-        $rules = array_change_key_case($rules);
+	/**
+	 * Returns the ratio of the asset
+	 */
+	public function ratio(): float
+	{
+		return $this->dimensions()->ratio();
+	}
 
-        $validations = [
-            'maxsize'     => ['size',   'max', 'The file is too large'],
-            'minsize'     => ['size',   'min', 'The file is too small'],
-            'maxwidth'    => ['width',  'max', 'The width of the image must not exceed %s pixels'],
-            'minwidth'    => ['width',  'min', 'The width of the image must be at least %s pixels'],
-            'maxheight'   => ['height', 'max', 'The height of the image must not exceed %s pixels'],
-            'minheight'   => ['height', 'min', 'The height of the image must be at least %s pixels'],
-            'orientation' => ['orientation', 'same', 'The orientation of the image must be "%s"']
-        ];
+	/**
+	 * Returns the orientation as string
+	 * `landscape` | `portrait` | `square`
+	 */
+	public function orientation(): string|false
+	{
+		return $this->dimensions()->orientation();
+	}
 
-        foreach ($validations as $key => $arguments) {
-            if (isset($rules[$key]) === true && $rules[$key] !== null) {
-                $property  = $arguments[0];
-                $validator = $arguments[1];
-                $message   = $arguments[2];
+	/**
+	 * Converts the object to an array
+	 */
+	public function toArray(): array
+	{
+		$array = array_merge(parent::toArray(), [
+			'dimensions' => $this->dimensions()->toArray(),
+			'exif'       => $this->exif()->toArray(),
+		]);
 
-                if (V::$validator($this->$property(), $rules[$key]) === false) {
-                    throw new Exception(sprintf($message, $rules[$key]));
-                }
-            }
-        }
+		ksort($array);
 
-        return true;
-    }
+		return $array;
+	}
 
-    /**
-     * Returns the ratio of the asset
-     *
-     * @return float
-     */
-    public function ratio(): float
-    {
-        return $this->dimensions()->ratio();
-    }
-
-    /**
-     * Returns the orientation as string
-     * landscape | portrait | square
-     *
-     * @return string
-     */
-    public function orientation(): string
-    {
-        return $this->dimensions()->orientation();
-    }
-
-    /**
-     * Converts the media object to a
-     * plain PHP array
-     *
-     * @return array
-     */
-    public function toArray(): array
-    {
-        return array_merge(parent::toArray(), [
-            'dimensions' => $this->dimensions()->toArray(),
-            'exif'       => $this->exif()->toArray(),
-        ]);
-    }
-
-    /**
-     * Converts the entire file array into
-     * a json string
-     *
-     * @return string
-     */
-    public function toJson(): string
-    {
-        return json_encode($this->toArray());
-    }
-
-    /**
-     * Returns the url
-     *
-     * @return string
-     */
-    public function url()
-    {
-        return $this->url;
-    }
-
-    /**
-     * Returns the width of the asset
-     *
-     * @return int
-     */
-    public function width(): int
-    {
-        return $this->dimensions()->width();
-    }
+	/**
+	 * Returns the width of the asset
+	 */
+	public function width(): int
+	{
+		return $this->dimensions()->width();
+	}
 }

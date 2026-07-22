@@ -1,0 +1,16 @@
+title: Link
+
+icon: 🖼
+status:
+  draft: true
+  listed: true
+
+columns:
+  - width: 1/2
+    fields:
+      link:
+        type: url
+      caption:
+        label: Caption
+        type: text
+        placeholder: Watch

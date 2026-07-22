@@ -1,18 +1,18 @@
 <?php 
 $link = "";
-if($data->isinternal()->isTrue()) {
-    $link = $data->internallink()->toPage()->url();
+if($block->isinternal()->isTrue()) {
+    $link = $block->internallink()->toPage()->url();
 } else {
-    $link = $data->externallink()->toString();
+    $link = $block->externallink()->toString();
 } ?>
 
 <a href="<?= $link ?>" data-target=1>
 <section class="link">
     <div class="link--caption">
-        <?= $data->caption()->text() ?>
+        <?= $block->caption()->text() ?>
     </div>
     <div class="link--title">
-        <?= $data->title()->text() ?>
+        <?= $block->title()->text() ?>
     </div>
     <div class="link--icon">
         <?php snippet('svg/svg-link') ?>
