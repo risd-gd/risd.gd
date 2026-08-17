@@ -67,16 +67,18 @@
           <?php if ($item->is('notices') && $page->isHomePage()): ?>
 
               <a data-target="<?= $item->num() ?>" href="<?= $item->url() ?>">
-                <div class="pane--handle __hasmarquee">
-                  
+              <div class="pane--handle">
+                      <?= $item->title() ?>
+                </div>  
+              </a>
+              <!-- <div class="pane--handle __hasmarquee">
                   <div class="notices--marquee">
-                   
                     <?php foreach ($item->children()->listed()->limit(5) as $notice): ?>
                       <?= $notice->title() ?><span class="marquee--marker">NOTICES</span>
                     <?php endforeach ?>
                   </div>
-                </div>
-              </a>
+                </div> -->
+             
 
               <?php elseif($item->isHomePage() and $page->template()->name() == "internal"): ?>
 

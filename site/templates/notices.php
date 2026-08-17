@@ -1,9 +1,10 @@
 <?php snippet('header') ?>
 
+
 <main id="notices">
   <div id="content" class="anim--fadein">
     <?php foreach ($notices = $page->children()->listed()->paginate(15) as $notice): ?>
-      <section class="notice notice__interactive">
+      <section class="notice notice__interactive<?= $notice->is($notices->first()) ? ' notice__active' : '' ?>">
         <div class="notice--meta">
             <div class="notice--timing"><?= $notice->timing()->text() ?></div>
             <div class="notice--location"><?= $notice->location()->text() ?></div>
@@ -57,5 +58,3 @@
 
 
 <?php snippet('footer') ?>
-
-

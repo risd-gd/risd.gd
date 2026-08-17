@@ -27,6 +27,26 @@ nav#nav {
     pointer-events: none;
     z-index: 100;
 
+    .nav--title {
+        @extend %type--body__upper;
+        // position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        height: $handle;
+        display: flex;
+        align-items: center;
+        padding: 0 $unit;
+        pointer-events: all;
+        font-size: inherit;
+        line-height: inherit;
+
+        @include bp-sm- {
+            height: $handle-sm;
+            padding: 0 $unit-sm * 2;
+        }
+    }
+
     @include bp-sm {
         box-shadow: 0px 5px 10px rgba(0,0,0,0.1);
         display: flex;
@@ -169,7 +189,8 @@ main {
 
         @include bp-sm- {
             min-height: calc(100vh - #{$handle-sm} * 2);
-            padding-top: $handle-sm * 3;
+            padding-top: $handle-sm * 1;
+            padding-bottom: $handle-sm * 1;
         }
     }
 
@@ -314,7 +335,8 @@ main {
         grid-auto-flow: row dense;
         grid-template-rows: auto auto 1fr;
         @include bp-sm- {
-            padding-top: $unit-sm * 6;
+            padding-top: $unit-sm * 0;
+            padding-bottom: $unit-sm * 3;
         }
         
         .notice--title {
@@ -403,6 +425,24 @@ main {
         @extend %type--body;
         @include col-collapse-md(#{'5 / 13'});
         padding-top: 0;
+
+        figure, iframe {
+           margin: 1.5rem 0;
+           max-width: 800px;
+           
+        }
+        figure.portrait {
+            max-width: 500px;
+        }
+        figcaption {
+            font-size: calc($body * 0.9);
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+
         @include bp-sm- {
             padding-right: $unit-sm * 2;
         }

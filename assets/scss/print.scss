@@ -8,11 +8,17 @@
 
 // Most of these styles are the same as the original notices, save the different font
 
+@page {
+    margin: 0;
+}
+
 html, body {
     font-size: 30px;
     font-family: 'GT Walsheim', Helvetica, Arial, sans-serif;
     margin: 0;
     padding: 0;
+    height: 100%;
+    overflow: hidden;
 }
 
 div {
@@ -20,12 +26,22 @@ div {
 }
 
 body.print {
-    height: 99%;
+    position: fixed;
+    inset: 0;
+    height: auto;
+    overflow: hidden;
 }
 
 .notice {
-    position: relative;
-    height: 99%;
+    position: fixed;
+    inset: 0;
+    height: auto;
+    max-height: 100%;
+    overflow: hidden;
+    break-inside: avoid;
+    break-after: avoid;
+    page-break-inside: avoid;
+    page-break-after: avoid;
 
     .notice--title {
         padding: 3.8rem 0.8rem 0 0.8rem;
@@ -49,6 +65,10 @@ body.print {
 
         a {
             color: inherit;
+        }
+
+        iframe, figure, img {
+            display: none;
         }
     }
     .notice--tools {

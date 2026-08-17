@@ -4,7 +4,7 @@
         #QR { display: none; }
     }
     @media only print { 
-        img, img#QR { display: block; }
+        img, img#QR { display: none; }
     }
 </style>
 <main id="notice">

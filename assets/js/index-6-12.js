@@ -59,13 +59,16 @@
             }
 
             function updateiframe($notice) {
-                var $currentNotice = $('.notice__active');
+                var $currentNotice = $('.notice__active'),
+                    $printNotice = $currentNotice.clone();
+
+                $printNotice.find('img, figure, iframe').remove();
 
                 $iframe.contents().find("head").append("<meta charset='utf-8'>");
                 $iframe.contents().find("head").append(`<link rel='stylesheet' href='${iframeCss}'>`);
                 $iframe.contents().find("body").addClass("print");
                 $iframe.contents().find("body").html("");
-                $iframe.contents().find("body").append($currentNotice.clone());
+                $iframe.contents().find("body").append($printNotice);
             }
 
             function print(currentNotice) {
